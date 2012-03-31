@@ -1,0 +1,33 @@
+application: algae
+version: 1
+runtime: python
+api_version: 1
+
+default_expiration: "14d"
+
+builtins:
+- remote_api: on
+- appstats: on
+
+handlers:
+- url: /remote_api
+  script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
+  
+- url: /favicon.ico
+  static_files: static/img/favicon.ico
+  upload: static/img/favicon.ico
+  
+- url: /robots.txt
+  static_files: static/robots.txt
+  upload: static/robots.txt
+  
+- url: /robots.txt
+  static_files: static/humans.txt
+  upload: static/humans.txt
+  
+- url: /static
+  static_dir: static
+  expiration: "14d"
+  
+- url: /.*
+  script: app.py

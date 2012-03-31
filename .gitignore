@@ -1,0 +1,4 @@
+.DS_Store
+*.pyc
+*.sql3
+bulkloader-log-*
