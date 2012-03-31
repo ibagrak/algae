@@ -1,38 +1,29 @@
-# [HTML5 Boilerplate](http://html5boilerplate.com)
+# Algae is an application template for [Google App Engine](http://https://developers.google.com/appengine/)
 
-HTML5 Boilerplate is a professional front-end template that helps you build fast, robust, adaptable, and future-proof websites. Spend more time developing and less time reinventing the wheel.
+Algae is designed to get you up to speed and running on App Engine in less than 3 minutes and 45 seconds. Guaranteed. 
 
-This project is the product of many years of iterative development and combined community knowledge. It does not impose a specific development philosophy or framework, so you're free to architect your code in the way that you want.
+It comes chock-full of goodies things you'd otherwise miss:
 
+* [HTML5 Boilerplate template](http://html5boilerplate.com)
+* User management, including bootstrap code for:
+    * Twitter authentication
+    * Facebook authentication
+    * Email signups
+* Session management with [gaesessions](https://github.com/dound/gae-sessions)
+* Basic testing infrastructure
+* Etc
+
+It IS the stuff to write home about.
 
 ## Quick start
 
-Clone the git repo - `git clone git://github.com/h5bp/html5-boilerplate.git` - or [download it](https://github.com/h5bp/html5-boilerplate/zipball/master)
+Clone the git repo - `git clone git://github.com/algae/algae.git`
 
-
-## Features
-
-* HTML5 ready. Use the new elements with confidence.
-* Cross-browser compatible (Chrome, Opera, Safari, Firefox 3.6+, IE6+).
-* Designed with progressive enhancement in mind.
-* CSS normalizations and common bug fixes.
-* IE-specific classes for easier cross-browser control.
-* A default print stylesheet, performance optimized.
-* Mobile browser optimizations.
-* Protection against any stray `console.log` causing JavaScript errors in IE6/7.
-* The latest jQuery via CDN, with a local fallback.
-* A custom Modernizr build for feature detection.
-* An optimized Google Analytics snippet.
-* Apache server caching, compression, and other configuration defaults for Grade-A performance.
-* Cross-domain Ajax and Flash.
-* "Delete-key friendly." Easy to strip out parts you don't need.
-* Extensive inline and accompanying documentation.
-
+Modify 'app.yaml' and 'settings.py'. [Register](https://appengine.google.com/) your new app with Google and off you go!
 
 ## Contributing
 
-Anyone and everyone is welcome to [contribute](https://github.com/h5bp/html5-boilerplate/wiki/contribute). Hundreds of developers have helped make the HTML5 Boilerplate what it is today.
-
+By Gosh, it's on Github.
 
 ## Project information
 
@@ -41,7 +32,6 @@ Anyone and everyone is welcome to [contribute](https://github.com/h5bp/html5-boi
 * Docs: http://html5boilerplate.com/docs
 * Twitter: http://twitter.com/h5bp
 
-
 ## License
 
 ### Major components:
@@ -49,6 +39,9 @@ Anyone and everyone is welcome to [contribute](https://github.com/h5bp/html5-boi
 * jQuery: MIT/GPL license
 * Modernizr: MIT/BSD license
 * Normalize.css: Public Domain
+* gae-sessions: Apache License Version 2.0
+* facebook.py: Apache License Version 2.0 (author: Facebook) 
+* oath.py: Unrestricted (author: Mike Knapp)
 
 ### Everything else:
 
