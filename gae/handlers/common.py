@@ -2,66 +2,72 @@ import logging
 import cgi
 import sys
 import traceback
+from functools import wraps
 
-from google.appengine.ext import webapp
-from sessions import get_current_session
+import webapp2
+from webapp2_extras import sessions
+
 import settings
-import model
-
-def withsession(func):
-    def wrapper(*args, **kwargs):
-        kwargs['session'] = get_current_session()
-        res = func(*args, **kwargs)
-        return res
-    
-    return wrapper
-
-def withuser(func):
-    def wrapper(*args, **kwargs):
-        if 'session' in kwargs:
-            kwargs['user'] = model.User.get_user_from_session(kwargs['session'].sid)
-        else:
-            session = get_current_session()
-            kwargs['user'] = model.User.get_user_from_session(session.sid)
-        
-        args[0].logger.debug("session object: \n %s" % session)    
-        res = func(*args, **kwargs)
-        return res
-    
-    return wrapper
 
 def logapi(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
-        args[0].logger.debug("API: %s args: %s" % (func.__name__, args))
+        logging.debug("API call: %s args: %s kwargs: %s" % (func.__name__, args[1:], kwargs))
         res = func(*args, **kwargs)
-        args[0].logger.debug("API: %s result: %s" % (func.__name__, res))
+        logging.debug("API call: %s result: %s" % (func.__name__, res))
         return res
     
     return wrapper
 
 def loghandler(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
-        args[0].logger.debug("API: %s args: %s" % (func.__name__, args))
+        logging.debug("HTML Request: %s args: %s kwargs: %s" % (func.__name__, args[1:], kwargs))
         res = func(*args, **kwargs)
         return res
     
     return wrapper
                 
-class AbstractRequestHandler(webapp.RequestHandler):
-    def __init__(self):
-        super(AbstractRequestHandler, self).__init__()
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
-    
+class BaseHandler(webapp2.RequestHandler):
     # if we don't have this then spammy head requests would clutter the error log
-    def head(self, *args):
+    def head(self):
         pass
         
     def handle_exception(self, exception, debug_mode):    
-        self.logger.exception(exception)
+        logging.exception(exception)
         if debug_mode:
             lines = ''.join(traceback.format_exception(*sys.exc_info()))
             self.response.clear()
             self.response.out.write('<pre>%s</pre>' % (cgi.escape(lines, quote=True)))
         else:
             self.redirect(settings.ERROR_URL)
+            
+    def dispatch(self):
+        # Get a session store for this request.
+        self.session_store = sessions.get_store(request=self.request)
+
+        try:
+            # Dispatch the request.
+            webapp2.RequestHandler.dispatch(self)
+        finally:
+            # Save all sessions.
+            self.session_store.save_sessions(self.response)
+
+    @webapp2.cached_property
+    def session(self):
+        # Returns a session using the default cookie key.
+        return self.session_store.get_session()
+    
+    def session_init(self):
+        # initialize default cookie values
+        for k,v in settings.cookie: 
+            self.session[k] = v
+    
+    def session_inc_pageviews(self):
+        self.session.session['pageviews'] = self.session['pageviews'] + 1
+    
+    def session_login(self):
+        self.session['authed'] = True
+    
+    def session_logout(self):
+        self.session['authed'] = False

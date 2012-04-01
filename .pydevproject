@@ -5,13 +5,16 @@
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python 2.7</pydev_property>
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
-<path>/raffl/gae/connectors</path>
-<path>/raffl/gae/handlers</path>
-<path>/raffl/gae</path>
+<path>/algae/gae/connectors</path>
+<path>/algae/gae/handlers</path>
+<path>/algae/gae</path>
 </pydev_pathproperty>
 <pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
 <path>${GOOGLE_APP_ENGINE}</path>
+<path>${GOOGLE_APP_ENGINE}/lib</path>
+<path>${GOOGLE_APP_ENGINE}/lib/webapp2</path>
 <path>${GOOGLE_APP_ENGINE}/lib/django_1_2</path>
+<path>${GOOGLE_APP_ENGINE}/lib/jinja2</path>
 </pydev_pathproperty>
 <pydev_variables_property name="org.python.pydev.PROJECT_VARIABLE_SUBSTITUTION">
 <key>GOOGLE_APP_ENGINE</key>

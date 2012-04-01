@@ -1,15 +1,18 @@
 import os
-from google.appengine.ext.webapp import template
 
+from handlers import jinja_environment
 import common
+import logging
             
-class Index(common.AbstractRequestHandler):
+class Index(common.BaseHandler):
     
-    @common.loghandler
-    @common.withuser
     def get(self, *args, **kwargs):
-        self.logger.debug("hello, world!")
+        logging.debug("hello, world!")
+        logging.debug("session: %s" % self.session)
         
-        t_args = { 'user' : kwargs['user'] }
+        t_args = { 'session' : self.session}
         path = os.path.join(os.path.dirname(__file__), "../static/templates/index.html")
-        self.response.out.write(template.render(path, t_args))
+        logging.error("path: %s" % path)
+        
+        template = jinja_environment.get_template("index.html")
+        self.response.out.write(template.render(t_args))

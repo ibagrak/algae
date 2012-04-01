@@ -1,21 +1,18 @@
-import logging
-
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
+import webapp2
 
 import settings
-import index
-import api
+from handlers import index, api
 
-application = webapp.WSGIApplication([
-                                      ('/',                                 index.MainPage),
-                                      ('/api?*',                            api.APIHandler),
-                                      ], debug = settings.DEBUG)
+application = webapp2.WSGIApplication([
+                                       ('/',                         index.Index),
+                                       ('/index.html',               index.Index),
+                                       (r'/api?.*',                  api.APIHandler),
+                                      ], 
+                                     debug = settings.DEBUG,
+                                     config = settings.config)
 
 def main():
-    logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
-    run_wsgi_app(application)
+    application.run()
 
 if __name__ == "__main__":
     main()

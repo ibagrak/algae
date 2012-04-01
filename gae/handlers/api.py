@@ -1,14 +1,14 @@
 import traceback
 import sys
 
-from django.utils import simplejson
-
+import json
+import logging
 import settings
-from handlers import common
 
-class APIHandler(common.AbstractRequestHandler):
+import common
+
+class APIHandler(common.BaseHandler):
     
-    @common.withuser
     def get(self, *args, **kwargs):
         action = self.request.get('action')
         args = self.request.arguments()
@@ -21,12 +21,12 @@ class APIHandler(common.AbstractRequestHandler):
         if not action in settings.APIS:
             result = (settings.INVALID_API_ERROR, 0)
         else:    
-            result = getattr(self, action)(kvs, kwargs['session'], kwargs['user'])
+            result = getattr(self, action)(kvs, self.session)
         
-        self.response.out.write(simplejson.dumps(result))
+        self.response.out.write(json.dumps(result))
         
     def handle_exception(self, exception, debug_mode):
-        self.logger.exception(exception)
+        logging.exception(exception)
 
         if debug_mode:
             lines = ''.join(traceback.format_exception(*sys.exc_info()))
@@ -35,10 +35,8 @@ class APIHandler(common.AbstractRequestHandler):
             result = (settings.GENERAL_ERROR, "Please contact application administrator for support")
             
         self.response.clear()
-        self.response.out.write(simplejson.dumps(result))
+        self.response.out.write(json.dumps(result))
     
     @common.logapi    
-    def test_api(self):
-        return settings.SUCCESS
-        
+    def test_api(self, session):
         return settings.SUCCESS

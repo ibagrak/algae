@@ -13,13 +13,13 @@ It comes chock-full of goodies things you'd otherwise miss:
 * Basic testing infrastructure
 * Etc
 
-It IS the stuff to write home about.
+Finally, an App Engine template to write home about.
 
 ## Quick start
 
 Clone the git repo - `git clone git://github.com/algae/algae.git`
 
-Modify 'app.yaml' and 'settings.py'. [Register](https://appengine.google.com/) your new app with Google and off you go!
+Modify `app.yaml` and `settings.py`. [Register](https://appengine.google.com/) your new app with Google and off you go!
 
 ## Contributing
 
@@ -27,10 +27,7 @@ By Gosh, it's on Github.
 
 ## Project information
 
-* Source: http://github.com/h5bp/html5-boilerplate
-* Web: http://html5boilerplate.com
-* Docs: http://html5boilerplate.com/docs
-* Twitter: http://twitter.com/h5bp
+* Still wondering what this is all about? Contact the [author](http://twitter.com/ibagrak)
 
 ## License
 

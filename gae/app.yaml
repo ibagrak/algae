@@ -1,6 +1,7 @@
 application: algae
 version: 1
-runtime: python
+runtime: python27
+threadsafe: false
 api_version: 1
 
 default_expiration: "14d"
@@ -25,9 +26,21 @@ handlers:
   static_files: static/humans.txt
   upload: static/humans.txt
   
-- url: /static
-  static_dir: static
-  expiration: "14d"
+- url: /static/css
+  static_dir: static/css
+  
+- url: /static/img
+  static_dir: static/img
+ 
+- url: /static/js
+  static_dir: static/js 
   
 - url: /.*
   script: app.py
+  
+libraries:
+- name: jinja2
+  version: "2.6"
+  
+- name: webapp2
+  version: "2.3"
