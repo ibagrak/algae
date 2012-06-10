@@ -4,12 +4,14 @@ Algae is designed to get you up to speed and running on App Engine in less than 
 
 It comes chock-full of goodies things you'd otherwise miss:
 
-* [HTML5 Boilerplate template](http://html5boilerplate.com)
+* [HTML5 Boilerplate](http://html5boilerplate.com)
+* [Twitter Bootstrap](http://twitter.github.com/bootstrap/index.html)
+* [Less Stylesheets](http://lesscss.org/)
 * User management, including bootstrap code for:
     * Twitter authentication
     * Facebook authentication
     * Email signups
-* Session management with [gaesessions](https://github.com/dound/gae-sessions)
+* Simple API & RESTful API code bootstrap
 * Basic testing infrastructure
 * Etc
 

@@ -37,7 +37,35 @@
 
   </header>
   <div role="main">
-    Hello, world!
+    <div class="container">
+    
+    <h1>User management</h1>
+    
+    <p>
+    {% if authed %}
+        You are logged in. <a href="#" id="logout_link">Logout</a>
+    {% else %}
+        You are not signed in. Sign in with:
+        <ul>
+            <li><a href="/oauth/forward/facebook">Facebook</a>
+            <li><a href="/oauth/forward/twitter">Twitter</a>
+            <li><a id="show_email_signup" href="#">Sign up</a> or <a id="show_email_signin" href="#">sign in</a> with email
+        </ul>
+    {% endif %}
+    
+    <h1>RESTful API</h1>
+    <p>Create widget
+    
+    <h1>LESS Stylesheets</h1>
+    <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. Modify <code>/gae/static/css/less/app.less</code> to change application-specific styles.
+    
+    <h1>Session support</h1>
+    
+    <p>Reload this page. The number of pageviews should increase. 
+    
+    <p>Pageviews: {{pageviews}}
+    
+    </div>
   </div>
   <footer>
 

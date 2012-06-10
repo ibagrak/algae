@@ -22,17 +22,17 @@ handlers:
   static_files: static/robots.txt
   upload: static/robots.txt
   
-- url: /robots.txt
+- url: /humans.txt
   static_files: static/humans.txt
   upload: static/humans.txt
   
-- url: /static/css
+- url: /css
   static_dir: static/css
   
-- url: /static/img
+- url: /img
   static_dir: static/img
  
-- url: /static/js
+- url: /js
   static_dir: static/js 
   
 - url: /.*

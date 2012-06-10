@@ -10,9 +10,15 @@ class Index(common.BaseHandler):
         logging.debug("hello, world!")
         logging.debug("session: %s" % self.session)
         
-        t_args = { 'session' : self.session}
-        path = os.path.join(os.path.dirname(__file__), "../static/templates/index.html")
-        logging.error("path: %s" % path)
+        self.session_inc_pageviews()
+        
+        t_args = { 'pageviews' : self.session['pageviews']}
         
         template = jinja_environment.get_template("index.html")
         self.response.out.write(template.render(t_args))
+        
+class AuthHandler(common.BaseHandler):
+    
+    def get(self, service):
+        pass
+    

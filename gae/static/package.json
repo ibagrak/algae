@@ -1,0 +1,22 @@
+{
+  "author": "Ilya Bagrak",
+  "name": "gae",
+  "description": "Algae Project Template",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "less": "~1.3.0"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "less": "./node_modules/.bin/lessc --compress ./css/less/bootstrap.less > css/bootstrap.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ibagrak/algae.git"
+  }
+}
