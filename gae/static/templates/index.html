@@ -43,21 +43,97 @@
     
     <p>
     {% if authed %}
-        You are logged in. <a href="#" id="logout_link">Logout</a>
+      Signed in as TBD. <a href="#" id="logout_link">Logout</a>
     {% else %}
-        You are not signed in. Sign in with:
-        <ul>
-            <li><a href="/oauth/forward/facebook">Facebook</a>
-            <li><a href="/oauth/forward/twitter">Twitter</a>
-            <li><a id="show_email_signup" href="#">Sign up</a> or <a id="show_email_signin" href="#">sign in</a> with email
-        </ul>
+      No one signed in. Sign in with:
+      <ul>
+        <li><a href="/oauth/forward/facebook">Facebook</a>
+        <li><a href="/oauth/forward/twitter">Twitter</a>
+        <li><a data-toggle="modal" href="#signup">Sign up</a> or <a data-toggle="modal" href="#signin">Sign in</a> with email
+      </ul>
     {% endif %}
+    
+    <div class="modal hide" id="signup">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Sign up with your email address</h3>
+      </div>
+    
+      <div class="modal-body">
+      <form id="signup_form" class="form-horizontal">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge required" id="username">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="email">Email address</label>
+            <div class="controls">
+              <input type="email" class="input-xlarge required email" id="email">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+              <input type="password" class="input-xlarge required" id="password">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      </div>
+      
+      <div class="modal-footer">
+        <a id="signup_btn" href="#" class="btn btn-primary">Sign Up</a>
+      </div>
+    </div>
+    
+    <div class="modal hide" id="signin">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Sign in</h3>
+      </div>
+    
+      <div class="modal-body">
+       <form class="form-horizontal">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge" id="username">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+              <input type="password" class="input-xlarge" id="password">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-primary">Sign In</a>
+      </div>
+    </div>
     
     <h1>RESTful API</h1>
     <p>Create widget
     
     <h1>LESS Stylesheets</h1>
-    <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. Modify <code>/gae/static/css/less/app.less</code> to change application-specific styles.
+    <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. 
+    <p>Modify <code>/gae/static/css/less/app.less</code> to change application-specific styles. Recompile styles by running 
+    <code>npm run-script less</code> from <code>/gae/static</code>
+    
+    <p>If <code>npm run-script less</code> command fails:
+    <ul>
+      <li>Install npm.
+      <li>Run <code>npm init</code>
+      <li>Accept all defaults (keep pressing Enter)
+      <li>Run <code>npm install less --save</code> to install LESS
+      <li>Run <code>npm run-script less</code> again. 
+    </ul>
     
     <h1>Session support</h1>
     

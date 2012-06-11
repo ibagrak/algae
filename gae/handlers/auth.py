@@ -5,6 +5,8 @@ Created on Jun 9, 2012
 '''
 import re
 import hashlib
+import urllib
+import logging
 
 from google.appengine.api import mail
 
@@ -13,7 +15,7 @@ import connectors
 import common
 import model
 
-class OathHandler(common.BaseHandler):
+class OauthHandler(common.BaseHandler):
     def get(self, step, service, **kwargs):
         if step == 'forward':
             if service == 'twitter':
@@ -60,30 +62,31 @@ class EmailAuthHandler(common.BaseAPIHandler):
                                          max_age = 315360000, # 10 years
                                          path = '/') 
                 
-                return ({'code': 200, 'message' : ''})
+                return common.get_error(200)
             elif not user.confirmed:
-                return ({'code': 404, 'message' : 'Email has not been confirmed. Check your inbox for email confirmation link!'})
+                return common.get_error(402, key = 'unconfirmed')
             else:
-                return ({'code': 404, 'message' : 'Invalid password.'})
+                return common.get_error(400, key = 'password')
         else:
-            return ({'code': 404, 'message' : 'Invalid email or password.'})
-        
-    def signup_email(self, **kwargs):
+            return common.get_error(400, key = 'email_password')
+    
+    @common.loghandler    
+    def signup_email(self, *args):
+        kwargs = self.request.GET
         if re.match(email_re, kwargs['email']):
             # check if this email address is in use
             user = model.User.get_user_from_email(kwargs['email'])
             if user: 
-                # there is a confirmed user
-                return ({'code' : 404, 'message' : 'There is already a user with this email address.'})
+                return common.get_error(402, key = 'duplicate')
             
             image_hash = hashlib.md5(kwargs['email']).hexdigest()
             
             # create user
-            user = model.User(nick = kwargs['nick'], 
-                              pic = ("http://www.gravatar.com/avatar/" + image_hash + "?d=http%3A%2F%2F%s.appspot.com%2Fstatic%2Fimages%2Fanonymous.png") % settings.APP_ID,
+            user = model.User(nick = kwargs['username'], 
+                              pic = "http://www.gravatar.com/avatar/" + image_hash + "?d=" + urllib.quote(settings.HOME_URL + '/static/images/anonymous.png'),
                               sid = self.session['id'],
                               email = kwargs['email'],
-                              pwhash = kwargs['pw_hash'],
+                              pwhash = kwargs['password'],
                               confirmed = False) 
             user.put()
             
@@ -98,10 +101,9 @@ Here is your email confirmation link: %s
 
 Thanks 
 
-""" % (kwargs['nick'], link))
-            result = ({'code' : 200, 'message' : ''})
+""" % (kwargs['username'], link))
+            logging.debug("sending out confirm link: %s", link)
+            return common.get_error(200)
         else: 
             # invalid email
-            result = ({'code' : 404, 'message' : 'Invalid email address. Please try again.'})
-            
-        return result
+            return common.get_error(400, key = 'email')

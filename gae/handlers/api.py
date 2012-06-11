@@ -7,12 +7,13 @@ import settings
 
 import common
 
-class APIHandler(common.BaseAPIHandler):
+class RPCHandler(common.BaseAPIHandler):
     
     def get(self, *args, **kwargs):
         pass
 
     
-    
+class RESTHandler(common.BaseRESTHandler):
+    pass
     
     

@@ -15,8 +15,9 @@
 
    ========================================================================== */
 
-@import url('bootstrap.css');
 @import url('h5bp.css');
+@import url('bootstrap.css');
+
 
 /* Uncomment if you want to use css instead of less for application-specific styles.
    If you uncomment be sure to remove @import "app.less" from the bottom of bootstrap.less */

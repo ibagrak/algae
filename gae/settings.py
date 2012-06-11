@@ -20,17 +20,31 @@ config['webapp2_extras.sessions'] = {
 # List of valid APIs
 APIS = frozenset({'test_api'})
 
-# Common errors
-INVALID_API_ERROR = 1
-GENERAL_ERROR     = 2
-SUCCESS           = 200
 
+#200 OK - Everything worked as expected.
+#400 Bad Request - Often missing a required parameter.
+#401 Unauthorized - No valid API key provided.
+#402 Request Failed - Parameters were valid but request failed.
+#404 Not Found - The requested item doesn't exist.
+#500, 502, 503, 504 Server errors - something went wrong on Stripe's end.
+
+API_CODES  = { 200 : 'Success', 
+               400 : {'email'       : 'Invalid email address', 
+                      'password'    : 'Invalid password', 
+                      'email_password' : 'Invalid email or password', 
+                      'unsupported' : 'Unsupported API'}, 
+               401 : 'Unauthorized', 
+               402 : {'unconfirmed' : 'Email has not been confirmed.', 
+                      'duplicate'   : 'User already exists.'},
+               404 : 'Does not exist', 
+               500 : {'generic'        : 'Server error', 
+                      'admin_required' : 'Please contact application administrator for support'}}
 
 # URLs
 ERROR_PATH = '/404.html'
 APP_ID = get_application_id()
 
-cookie = { 'id'        : 0,     #session id
-           'pageviews' : 0, 
-           'authed'    : False, 
-           'active'    : True }
+COOKIE_TEMPLATE = { 'id'        : 0,     #session id
+                    'pageviews' : 0, 
+                    'authed'    : False, 
+                    'active'    : True }

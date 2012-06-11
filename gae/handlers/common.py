@@ -12,6 +12,14 @@ from webapp2_extras import sessions, json
 import settings
 import model
 
+def get_error(code, key = None, message = None, *args):
+    if key: 
+        return {'code' : code, 'message' : settings.API_CODES[code][key]}
+    elif message:
+        return {'code' : code, 'message' : message}
+    else:
+        return {'code' : code, 'message' : settings.API_CODES[code]}
+    
 def logapi(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -55,19 +63,19 @@ class BaseHandler(webapp2.RequestHandler):
         finally:
             # Save all sessions.
             self.session_store.save_sessions(self.response)
-
+        
     @webapp2.cached_property
     def session(self):
-        # Returns a session using the default cookie key.
-        return self.session_store.get_session()
-    
-    def session_init(self):
-        # initialize default cookie values
-        for k, v in settings.cookie: 
-            self.session[k] = v
+        session = self.session_store.get_session()
         
-        # initialize random session ID
-        self.session['id'] = hashlib.md5(os.urandom(16)).hexdigest()
+        if len(session) == 0:
+            for k, v in settings.COOKIE_TEMPLATE.iteritems(): 
+                session[k] = v
+        
+            # initialize random session ID
+            session['id'] = hashlib.md5(os.urandom(16)).hexdigest()
+        # Returns a session using the default cookie key.
+        return session
         
     def session_regenerate_id(self):
         self.session['id'] = hashlib.md5(os.urandom(16)).hexdigest()
@@ -99,29 +107,28 @@ class BaseAPIHandler(BaseHandler):
             
         if debug_mode:
             lines = ''.join(traceback.format_exception(*sys.exc_info()))
-            result = ({'code': settings.GENERAL_ERROR, 'message': lines}) 
+            result = get_error(500, message = lines) 
         else:
-            result = ({'code': settings.GENERAL_ERROR, 'message': 'Please contact application administrator for support'})
+            result = get_error(500, key = 'admin_required') 
             
         self.response.clear()
         self.response.write(json.encode(result))
         
     def get(self, *args):
         action = self.request.get('action')
-        args = self.request.GET.to_dict()
-        args.remove('action')
+        args = self.request.GET
         
-        kvs = {}
-        kvs['user'] = model.User.get_user_from_session(self.session['id'])
+        args['user'] = model.User.get_user_from_session(self.session['id'])
         for arg in args:
-            kvs[arg] = self.request.get(arg)
+            args[arg] = self.request.get(arg)
         
-        if not action in settings.APIS:
-            result = ({'code': settings.INVALID_API_ERROR, 'message': 'Unsupported API action'})
+        if not 'action' in args or not args['action'] in settings.APIS:
+            result = get_error(400, key = 'unsupported')
         else:    
-            result = getattr(self, action)(**kvs)
+            result = getattr(self, action)(args)
         
         self.response.clear()
+        self.response.set_status(result['code'])
         self.response.write(json.encode(result))
 
     def put(self):
