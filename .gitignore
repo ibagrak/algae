@@ -2,3 +2,4 @@
 *.pyc
 *.sql3
 bulkloader-log-*
+gae/static/node_modules

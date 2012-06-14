@@ -77,7 +77,8 @@ class EmailAuthHandler(common.BaseAPIHandler):
             # check if this email address is in use
             user = model.User.get_user_from_email(kwargs['email'])
             if user: 
-                return common.get_error(402, key = 'duplicate')
+                self.prep_response(402, key = 'duplicate')
+                return
             
             image_hash = hashlib.md5(kwargs['email']).hexdigest()
             
@@ -102,8 +103,9 @@ Here is your email confirmation link: %s
 Thanks 
 
 """ % (kwargs['username'], link))
-            logging.debug("sending out confirm link: %s", link)
-            return common.get_error(200)
+            logging.info("sending out confirm link: %s", link)
+            self.prep_response(200)
         else: 
             # invalid email
-            return common.get_error(400, key = 'email')
+            self.prep_response(400, key = 'email')
+            

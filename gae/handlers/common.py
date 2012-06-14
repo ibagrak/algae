@@ -12,6 +12,9 @@ from webapp2_extras import sessions, json
 import settings
 import model
 
+def get_json_error(code, key = None, message = None, *args):
+    return json.encode(get_error(code, key = key, message = None, *args))
+
 def get_error(code, key = None, message = None, *args):
     if key: 
         return {'code' : code, 'message' : settings.API_CODES[code][key]}
@@ -90,13 +93,13 @@ class BaseHandler(webapp2.RequestHandler):
         self.session['authed'] = False
 
 class BaseAPIHandler(BaseHandler):
+    def prep_response(self, code, key = None, message = None, *args):
+        self.response.set_status(code)
+        self.response.write(get_json_error(code, key = key, message = message, *args))
     
     def handle_exception(self, exception, debug_mode):
         # Log the error.
         logging.exception(exception)
-
-        # Set a custom message.
-        self.response.write('An error occurred.')
 
         # If the exception is a HTTPException, use its error code.
         # Otherwise use a generic 500 error code.
