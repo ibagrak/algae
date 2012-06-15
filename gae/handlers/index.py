@@ -16,3 +16,4 @@ class Index(common.BaseHandler):
         
         template = jinja_environment.get_template("index.html")
         self.response.out.write(template.render(t_args))
+

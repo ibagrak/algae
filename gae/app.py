@@ -9,11 +9,14 @@ routes = [webapp2.Route('/',                  handler = index.Index),
           webapp2.Route('/email-signup',     handler = email_auth.EmailAuthHandler, handler_method="signup_email"),
           webapp2.Route('/oauth/<action>/<service>',handler = oauth.OauthHandler),
           webapp2.Route('/rest/<obj_t>/<id>', handler = common.BaseRESTHandler), 
-          webapp2.Route('/rpc',               handler = api.RPCHandler)]                             
+          webapp2.Route('/rpc',               handler = api.RPCHandler), 
+          ]                             
                                        
 application = webapp2.WSGIApplication(routes,   
                                       debug = settings.DEBUG,
                                       config = settings.config)
+
+application.error_handlers[404] = common.handle_404
 
 def main():
     application.run()

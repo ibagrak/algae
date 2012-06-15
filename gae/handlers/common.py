@@ -11,6 +11,7 @@ from webapp2_extras import sessions, json
 
 import settings
 import model
+from handlers import jinja_environment
 
 def get_json_error(code, key = None, message = None, *args):
     return json.encode(get_error(code, key = key, message = None, *args))
@@ -166,6 +167,11 @@ class BaseRESTHandler(BaseAPIHandler):
         cls = getattr(sys.modules['model'], obj_t)
         obj = cls.delete(identifier)
         return json.encode(obj)
+    
+def handle_404(request, response, exception):
+    template = jinja_environment.get_template("404.html")
+    response.set_status(404)
+    response.out.write(template.render())
     
 
     
