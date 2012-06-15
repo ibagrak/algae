@@ -2,140 +2,127 @@
 
 $(document).ready( function() {
     
-    $('#signup').on('hidden', function () {
-        // restore form and buttons to original state
+    // modal popup can be in 2 states: hidden or shown
+    // when shown: it can be in 3 states: 
+    // 1. start state - form shown and validating input, button active
+    // 2. submitting state - form deactivated, button deactivated (ajax request sent)
+    // 3. submitted state - form deactivated, button deactivated, result message shown (ajax response received)
+    // 
+    //      if submitted state result is error we can (1) close modal or (2) restore to state 1.
+    //      if submitted state result is success we can (1) close modal
+    
+    $('.tri-state').each(function () {
+        var modal = $(this);
+        var frm = $(this).find('form');
+        var btn = $(this).find('.submit');
+        var orig_btn_label = btn.html();
         var result = $(this).find('.form_result');
-        var form = $(this).find('form');
-        var btn = $('#signup_btn').removeClass('restore').addClass('submit');
+        var action = frm.attr('name');
         
-        form.find(':input').removeAttr('disabled');
-        form.find(':input').val('');
-        form.validate().resetForm();
-        
-        btn.html('Sign up');
-        btn.removeAttr('disabled');
-        
-        result.hide(); 
-        form.show();
-        btn.show();
-    });
-      
-    $('#signup_form').validate({
-        errorClass:     "error",
-        errorElement:   "span", // class='help-inline'
-        highlight: function(element, errorClass, validClass) {
-            if (element.type === 'radio') {
-                this.findByName(element.name).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
-            } else {
-                $(element).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
-            }
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            if (element.type === 'radio') {
-                this.findByName(element.name).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
-            } else {
-                $(element).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
-            }
-        }
-    });
-    
-    $('.submit').live('click', function() {
-        var kvs = {}
-        if ($('#signup_form').validate().form()) {
-            $('#signup_form').find(":input").each(function() {
-                if ($(this).attr('type') == 'password') {
-                    kvs[$(this).attr('id')] = MD5($(this).val())
-                } else {
-                    kvs[$(this).attr('id')] = $(this).val()
-                }
-            });
+        // restore state when modal is hidden
+        $(this).on('hidden', function () {    
+            var result = $(this).find('.form_result');
+                  
+            frm.find(':input').removeAttr('disabled');
+            frm.find(':input').val('');
+            frm.validate().resetForm(); // reset validation state
             
-            // Disable form
-            $('#signup_form').find(':input').attr('disabled', '');
+            btn.removeClass('restore').addClass('submit');
+            btn.html(orig_btn_label);
+            btn.removeAttr('disabled');
             
-            // Disable button
-            var btn = $(this);
-            btn.attr('disabled', '');
-            btn.html('Sending...');
-            
-            $.ajax({
-                type: 'GET',
-                url: "/email-signup",
-                data: kvs,
-            }).done(function(data, code, jqxhr) {
-                var data = $.parseJSON(data);
-                var code = data['code'];
-                var message = data['message'];
+            result.hide(); 
+            frm.show();
+            btn.show();
+        });
+          
+        // submit button callback
+        $('.submit').live('click', function() {
+            var kvs = {}
+            if (frm.validate().form()) {
+                frm.find(":input").each(function() {
+                    if ($(this).attr('type') == 'password') {
+                        kvs[$(this).attr('id')] = MD5($(this).val());
+                    } else {
+                        kvs[$(this).attr('id')] = $(this).val();
+                    }
+                });
                 
-                if (code == 200) { // success
-                    // hide form & show
-                    btn.parents('.modal').find('.form_result').html('Success!');
-                    btn.parents('.modal').find('form').hide();
-                    btn.parents('.modal').find('.form_result').show();
+                // Disable form
+                frm.find(':input').attr('disabled', '');
+                
+                // Disable button
+                btn.attr('disabled', '');
+                btn.html('Sending...');
+                
+                $.ajax({
+                    type: 'GET',
+                    url: '/' + action,
+                    data: kvs,
+                }).done(function(data, code, jqxhr) {
+                    var data = $.parseJSON(data);
+                    var code = data['code'];
+                    var message = data['message'];
                     
-                    btn.hide();
+                    if (code == 200) { // success
+                        // hide form & show
+                        result.html('Success!');
+                        frm.hide();
+                        result.show();
+                        
+                        btn.hide();
+                    } else {
+                        // should never happen (HTTP error code always matches JSON 'code')
+                    }
+                }).fail(function(jqxhr, code, exception) {
+                    // TODO: Error handling
+                    var data = $.parseJSON(jqxhr.responseText);
+                    var code = data['code'];
+                    var message = data['message'];
+                    
+                    result.html('So sorry! ' + message);
+                    frm.hide();
+                    result.show();
+                    
+                    btn.removeAttr('disabled');
+                    btn.html('Try again');
+                    btn.removeClass('submit').addClass('restore');
+                }); 
+            }
+        });
+        
+        // restore form after error message
+        $('.restore').live('click', function() {
+            btn.removeClass('restore').addClass('submit');
+                    
+            // enable form  
+            frm.find(':input').removeAttr('disabled');
+            frm.find(':input').val('');
+            frm.validate().resetForm();
+                    
+            result.hide(); 
+            frm.show();
+            $(this).html(orig_btn_label)
+        });
+        
+        // setup validation to play well with default Twitter bootstrap classes
+        frm.validate({
+            errorClass:     "error",
+            errorElement:   "span", // class='help-inline'
+            highlight: function(element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
                 } else {
-                    // should never happen (HTTP error code always matches JSON 'code')
+                    $(element).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
                 }
-            }).fail(function(jqxhr, code, exception) {
-                // TODO: Error handling
-                var data = $.parseJSON(jqxhr.responseText);
-                var code = data['code'];
-                var message = data['message'];
-                
-                btn.parents('.modal').find('.form_result').html('So sorry! ' + message);
-                btn.parents('.modal').find('form').hide();
-                btn.parents('.modal').find('.form_result').show();
-                
-                btn.removeAttr('disabled');
-                btn.html('Try again');
-                btn.removeClass('submit').addClass('restore');
-            }); 
-        }
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
+                } else {
+                    $(element).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
+                }
+            }
+        });
     });
-    
-    $('.restore').live('click', function() {
-        $(this).removeClass('restore').addClass('submit');
-        
-        // enable form
-        var result = $(this).parents('.modal').find('.form_result');
-        var form = $(this).parents('.modal').find('form');
-        form.find(':input').removeAttr('disabled');
-        form.find(':input').val('');
-        form.validate().resetForm();
-        
-        result.hide(); 
-        form.show();
-        $(this).html('Sign up')
-    });
-    
-    
-//    $.ajax({
-//        type: 'POST',
-//        url: "/api/v1/pitch" + window.location.pathname,
-//        data: kvs,
-//        dataType: "json",
-//        contentType: "application/json; charset=utf-8"
-//    }).done(function(data, code, jqxhr) {
-//        var code = data['code'];
-//        var message = data['message'];
-//        var feedback; 
-//        
-//        if (code == PARTIALLY_SAVED || code == SAVED) {
-//            feedback = 'All changes saved<span id="saved_ago"></span>.'
-//        } else {
-//            feedback = 'An unknown error has occured.'
-//        }
-//        
-//        if ($('.input-overflown').length > 0) {
-//            feedback = feedback + ' Be sure to correct other fields.';
-//        }
-//        
-//        $('.word_limited, .char_limited').removeClass('input-changed');
-//        setTimeout(function() {$('#form_status').html(feedback);}, 400);
-//        
-//    }).fail(function(jqxhr, code, exception) {
-//        // TODO: Error handling
-//        $('#form_status').html('A ' + jqxhr.status + ' error occured while saving.');
-//    });
 });

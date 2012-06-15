@@ -7,8 +7,8 @@ import logging
 class Index(common.BaseHandler):
     
     def get(self, *args, **kwargs):
-        logging.debug("hello, world!")
-        logging.debug("session: %s" % self.session)
+        logging.info("hello, world!")
+        logging.info("session: %s" % self.session)
         
         self.session_inc_pageviews()
         

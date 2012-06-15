@@ -9,42 +9,47 @@ import urllib
 import logging
 
 from google.appengine.api import mail
+from google.appengine.ext import db
+
+from handlers import jinja_environment
 
 import settings
 import connectors
 import common
 import model
 
-class OauthHandler(common.BaseHandler):
-    def get(self, step, service, **kwargs):
-        if step == 'forward':
-            if service == 'twitter':
-                pass #TODO
-            elif service == 'facebook':
-                pass #TODO
-            else:
-                return self.redirect(settings.ERROR_PATH)
-        elif step == 'confirm':
-            if service == 'twitter':
-                pass #TODO
-            elif service == 'facebook':
-                pass #TODO
-            else:
-                return self.redirect(settings.ERROR_PATH)
-
 email_re = re.compile(
     r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"  # dot-atom
     r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-011\013\014\016-\177])*"' # quoted-string
     r')@(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?$', re.IGNORECASE)  # domain
 
+class EmailConfirm(common.BaseHandler):
+    def get(self, *args, **kwargs):
+        kwargs = self.request.GET
+        
+        user = model.User.get(db.Key(kwargs['key']))
+        if user: 
+            user.confirmed = True
+            user.put()
+            t_args = { 'confirm_status' : 'Email confirmed.'}
+        else: 
+            t_args = { 'confirm_status' : 'Email not confirmed.'}
+            
+        self.session_inc_pageviews()
+        t_args.update({ 'pageviews' : self.session['pageviews']})
+        
+        template = jinja_environment.get_template("email_confirm.html")
+        self.response.out.write(template.render(t_args))
+        
 # email authentication is handled through form submission
 #   -> /email/action=signin_email&email=<>&pw_hash=<>           : email signin  
 #   <- json response   
 #   -> /email/action=signup_email&email=<>&pw_hash=<>&nick=<>   : email signup
 #   <- json response
 class EmailAuthHandler(common.BaseAPIHandler):
-
-    def signin_email(self, **kwargs):
+        
+    def signin_email(self, *args):
+        kwargs = self.request.GET
         user = model.User.get_user_from_email(kwargs['email'])
     
         if user:
@@ -62,13 +67,13 @@ class EmailAuthHandler(common.BaseAPIHandler):
                                          max_age = 315360000, # 10 years
                                          path = '/') 
                 
-                return common.get_error(200)
+                return self.prep_response(200)
             elif not user.confirmed:
-                return common.get_error(402, key = 'unconfirmed')
+                return self.prep_response(402, key = 'unconfirmed')
             else:
-                return common.get_error(400, key = 'password')
+                return self.prep_response(400, key = 'password')
         else:
-            return common.get_error(400, key = 'email_password')
+            return self.prep_response(400, key = 'email_password')
     
     @common.loghandler    
     def signup_email(self, *args):
@@ -91,7 +96,7 @@ class EmailAuthHandler(common.BaseAPIHandler):
                               confirmed = False) 
             user.put()
             
-            link = ("http://%s.appspot.com/email_confirmation/" % settings.APP_ID) + str(user.key())    
+            link = "http://%s.appspot.com/email-confirm?key=%s" % (settings.APP_ID, str(user.key()))  
             mail.send_mail(sender = "%s Notifier <noreply@%s.appspot.com>" % (settings.APP_ID, settings.APP_ID), 
                            to = kwargs['email'],
                            subject = "%s Email Confirmation" % settings.APP_ID, 
