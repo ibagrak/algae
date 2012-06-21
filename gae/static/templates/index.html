@@ -9,13 +9,14 @@
     <h1>User management</h1>
     
     <p>
-    {% if authed %}
-      Signed in as TBD. <a href="#" id="logout_link">Logout</a>
+    {% if logged_in %}
+      <p>Signed in as <img src = "{{ current_user.pic }}"> at <a href="{{ current_user.profile }}">{{ current_user.username }}</a>.
+      <p><a href="/logout">Logout</a>
     {% else %}
       No one signed in. Sign in with:
       <ul>
-        <li><a href="/oauth/forward/facebook">Facebook</a>
-        <li><a href="/oauth/forward/twitter">Twitter</a>
+        <li><a href="/auth/facebook">Facebook</a>
+        <li><a href="/auth/twitter">Twitter</a>
         <li><a data-toggle="modal" href="#signup">Sign up</a> or <a data-toggle="modal" href="#signin">Sign in</a> with email
       </ul>
     {% endif %}
@@ -42,9 +43,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="password">Password</label>
+              <label class="control-label" for="password_raw">Password</label>
               <div class="controls">
-                <input type="password" class="input-xlarge required" id="password">
+                <input type="password" class="input-xlarge required" id="password_raw">
               </div>
             </div>
           </fieldset>

@@ -3,3 +3,4 @@
 *.sql3
 bulkloader-log-*
 gae/static/node_modules
+gae/secrets.py

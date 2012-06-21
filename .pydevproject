@@ -5,9 +5,12 @@
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python 2.7</pydev_property>
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
-<path>/algae/gae/connectors</path>
 <path>/algae/gae/handlers</path>
 <path>/algae/gae</path>
+<path>/algae/gae/lib</path>
+<path>/algae/gae/lib/httplib2</path>
+<path>/algae/gae/lib/oauth2</path>
+<path>/algae/gae/lib/simpleauth</path>
 </pydev_pathproperty>
 <pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
 <path>${GOOGLE_APP_ENGINE}</path>

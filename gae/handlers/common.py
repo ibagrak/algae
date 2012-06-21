@@ -7,7 +7,8 @@ import os
 from functools import wraps
 
 import webapp2
-from webapp2_extras import sessions, json
+from webapp2_extras import sessions, json, auth
+from jinja2.runtime import TemplateNotFound
 
 import settings
 import model
@@ -55,7 +56,7 @@ class BaseHandler(webapp2.RequestHandler):
             self.response.clear()
             self.response.write('<pre>%s</pre>' % (cgi.escape(lines, quote=True)))
         else:
-            self.redirect(settings.ERROR_PATH)
+            self.abort(404)
             
     def dispatch(self):
         # Get a session store for this request.
@@ -80,6 +81,21 @@ class BaseHandler(webapp2.RequestHandler):
             session['id'] = hashlib.md5(os.urandom(16)).hexdigest()
         # Returns a session using the default cookie key.
         return session
+    
+    @webapp2.cached_property
+    def auth(self):
+        return auth.get_auth()
+  
+    @webapp2.cached_property
+    def current_user(self):
+        """Returns currently logged in user"""
+        user_dict = self.auth.get_user_by_session()
+        return self.auth.store.user_model.get_by_id(user_dict['user_id'])
+      
+    @webapp2.cached_property
+    def logged_in(self):
+        """Returns true if a user is currently logged in, false otherwise"""
+        return self.auth.get_user_by_session() is not None
         
     def session_regenerate_id(self):
         self.session['id'] = hashlib.md5(os.urandom(16)).hexdigest()
@@ -92,9 +108,29 @@ class BaseHandler(webapp2.RequestHandler):
     
     def session_logout(self):
         self.session['authed'] = False
+    
+    def prep_html_response(self, template_name, template_vars={}):
+        # Preset values for the template
+        values = {
+          'url_for'      : self.uri_for,
+          'logged_in'    : self.logged_in,
+          'current_user' : self.current_user if self.logged_in else None
+        }
+        
+        # Add manually supplied template values
+        values.update(template_vars)
+        
+        logging.info("session: %s" % self.session)
+        logging.info("template vars: %s" % values)
+        
+        try:
+            template = jinja_environment.get_template(template_name)
+            self.response.out.write(template.render(**values))
+        except TemplateNotFound:
+            self.abort(404)
 
 class BaseAPIHandler(BaseHandler):
-    def prep_response(self, code, key = None, message = None, *args):
+    def prep_json_response(self, code, key = None, message = None, *args):
         self.response.set_status(code)
         self.response.write(get_json_error(code, key = key, message = message, *args))
     

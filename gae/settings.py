@@ -1,25 +1,28 @@
 import os
 from google.appengine.api.app_identity import get_default_version_hostname, get_application_id
 
+from secrets import SESSION_KEY
+
 if 'SERVER_SOFTWARE' in os.environ:
     DEBUG = os.environ['SERVER_SOFTWARE'].startswith('Dev')
     HOME_URL = 'http://localhost'
 else:
     DEBUG = False
-    HOME_URL = 'http://' + get_default_version_hostname()
+    HOME_URL = 'http://' + get_default_version_hostname() + get_
 
 # webapp2 config
-config = {}
-config['webapp2_extras.sessions'] = {
-    # Randomize cookie key with os.urandom(64). Do it offline and copy the string here. 
-    'secret_key': 'l\xd5q\xa1t\x01\xbc\x9e\xf2\xfa\xaf\x1f\xfe\x06\xcey\x08\xfc\xda\xe9"\xa6@#E^}\xf3F.\xeb\xd7\x82\x1bh\xd5\xea\xcf-\x19\xdb\xa2\xd6N\xae\x11\x13\xff!\xe24\xf6\x1c\x00\x1f\xd0\xaf\xcf\xf1\xbb\x04\xe7u;',
+app_config = {
+  'webapp2_extras.sessions': {
+    'cookie_name': '_simpleauth_sess',
+    'secret_key': SESSION_KEY
+  },
+  'webapp2_extras.auth': {
+    'user_attributes': []
+  }
 }
-
-
 
 # List of valid APIs
 APIS = frozenset({'test_api'})
-
 
 #200 OK - Everything worked as expected.
 #400 Bad Request - Often missing a required parameter.
@@ -32,7 +35,8 @@ API_CODES  = { 200 : 'Success',
                400 : {'email'       : 'Invalid email address', 
                       'password'    : 'Invalid password', 
                       'email_password' : 'Invalid email or password', 
-                      'unsupported' : 'Unsupported API'}, 
+                      'unsupported' : 'Unsupported API', 
+                      'missing'     : 'Not all parameter present'}, 
                401 : 'Unauthorized', 
                402 : {'unconfirmed' : 'Email has not been confirmed.', 
                       'duplicate'   : 'User already exists.'},
@@ -41,7 +45,6 @@ API_CODES  = { 200 : 'Success',
                       'admin_required' : 'Please contact application administrator for support'}}
 
 # URLs
-ERROR_PATH = '/404.html'
 APP_ID = get_application_id()
 
 COOKIE_TEMPLATE = { 'id'        : 0,     #session id

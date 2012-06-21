@@ -65,12 +65,17 @@ $(document).ready( function() {
                     var message = data['message'];
                     
                     if (code == 200) { // success
-                        // hide form & show
-                        result.html('Success!');
-                        frm.hide();
-                        result.show();
-                        
-                        btn.hide();
+                        // if we were trying to signin reload with new session on success
+                        if (action == 'email-signin') {
+                            location.reload();
+                        } else {
+                            // hide form & show result
+                            result.html('Success!');
+                            frm.hide();
+                            result.show();
+                            
+                            btn.hide();
+                        }
                     } else {
                         // should never happen (HTTP error code always matches JSON 'code')
                     }
