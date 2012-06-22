@@ -15,12 +15,12 @@ class AuthHandler(common.BaseHandler, simpleauth.SimpleAuthHandler):
     USER_ATTRS = {
       'google'   : {
         'picture': 'pic',
-        'name'   : 'nick',
+        'name'   : 'username',
         'link'   : 'profile'
       },
       'facebook' : {
         'id'     : lambda id: ('pic', 'http://graph.facebook.com/{0}/picture?type=large'.format(id)),
-        'name'   : 'name',
+        'name'   : 'username',
         'link'   : 'profile'
       },
 #      'windows_live': {
