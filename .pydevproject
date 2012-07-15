@@ -7,10 +7,10 @@
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
 <path>/algae/gae/handlers</path>
 <path>/algae/gae</path>
-<path>/algae/gae/lib</path>
-<path>/algae/gae/lib/httplib2</path>
-<path>/algae/gae/lib/oauth2</path>
-<path>/algae/gae/lib/simpleauth</path>
+<path>/algae/gae/libs</path>
+<path>/algae/gae/libs/httplib2</path>
+<path>/algae/gae/libs/oauth2</path>
+<path>/algae/gae/libs/simpleauth</path>
 </pydev_pathproperty>
 <pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
 <path>${GOOGLE_APP_ENGINE}</path>

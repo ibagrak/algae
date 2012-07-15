@@ -29,7 +29,7 @@ By Gosh, it's on Github.
 
 ## Project information
 
-* Still wondering what this is all about? Contact the [author](http://twitter.com/ibagrak)
+Still wondering what this is all about? Contact the [author](http://twitter.com/ibagrak)
 
 ## License
 
@@ -38,10 +38,8 @@ By Gosh, it's on Github.
 * jQuery: MIT/GPL license
 * Modernizr: MIT/BSD license
 * Normalize.css: Public Domain
-* gae-sessions: Apache License Version 2.0
-* facebook.py: Apache License Version 2.0 (author: Facebook) 
-* oath.py: Unrestricted (author: Mike Knapp)
+* simpleauth: MIT
 
 ### Everything else:
 
-The Unlicense (aka: public domain)
+Everything else is licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).

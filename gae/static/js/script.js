@@ -20,7 +20,7 @@ $(document).ready( function() {
         var action = frm.attr('name');
         
         // restore state when modal is hidden
-        $(this).on('hidden', function () {    
+        modal.on('hidden', function () {    
             var result = $(this).find('.form_result');
                   
             frm.find(':input').removeAttr('disabled');
@@ -37,77 +37,78 @@ $(document).ready( function() {
         });
           
         // submit button callback
-        $('.submit').live('click', function() {
-            var kvs = {}
-            if (frm.validate().form()) {
-                frm.find(":input").each(function() {
-                    if ($(this).attr('type') == 'password') {
-                        kvs[$(this).attr('id')] = MD5($(this).val());
-                    } else {
-                        kvs[$(this).attr('id')] = $(this).val();
-                    }
-                });
+        btn.live('click', function() {
+            // restore form after error message
+            if (btn.hasClass('restore')) {
+                btn.removeClass('restore');
                 
-                // Disable form
-                frm.find(':input').attr('disabled', '');
-                
-                // Disable button
-                btn.attr('disabled', '');
-                btn.html('Sending...');
-                
-                $.ajax({
-                    type: 'GET',
-                    url: '/' + action,
-                    data: kvs,
-                }).done(function(data, code, jqxhr) {
-                    var data = $.parseJSON(data);
-                    var code = data['code'];
-                    var message = data['message'];
-                    
-                    if (code == 200) { // success
-                        // if we were trying to signin reload with new session on success
-                        if (action == 'email-signin') {
-                            location.reload();
+                // enable form  
+                frm.find(':input').removeAttr('disabled');
+                frm.find(':input').val('');
+                frm.validate().resetForm();
+                        
+                result.hide(); 
+                frm.show();
+                $(this).html(orig_btn_label)
+            // submit button normally
+            } else {
+                var kvs = {}
+                if (frm.validate().form()) {
+                    frm.find(":input").each(function() {
+                        if ($(this).attr('type') == 'password') {
+                            kvs[$(this).attr('id')] = MD5($(this).val());
                         } else {
-                            // hide form & show result
-                            result.html('Success!');
-                            frm.hide();
-                            result.show();
-                            
-                            btn.hide();
+                            kvs[$(this).attr('id')] = $(this).val();
                         }
-                    } else {
-                        // should never happen (HTTP error code always matches JSON 'code')
-                    }
-                }).fail(function(jqxhr, code, exception) {
-                    // TODO: Error handling
-                    var data = $.parseJSON(jqxhr.responseText);
-                    var code = data['code'];
-                    var message = data['message'];
+                    });
                     
-                    result.html('So sorry! ' + message);
-                    frm.hide();
-                    result.show();
+                    // Disable form
+                    frm.find(':input').attr('disabled', '');
                     
-                    btn.removeAttr('disabled');
-                    btn.html('Try again');
-                    btn.removeClass('submit').addClass('restore');
-                }); 
-            }
-        });
-        
-        // restore form after error message
-        $('.restore').live('click', function() {
-            btn.removeClass('restore').addClass('submit');
+                    // Disable button
+                    btn.attr('disabled', '');
+                    btn.html('Sending...');
                     
-            // enable form  
-            frm.find(':input').removeAttr('disabled');
-            frm.find(':input').val('');
-            frm.validate().resetForm();
-                    
-            result.hide(); 
-            frm.show();
-            $(this).html(orig_btn_label)
+                    $.ajax({
+                        type: 'GET',
+                        url: '/' + action,
+                        data: kvs,
+                    }).done(function(data, code, jqxhr) {
+                        var data = $.parseJSON(data);
+                        var code = data['code'];
+                        var message = data['message'];
+                        
+                        if (code == 200) { // success
+                            // if we were trying to signin reload with new session on success
+                            if (action == 'email-signin') {
+                                location.reload();
+                            } else {
+                                // hide form & show result
+                                result.html('Success!');
+                                frm.hide();
+                                result.show();
+                                
+                                btn.hide();
+                            }
+                        } else {
+                            // should never happen (HTTP error code always matches JSON 'code')
+                        }
+                    }).fail(function(jqxhr, code, exception) {
+                        // TODO: Error handling
+                        var data = $.parseJSON(jqxhr.responseText);
+                        var code = data['code'];
+                        var message = data['message'];
+                        
+                        result.html('So sorry! ' + message);
+                        frm.hide();
+                        result.show();  
+                        
+                        btn.removeAttr('disabled');
+                        btn.html('Try again');
+                        btn.addClass('restore');
+                    }); 
+                }
+            }  
         });
         
         // setup validation to play well with default Twitter bootstrap classes

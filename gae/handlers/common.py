@@ -97,17 +97,8 @@ class BaseHandler(webapp2.RequestHandler):
         """Returns true if a user is currently logged in, false otherwise"""
         return self.auth.get_user_by_session() is not None
         
-    def session_regenerate_id(self):
-        self.session['id'] = hashlib.md5(os.urandom(16)).hexdigest()
-        
     def session_inc_pageviews(self):
         self.session['pageviews'] = self.session['pageviews'] + 1
-    
-    def session_login(self):
-        self.session['authed'] = True
-    
-    def session_logout(self):
-        self.session['authed'] = False
     
     def prep_html_response(self, template_name, template_vars={}):
         # Preset values for the template
@@ -130,10 +121,7 @@ class BaseHandler(webapp2.RequestHandler):
             self.abort(404)
 
 class BaseAPIHandler(BaseHandler):
-    def prep_json_response(self, code, key = None, message = None, *args):
-        self.response.set_status(code)
-        self.response.write(get_json_error(code, key = key, message = message, *args))
-    
+
     def handle_exception(self, exception, debug_mode):
         # Log the error.
         logging.exception(exception)
@@ -179,6 +167,10 @@ class BaseAPIHandler(BaseHandler):
     
     def delete(self):
         pass
+    
+    def prep_json_response(self, code, key = None, message = None, *args):
+        self.response.set_status(code)
+        self.response.write(get_json_error(code, key = key, message = message, *args))
     
 class BaseRESTHandler(BaseAPIHandler):
         
