@@ -12,8 +12,9 @@ It comes chock-full of goodies things you'd otherwise miss:
     * Facebook authentication
     * Email signups
 * Simple API & RESTful API code bootstrap
+* Integrated jQuery form validation
 * Basic testing infrastructure
-* Etc
+* and more..
 
 Finally, an App Engine template to write home about.
 

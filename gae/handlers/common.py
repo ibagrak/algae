@@ -4,9 +4,12 @@ import sys
 import traceback
 import hashlib
 import os
+import datetime, time
+
 from functools import wraps
 
 import webapp2
+from google.appengine.ext import db
 from webapp2_extras import sessions, json, auth
 from jinja2.runtime import TemplateNotFound
 
@@ -15,13 +18,14 @@ import model
 from handlers import jinja_environment
 
 def get_json_error(code, key = None, message = None, *args):
-    return json.encode(get_error(code, key = key, message = None, *args))
+    logging.error(json.encode(get_error(code, key = key, message = message, *args)))
+    return json.encode(get_error(code, key = key, message = message, *args))
 
 def get_error(code, key = None, message = None, *args):
-    if key: 
-        return {'code' : code, 'message' : settings.API_CODES[code][key]}
-    elif message:
+    if message:
         return {'code' : code, 'message' : message}
+    elif key: 
+        return {'code' : code, 'message' : settings.API_CODES[code][key]}
     else:
         return {'code' : code, 'message' : settings.API_CODES[code]}
     
@@ -171,24 +175,59 @@ class BaseAPIHandler(BaseHandler):
     def prep_json_response(self, code, key = None, message = None, *args):
         self.response.set_status(code)
         self.response.write(get_json_error(code, key = key, message = message, *args))
-    
+
+SIMPLE_TYPES = (int, long, float, bool, dict, basestring, list)
+
+def to_dict(model):
+    output = {}
+
+    for key, prop in model.properties().iteritems():
+        value = getattr(model, key)
+
+        if value is None or isinstance(value, SIMPLE_TYPES):
+            output[key] = value
+        elif isinstance(value, datetime.date):
+            # Convert date/datetime to ms-since-epoch ("new Date()").
+            ms = time.mktime(value.utctimetuple())
+            ms += getattr(value, 'microseconds', 0) / 1000
+            output[key] = int(ms)
+        elif isinstance(value, db.GeoPt):
+            output[key] = {'lat': value.lat, 'lon': value.lon}
+        elif isinstance(value, db.Model):
+            output[key] = to_dict(value)
+        else:
+            raise ValueError('cannot encode ' + repr(prop))
+
+    output['id'] = model.key().id()
+    return output
+
 class BaseRESTHandler(BaseAPIHandler):
+    
+    def put(self, obj_t, *args):
+        logging.error("put contents: %s", self.request.body)
+        kvs = json.decode(self.request.body)
         
+        # find model class
+        cls = getattr(sys.modules['model'], obj_t)
+        
+        # dispatch put to that model class. all model classes need to a subclass model.RESTModel
+        obj = to_dict(cls.put(kvs))
+        
+        return self.prep_json_response(200, message = obj)
+
     def get(self, obj_t, identifier, *args):
         cls = getattr(sys.modules['model'], obj_t)
-        obj = cls.get(identifier)
-        return json.encode(obj)
-    
-    def put(self, obj_t, identifier, *args):
-        kvs = json.decode(self.request.body)
-        cls = getattr(sys.modules['model'], obj_t, kvs)
-        obj = cls.put(identifier)
-        return json.encode(obj)
-    
+        
+        # dispatch put to that model class. all model classes need to a subclass model.RESTModel
+        obj = to_dict(cls.get(int(identifier)))
+        
+        return self.prep_json_response(200, message = obj)
+
     def post(self, obj_t, identifier, *args):
+        logging.error("post contents: %s", self.request.body)
         kvs = json.decode(self.request.body)
-        cls = getattr(sys.modules['model'], obj_t, kvs)
-        obj = cls.post(identifier)
+        cls = getattr(sys.modules['model'], obj_t)
+        obj = cls.post(identifier, kvs)
         return json.encode(obj)
     
     def delete(self, obj_t, identifier, *args):

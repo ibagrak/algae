@@ -131,4 +131,116 @@ $(document).ready( function() {
             }
         });
     });
+    
+    $("#create").validate({
+        errorClass:      "error",
+        errorElement:    "span", 
+        
+        highlight: function(element, errorClass, validClass) {
+            if (element.type === 'radio') {
+                this.findByName(element.name).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
+            } else {
+                $(element).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
+            }
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            if (element.type === 'radio') {
+                this.findByName(element.name).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
+            } else {
+                $(element).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
+            }
+        }
+    });
+    
+    $("#create_btn").click(function() {
+        var btn = $(this);
+        var frm = $(this).parents('form');
+        var result = $(this).siblings('.form_result');
+        
+        var kvs = {}
+        if (frm.validate().form()) {
+            frm.find(":input").each(function() {
+                if ($(this).attr('type') == 'password') {
+                    kvs[$(this).attr('id')] = MD5($(this).val());
+                } else {
+                    kvs[$(this).attr('id')] = $(this).val();
+                }
+            });
+            
+            // Disable form
+            frm.find(':input').attr('disabled', '');
+            
+            // Disable button
+            btn.attr('disabled', '');
+            
+            var kvs = JSON.stringify(kvs);
+            
+            $.ajax({
+                type: 'PUT',
+                url: '/rest/Widgets',
+                data: kvs,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8"
+            }).done(function(data, code, jqxhr) {
+                var code = data['code'];
+                var message = data['message'];
+                
+                // Restore
+                frm.find(':input').removeAttr('disabled');
+                frm.find(':input').val('');
+                btn.removeAttr('disabled');
+                
+                if (code == 200) { // success                   
+                    var id = data['message']['id'];
+                    
+                    $.ajax({
+                        type: 'GET',
+                        url: '/rest/Widget/' + id,
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8"
+                    }).done(function(data, code, jqxhr) {
+                        var code = data['code'];
+                        var message = data['message'];
+                        
+                        if (code == 200) {  
+                            // hide form & show result
+                            result.html('Success!');
+                            result.show();
+                            result.fadeOut('slow');
+                            
+                            $("#entity-row").tmpl([{id : data['message']['id'], obj : JSON.stringify(data['message'])}]).prependTo("#entities > tbody");
+                        } else {
+                            // should never happen (HTTP error code always matches JSON 'code')
+                            result.html('Couldn\'t retrieve created entity!');
+                            result.show();
+                            result.fadeOut('slow');
+                        }                  
+                    }).fail(function(jqxhr, code, exception) {
+                        // should never happen (HTTP error code always matches JSON 'code')
+                        result.html('Couldn\'t retrieve created entity!');
+                        result.show();
+                        result.fadeOut('slow');
+                    });
+                } else {
+                    // should never happen (HTTP error code always matches JSON 'code')
+                    result.html('Error!');
+                    result.show();
+                    result.fadeOut('slow');
+                }
+            }).fail(function(jqxhr, code, exception) {
+                // TODO: Error handling
+                var data = $.parseJSON(jqxhr.responseText);
+                var code = data['code'];
+                var message = data['message'];
+                
+                // Restore
+                frm.find(':input').removeAttr('disabled');
+                frm.find(':input').val('');
+                btn.removeAttr('disabled');
+                
+                result.html('So sorry! ' + message);
+                result.show();  
+            }); 
+        }
+    });
 });

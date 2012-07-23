@@ -712,5 +712,4 @@ a.label:hover,a.badge:hover{color:#ffffff;text-decoration:none;cursor:pointer;}
 .show{display:block;}
 .invisible{visibility:hidden;}
 .app-less-verify{color:#26979f;}
-a:visited{color:#0088cc;}
-a:hover{color:#005580;}
+label{cursor:default;}

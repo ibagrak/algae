@@ -18,7 +18,8 @@ routes = [webapp2.Route('/',                  handler = index.Index),
           webapp2.Route('/logout', handler='handlers.oauth.AuthHandler:logout', name='logout'),
           
           # REST API
-          webapp2.Route('/rest/<obj_t>/<id>', handler = common.BaseRESTHandler), 
+          webapp2.Route('/rest/<obj_t>s', methods = ['PUT'], handler = common.BaseRESTHandler),
+          webapp2.Route('/rest/<obj_t>/<identifier:\d+>', methods = ['GET', 'POST', 'DELETE'], handler = common.BaseRESTHandler), 
           
           # RPC API
           webapp2.Route('/rpc',               handler = api.RPCHandler), 

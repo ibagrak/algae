@@ -8,7 +8,7 @@ if 'SERVER_SOFTWARE' in os.environ:
     HOME_URL = 'http://localhost'
 else:
     DEBUG = False
-    HOME_URL = 'http://' + get_default_version_hostname() + get_
+    HOME_URL = 'http://' + get_default_version_hostname()
 
 # webapp2 config
 app_config = {
@@ -51,3 +51,6 @@ COOKIE_TEMPLATE = { 'id'        : 0,     #session id
                     'pageviews' : 0, 
                     'authed'    : False, 
                     'active'    : True }
+
+# Model that will be used to demo ReSTful APIs
+SAMPLE_ENTITY = 'Widget'

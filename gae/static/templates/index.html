@@ -1,10 +1,11 @@
 {% extends "layout.html" %}
 
 {% block scripts %}
-
+  
 {% endblock %}
 
 {% block content %}
+    
     
     <h1>User management</h1>
     
@@ -89,7 +90,69 @@
     </div>
     
     <h1>RESTful API</h1>
-    <p>Create widget
+    <p>The create form and the list of entities below are automatically generated from model definitions in <code>/gae/model.py</code>. 
+    You can change <code>SAMPLE_ENTITY</code> variable to select the model to manipulate.
+    
+    <h3>Create Entity</h3>
+    <p>Enter value(s) and click "Create". A new widget should appear in "Update/Delete" section.
+    
+    <form id="create" class="form-horizontal">
+      <fieldset>  
+      {% for field in form %}
+      
+        <div class="control-group">
+          <label class="control-label" for="{{field.id}}">{{field.label}}</label>
+          <div class="controls">
+            {% if field.element == 'text' %}
+            <input type="text" class="input-xlarge required" id="{{field.id}}">
+            {% elif field.element == 'checkbox' %}
+            <label class="checkbox">
+              <input type="checkbox" id="{{field.id}}" value="option1">
+            </label>
+            {% endif %}
+           </div>
+        </div>
+          
+      {% endfor %}
+        
+        <div class="form-actions">
+          <button id="create_btn" type="submit" class="btn btn-primary">Create</button> <span class="form_result"></span>
+        </div>
+      </fieldset>
+    </form>
+    
+    
+    <h3>Update/Delete Entity</h3>
+    
+    <script id="entity-row" type="text/html">
+    <tr>      
+      <td data-id=${id}>${id}</td>
+      <td>${obj}</td>
+      <td>
+        <button type="submit" class="btn">Update</button> <button type="submit" class="btn">Delete</button>
+      </td>
+    </tr>
+    </script>
+  
+    <table id="entities" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Summary</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for widget in widget %}
+        <tr>
+          <td>widget.id</td>
+          <td>widget.repr</td>
+          <td><button type="submit" class="btn">Update</button> <button type="submit" class="btn">Delete</button>
+              <button type="submit" class="btn">Update</button> <button type="submit" class="btn">Delete</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     
     <h1>LESS Stylesheets</h1>
     <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. 
