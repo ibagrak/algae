@@ -1,12 +1,15 @@
 {% extends "layout.html" %}
+{% import 'forms.html' as forms %}
+
+{% block title %}
+Home
+{% endblock %}
 
 {% block scripts %}
   
 {% endblock %}
 
 {% block content %}
-    
-    
     <h1>User management</h1>
     
     <p>
@@ -96,31 +99,7 @@
     <h3>Create Entity</h3>
     <p>Enter value(s) and click "Create". A new widget should appear in "Update/Delete" section.
     
-    <form id="create" class="form-horizontal">
-      <fieldset>  
-      {% for field in form %}
-      
-        <div class="control-group">
-          <label class="control-label" for="{{field.id}}">{{field.label}}</label>
-          <div class="controls">
-            {% if field.element == 'text' %}
-            <input type="text" class="input-xlarge required" id="{{field.id}}">
-            {% elif field.element == 'checkbox' %}
-            <label class="checkbox">
-              <input type="checkbox" id="{{field.id}}" value="option1">
-            </label>
-            {% endif %}
-           </div>
-        </div>
-          
-      {% endfor %}
-        
-        <div class="form-actions">
-          <button id="create_btn" type="submit" class="btn btn-primary">Create</button> <span class="form_result"></span>
-        </div>
-      </fieldset>
-    </form>
-    
+    {{ forms.form('create', 'Create', '', form) }}
     
     <h3>Update/Delete Entity</h3>
     
@@ -143,16 +122,18 @@
         </tr>
       </thead>
       <tbody>
-        {% for widget in widget %}
+        {% for widget in widgets %}
         <tr>
-          <td>widget.id</td>
-          <td>widget.repr</td>
-          <td><button type="submit" class="btn">Update</button> <button type="submit" class="btn">Delete</button>
-              <button type="submit" class="btn">Update</button> <button type="submit" class="btn">Delete</button></td>
+          <td>{{widget.key().id()}}</td>
+          <td>{{widget.str}}</td>
+          <td><button type="submit" class="btn update_btn" data-id="{{widget.key().id()}}">Update</button> 
+          <button type="submit" class="btn delete_btn" data-id="{{widget.key().id()}}">Delete</button></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
+    
+    {{ forms.form('update', 'Update', 'disabled', form) }}
     
     <h1>LESS Stylesheets</h1>
     <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. 

@@ -3,7 +3,11 @@ Created on Mar 29, 2012
 
 @author: ibagrak
 '''
-import logging
+import webapp2
+from webapp2_extras import json
+
+import settings
+import utils
 
 from google.appengine.ext import db
 
@@ -51,7 +55,6 @@ class RESTModel(db.Model):
         
         try:
             entity = cls(**kvs)
-            logging.error(entity) 
             db.put(entity)
         except: 
             return None
@@ -71,10 +74,16 @@ class RESTModel(db.Model):
         
         return False
 
-def generate_model_form(cls):
+    @property
+    def str(self):
+        return str(json.encode(utils.to_dict(self)))
+
+def generate_model_form(cls, with_key = False):
     fields = filter(lambda x: issubclass(type(x[1]), db.Property), cls.__dict__.iteritems())
     
-    form = []
+    #firstly, let's add key to the form and make it disabled
+    form = [{'element' : 'text', 'label' : 'id', 'id' : 'id'}] if with_key else []
+    
     for v in fields: 
         if isinstance(v[1], db.IntegerProperty): 
             form.append({'element' : 'text', 'label' : v[0], 'class' : 'integer', 'id' : v[0]})
@@ -90,11 +99,12 @@ def generate_model_form(cls):
             form.append({'element' : 'text', 'label' : v[0], 'id' : v[0]})
         else:
             raise UnsupportedFieldTypeError(v)
-        
+    
     return form
         
 class Widget(RESTModel):
     int_field = db.IntegerProperty(verbose_name = "Integer field", required = True, default = 0)
+    
 
     
     

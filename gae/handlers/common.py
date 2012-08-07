@@ -4,17 +4,18 @@ import sys
 import traceback
 import hashlib
 import os
-import datetime, time
+
 
 from functools import wraps
 
 import webapp2
-from google.appengine.ext import db
+
 from webapp2_extras import sessions, json, auth
 from jinja2.runtime import TemplateNotFound
 
 import settings
 import model
+import utils
 from handlers import jinja_environment
 
 def get_json_error(code, key = None, message = None, *args):
@@ -176,31 +177,6 @@ class BaseAPIHandler(BaseHandler):
         self.response.set_status(code)
         self.response.write(get_json_error(code, key = key, message = message, *args))
 
-SIMPLE_TYPES = (int, long, float, bool, dict, basestring, list)
-
-def to_dict(model):
-    output = {}
-
-    for key, prop in model.properties().iteritems():
-        value = getattr(model, key)
-
-        if value is None or isinstance(value, SIMPLE_TYPES):
-            output[key] = value
-        elif isinstance(value, datetime.date):
-            # Convert date/datetime to ms-since-epoch ("new Date()").
-            ms = time.mktime(value.utctimetuple())
-            ms += getattr(value, 'microseconds', 0) / 1000
-            output[key] = int(ms)
-        elif isinstance(value, db.GeoPt):
-            output[key] = {'lat': value.lat, 'lon': value.lon}
-        elif isinstance(value, db.Model):
-            output[key] = to_dict(value)
-        else:
-            raise ValueError('cannot encode ' + repr(prop))
-
-    output['id'] = model.key().id()
-    return output
-
 class BaseRESTHandler(BaseAPIHandler):
     
     def put(self, obj_t, *args):
@@ -211,7 +187,7 @@ class BaseRESTHandler(BaseAPIHandler):
         cls = getattr(sys.modules['model'], obj_t)
         
         # dispatch put to that model class. all model classes need to a subclass model.RESTModel
-        obj = to_dict(cls.put(kvs))
+        obj = utils.to_dict(cls.put(kvs))
         
         return self.prep_json_response(200, message = obj)
 
@@ -219,7 +195,7 @@ class BaseRESTHandler(BaseAPIHandler):
         cls = getattr(sys.modules['model'], obj_t)
         
         # dispatch put to that model class. all model classes need to a subclass model.RESTModel
-        obj = to_dict(cls.get(int(identifier)))
+        obj = utils.to_dict(cls.get(int(identifier)))
         
         return self.prep_json_response(200, message = obj)
 

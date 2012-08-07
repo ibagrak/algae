@@ -132,7 +132,7 @@ $(document).ready( function() {
         });
     });
     
-    $("#create").validate({
+    $("#create_form").validate({
         errorClass:      "error",
         errorElement:    "span", 
         
@@ -157,7 +157,23 @@ $(document).ready( function() {
         var frm = $(this).parents('form');
         var result = $(this).siblings('.form_result');
         
+        var restore = function() {
+            // Restore
+            frm.find(':input').removeAttr('disabled');
+            frm.find(':input#id').addClass('disabled').attr('disabled', '');
+            frm.find(':input').val('');
+            btn.removeAttr('disabled');
+        };
+        
+        var show_result = function() {
+            // hide form & show result
+            result.html('Success!');
+            result.show();
+            result.fadeOut('slow');
+        };
+        
         var kvs = {}
+        
         if (frm.validate().form()) {
             frm.find(":input").each(function() {
                 if ($(this).attr('type') == 'password') {
@@ -166,7 +182,7 @@ $(document).ready( function() {
                     kvs[$(this).attr('id')] = $(this).val();
                 }
             });
-            
+
             // Disable form
             frm.find(':input').attr('disabled', '');
             
@@ -186,9 +202,7 @@ $(document).ready( function() {
                 var message = data['message'];
                 
                 // Restore
-                frm.find(':input').removeAttr('disabled');
-                frm.find(':input').val('');
-                btn.removeAttr('disabled');
+                restore();
                 
                 if (code == 200) { // success                   
                     var id = data['message']['id'];
@@ -204,28 +218,20 @@ $(document).ready( function() {
                         
                         if (code == 200) {  
                             // hide form & show result
-                            result.html('Success!');
-                            result.show();
-                            result.fadeOut('slow');
+                            show_result('Success!');
                             
                             $("#entity-row").tmpl([{id : data['message']['id'], obj : JSON.stringify(data['message'])}]).prependTo("#entities > tbody");
                         } else {
                             // should never happen (HTTP error code always matches JSON 'code')
-                            result.html('Couldn\'t retrieve created entity!');
-                            result.show();
-                            result.fadeOut('slow');
+                            show_result('Couldn\'t retrieve created entity!');
                         }                  
                     }).fail(function(jqxhr, code, exception) {
                         // should never happen (HTTP error code always matches JSON 'code')
-                        result.html('Couldn\'t retrieve created entity!');
-                        result.show();
-                        result.fadeOut('slow');
+                        show_result('Couldn\'t retrieve created entity!');
                     });
                 } else {
                     // should never happen (HTTP error code always matches JSON 'code')
-                    result.html('Error!');
-                    result.show();
-                    result.fadeOut('slow');
+                    show_result('Error!');
                 }
             }).fail(function(jqxhr, code, exception) {
                 // TODO: Error handling
@@ -234,13 +240,20 @@ $(document).ready( function() {
                 var message = data['message'];
                 
                 // Restore
-                frm.find(':input').removeAttr('disabled');
-                frm.find(':input').val('');
-                btn.removeAttr('disabled');
+                restore();
                 
                 result.html('So sorry! ' + message);
                 result.show();  
             }); 
         }
+    });
+    
+    $('.update_btn').live('click', function() {
+        //load the form with item to update
+        
+    });
+    
+    $('.delete_btn').live('click', function() {
+        //delete item
     });
 });
