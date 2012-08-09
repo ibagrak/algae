@@ -256,4 +256,6 @@ $(document).ready( function() {
     $('.delete_btn').live('click', function() {
         //delete item
     });
+
+    $('#datepicker').datepicker();
 });

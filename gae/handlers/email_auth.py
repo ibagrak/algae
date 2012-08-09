@@ -12,14 +12,7 @@ from google.appengine.api import mail
 
 import settings
 import common
-
-email_re = re.compile(
-    r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"  # dot-atom
-    r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-011\013\014\016-\177])*"' # quoted-string
-    r')@(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?$', re.IGNORECASE)  # domain
-
-get_gravatar_url = lambda (email): "http://www.gravatar.com/avatar/" + hashlib.md5(email).hexdigest() + \
-    "?d=" + urllib.quote(settings.HOME_URL + '/static/images/anonymous.png')
+import utils
             
 class EmailConfirm(common.BaseHandler):
     def get(self, *args):
@@ -95,9 +88,9 @@ class EmailAuthHandler(common.BaseAPIHandler):
         if not ('email' in kwargs and 'username' in kwargs and 'password_raw' in kwargs):
             return self.prep_json_response(400, key = 'missing')
             
-        if re.match(email_re, kwargs['email']):
+        if re.match(utils.email_re, kwargs['email']):
             auth_id = '%s:%s' % ("own", kwargs['email'])
-            kwargs['pic'] = get_gravatar_url(kwargs['email'])
+            kwargs['pic'] = utils.to_gravatar_url(kwargs['email'])
             kwargs['profile'] = 'mailto:' + kwargs['email']
             
             logging.info('Creating a brand new user')

@@ -17,7 +17,7 @@ Home
       <p>Signed in as <img src = "{{ current_user.pic }}"> at <a href="{{ current_user.profile }}">{{ current_user.username }}</a>.
       <p><a href="/logout">Logout</a>
     {% else %}
-      No one signed in. Sign in with:
+      No one is signed in. Sign in with:
       <ul>
         <li><a href="/auth/facebook">Facebook</a>
         <li><a href="/auth/twitter">Twitter</a>
@@ -117,7 +117,7 @@ Home
       <thead>
         <tr>
           <th>ID</th>
-          <th>Summary</th>
+          <th class="span9">Summary</th>
           <th>Action</th>
         </tr>
       </thead>

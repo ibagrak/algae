@@ -12,8 +12,7 @@ class RPCHandler(common.BaseAPIHandler):
     def get(self, *args, **kwargs):
         pass
 
-    
 class RESTHandler(common.BaseRESTHandler):
-    pass
-    
-    
+	
+	def get(self, *args, **kwargs):
+		pass
