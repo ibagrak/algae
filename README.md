@@ -6,7 +6,7 @@ It comes chock-full of goodies you always wanted but never could get (until now)
 
 * [HTML5 Boilerplate](http://html5boilerplate.com)
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/index.html)
-* [Less Stylesheets](http://lesscss.org/)
+* [Less Stylesheets](http://lesscss.org/) + [Font Awesome](http://fortawesome.github.com/Font-Awesome/)
 * User management, including code for:
     * Twitter authentication
     * Facebook authentication

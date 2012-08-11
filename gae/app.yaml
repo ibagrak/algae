@@ -34,6 +34,9 @@ handlers:
  
 - url: /js
   static_dir: static/js 
+
+- url: /font
+  static_dir: static/font
   
 - url: /.*
   script: app.py

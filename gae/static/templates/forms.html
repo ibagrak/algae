@@ -29,7 +29,11 @@
     {% endfor %}
       
       <div class="form-actions">
-        <button id="{{name}}_btn" type="submit" class="{{disabled}} btn btn-primary" {{disabled}}>{{submit_txt}}</button> <span class="form_result"></span>
+        {% if name == 'create' %}
+          <button id="{{name}}_btn" type="submit" class="{{disabled}} btn btn-primary" {{disabled}}><i class="icon-plus"></i> {{submit_txt}}</button> <span class="form_result"></span>
+        {% elif name == 'update' %}
+          <button id="{{name}}_btn" type="submit" class="{{disabled}} btn btn-primary" {{disabled}}><i class="icon-edit"></i> {{submit_txt}}</button> <span class="form_result"></span>
+        {% endif %}
       </div>
     </fieldset>
   </form>
