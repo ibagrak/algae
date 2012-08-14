@@ -145,6 +145,7 @@ class BaseAPIHandler(BaseHandler):
             result = get_error(500, key = 'admin_required') 
             
         self.response.clear()
+        self.response.headers['Content-Type'] = 'application/json'
         self.response.write(json.encode(result))
         
     def get(self, *args):
@@ -162,6 +163,7 @@ class BaseAPIHandler(BaseHandler):
         
         self.response.clear()
         self.response.set_status(result['code'])
+        self.response.headers['Content-Type'] = 'application/json'
         self.response.write(json.encode(result))
 
     def put(self):
@@ -175,6 +177,7 @@ class BaseAPIHandler(BaseHandler):
     
     def prep_json_response(self, code, key = None, message = None, *args):
         self.response.set_status(code)
+        self.response.headers['Content-Type'] = 'application/json'
         self.response.write(get_json_error(code, key = key, message = message, *args))
 
 class BaseRESTHandler(BaseAPIHandler):
@@ -202,9 +205,13 @@ class BaseRESTHandler(BaseAPIHandler):
     def post(self, obj_t, identifier, *args):
         logging.error("post contents: %s", self.request.body)
         kvs = json.decode(self.request.body)
+
+        # find model class
         cls = getattr(sys.modules['model'], obj_t)
-        obj = cls.post(identifier, kvs)
-        return json.encode(obj)
+
+        obj = utils.to_dict(cls.post(int(identifier), kvs))
+
+        return self.prep_json_response(200, message = obj)
     
     def delete(self, obj_t, identifier, *args):
         cls = getattr(sys.modules['model'], obj_t)

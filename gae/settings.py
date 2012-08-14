@@ -57,3 +57,13 @@ SAMPLE_ENTITY = 'Widget'
 
 DATE_FORMAT_HTML = "dd-mm-yyyy"
 DATE_FORMAT = "%d-%m-%Y"
+
+# Email Authentication
+EMAIL_CONFIRM_BODY = """ 
+Hello, %s!
+
+Click the link to confirm your email address: %s
+
+Thanks 
+
+""" 

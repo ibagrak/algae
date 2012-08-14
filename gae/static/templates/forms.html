@@ -10,7 +10,7 @@
             {% if field.id == 'id' %}
               <input type="text" class="input-xlarge optional disabled {{field.class}}" id="{{field.id}}" disabled>
             {% elif field.class == 'date' %}
-              <div class="input-append date" id="datepicker" data-date="12-02-2012" data-date-format="{{field.format}}">
+              <div id="{{name}}_datepicker" class="input-append date datepicker" data-date="12-02-2012" data-date-format="{{field.format}}">
                 <input size="16" type="text" value="12-02-2012" id="{{field.id}}" disabled>
                 <span class="add-on"><i class="icon-calendar"></i></span>
               </div>
@@ -22,7 +22,7 @@
               <input type="checkbox" class="{{field.class}}" id="{{field.id}}" value="True">
             </label>
           {% elif field.element == 'textarea' %}
-            <textarea class="input-xlarge" class="{{field.class}}" id="{{field.id}}" rows="3"></textarea>
+            <textarea class="input-xlarge required {{field.class}}" id="{{field.id}}" name="{{field.id}}" rows="3"></textarea>
           {% endif %}
          </div>
       </div>

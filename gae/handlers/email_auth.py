@@ -102,7 +102,7 @@ class EmailAuthHandler(common.BaseAPIHandler):
                 
             if ok:
                 token = self.auth.store.user_model.create_signup_token(kwargs['email'])
-                # there is no way to check if toekn still exists for a given emai (i.e. email hasn't been
+                # there is no way to check if toekn still exists for a given email (i.e. email hasn't been
                 # confirmed) without having the token to we cheat here and temporarily store it in user
                 user.token = token
                 user.put()
@@ -111,14 +111,7 @@ class EmailAuthHandler(common.BaseAPIHandler):
                 mail.send_mail(sender = "%s Notifier <noreply@%s.appspot.com>" % (settings.APP_ID, settings.APP_ID), 
                                to = kwargs['email'],
                                subject = "%s Email Confirmation" % settings.APP_ID, 
-                               body = """ 
-Hello, %s!
-
-Here is your email confirmation link: %s
-
-Thanks 
-
-""" % (kwargs['username'], link))
+                               body = settings.EMAIL_CONFIRM_BODY % (kwargs['username'], link))
                 logging.info("sending out confirm link: %s", link)
                 self.prep_json_response(200)
             else:

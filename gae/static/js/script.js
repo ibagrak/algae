@@ -132,130 +132,285 @@ $(document).ready( function() {
         });
     });
     
-    $("#create_form").validate({
-        errorClass:      "error",
-        errorElement:    "span", 
-        
-        highlight: function(element, errorClass, validClass) {
-            if (element.type === 'radio') {
-                this.findByName(element.name).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
-            } else {
-                $(element).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
+    var make_ajax_form = function (type, done_func) {
+        var btn_selector = '#' + type + '_btn';
+
+        $('#' + type + '_btn').click(function() {
+            if (type == 'create') {
+                var URL = '/rest/Widgets'; 
+                var t = 'PUT';
+            } else if (type == 'update') {
+                var id = $(btn_selector).data('id');
+                var URL = '/rest/Widget/' + id;
+                var t = 'POST';
             }
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            if (element.type === 'radio') {
-                this.findByName(element.name).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
-            } else {
-                $(element).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
-            }
-        }
-    });
-    
-    $("#create_btn").click(function() {
-        var btn = $(this);
-        var frm = $(this).parents('form');
-        var result = $(this).siblings('.form_result');
+
+            var btn = $(this);
+            var frm = $(this).parents('form');
+            var result = $(this).siblings('.form_result');
+            
+            var restore = function() {
+                // Restore
+                // only restore children inputs of controls (doesn't apply to datepicker)
+                frm.find('.controls > :input').removeAttr('disabled');
+                frm.find('.controls > :input').val('');
+                btn.removeAttr('disabled');
+            };
+            
+            var show_result = function() {
+                // hide form & show result
+                result.html('Success!');
+                result.show();
+                result.fadeOut('slow');
+            };
+            
+            $(frm).validate({
+                errorClass:      "error",
+                errorElement:    "span", 
         
-        var restore = function() {
-            // Restore
-            frm.find(':input').removeAttr('disabled');
-            frm.find(':input#id').addClass('disabled').attr('disabled', '');
-            frm.find(':input').val('');
-            btn.removeAttr('disabled');
-        };
-        
-        var show_result = function() {
-            // hide form & show result
-            result.html('Success!');
-            result.show();
-            result.fadeOut('slow');
-        };
-        
-        var kvs = {}
-        
-        if (frm.validate().form()) {
-            frm.find(":input").each(function() {
-                if ($(this).attr('type') == 'password') {
-                    kvs[$(this).attr('id')] = MD5($(this).val());
-                } else {
-                    kvs[$(this).attr('id')] = $(this).val();
+                highlight: function(element, errorClass, validClass) {
+                    if (element.type === 'radio') {
+                        this.findByName(element.name).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
+                    } else {
+                        $(element).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
+                    }
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    if (element.type === 'radio') {
+                        this.findByName(element.name).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
+                    } else {
+                        $(element).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
+                    }
                 }
             });
 
-            // Disable form
-            frm.find(':input').attr('disabled', '');
+            var kvs = {}
             
-            // Disable button
-            btn.attr('disabled', '');
-            
-            var kvs = JSON.stringify(kvs);
+            if (frm.validate().form()) {
+                frm.find(":input").each(function() {
+                    if ($(this).attr('type') == 'password') {
+                        kvs[$(this).attr('id')] = MD5($(this).val());
+                    } else {
+                        kvs[$(this).attr('id')] = $(this).val();
+                    }
+                });
+
+                // Disable form
+                frm.find(':input').attr('disabled', '');
+                
+                // Disable button
+                btn.attr('disabled', '');
+                
+                var kvs = JSON.stringify(kvs);
+                
+                $.ajax({
+                    type: t,
+                    url: URL,
+                    data: kvs,
+                    dataType: "json",
+                    processData: false,
+                    contentType: "application/json; charset=utf-8"
+                }).done(function(data, code, jqxhr) {
+                    // Restore
+                    restore();
+                    
+                    if (done_func) {
+                        done_func(data, show_result);
+                    }
+                    
+                }).fail(function(jqxhr, code, exception) {
+                    // TODO: Error handling
+                    var data = $.parseJSON(jqxhr.responseText);
+                    var code = data['code'];
+                    var message = data['message'];
+                    
+                    // Restore
+                    restore();
+                    
+                    result.html('So sorry! ' + message);
+                    result.show();  
+                }); 
+            }
+        });
+    }
+    
+    // if PUT API call is successful, we want to retrieve the new item and place it in the table below
+    // this function is a parameter to make_ajax_form()
+    var done_create_func = function (data, show_result) {
+        var code = data['code'];
+        var message = data['message'];
+                    
+        if (code == 200) { // success                   
+            var id = message['id'];
             
             $.ajax({
-                type: 'PUT',
-                url: '/rest/Widgets',
-                data: kvs,
+                type: 'GET',
+                url: '/rest/Widget/' + id,
                 dataType: "json",
                 contentType: "application/json; charset=utf-8"
             }).done(function(data, code, jqxhr) {
                 var code = data['code'];
                 var message = data['message'];
                 
-                // Restore
-                restore();
-                
-                if (code == 200) { // success                   
-                    var id = data['message']['id'];
+                if (code == 200) {  
+                    // hide form & show result
+                    show_result('Success!');
                     
-                    $.ajax({
-                        type: 'GET',
-                        url: '/rest/Widget/' + id,
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8"
-                    }).done(function(data, code, jqxhr) {
-                        var code = data['code'];
-                        var message = data['message'];
-                        
-                        if (code == 200) {  
-                            // hide form & show result
-                            show_result('Success!');
-                            
-                            $("#entity-row").tmpl([{id : data['message']['id'], obj : JSON.stringify(data['message'])}]).prependTo("#entities > tbody");
-                        } else {
-                            // should never happen (HTTP error code always matches JSON 'code')
-                            show_result('Couldn\'t retrieve created entity!');
-                        }                  
-                    }).fail(function(jqxhr, code, exception) {
-                        // should never happen (HTTP error code always matches JSON 'code')
-                        show_result('Couldn\'t retrieve created entity!');
-                    });
+                    $("#entity-row").tmpl([{id : data['message']['id'], obj : JSON.stringify(data['message'])}]).prependTo("#entities > tbody");
                 } else {
                     // should never happen (HTTP error code always matches JSON 'code')
-                    show_result('Error!');
-                }
+                    show_result('Couldn\'t retrieve created entity!');
+                }                  
             }).fail(function(jqxhr, code, exception) {
-                // TODO: Error handling
-                var data = $.parseJSON(jqxhr.responseText);
+                // should never happen (HTTP error code always matches JSON 'code')
+                show_result('Couldn\'t retrieve created entity!');
+            });
+        } else {
+            // should never happen (HTTP error code always matches JSON 'code')
+            show_result('Error!');
+        }                
+    }
+
+    // if POST API call is successful, we want to update the item summary in the table
+    // this function is a parameter to make_ajax_form()
+    var done_update_func = function (data, show_result) {
+        var code = data['code'];
+        var message = data['message'];
+                    
+        if (code == 200) { // success                   
+            var id = message['id'];
+            
+            $.ajax({
+                type: 'GET',
+                url: '/rest/Widget/' + id,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8"
+            }).done(function(data, code, jqxhr) {
                 var code = data['code'];
                 var message = data['message'];
                 
-                // Restore
-                restore();
-                
-                result.html('So sorry! ' + message);
-                result.show();  
-            }); 
+                if (code == 200) {  
+                    // hide form & show result
+                    show_result('Success!');
+                    
+                    // FIXME: wonky
+                    var btn_selector = '.update_btn[data-id=\"' + id + '\"]';
+                    var btn = $(btn_selector);
+                    var summary_cell = btn.parents('tr').find('td:nth-child(2)');
+                    
+                    btn.removeAttr('disabled');   
+                    summary_cell.html(JSON.stringify(message));
+                } else {
+                    // should never happen (HTTP error code always matches JSON 'code')
+                    show_result('Couldn\'t retrieve updated entity!');
+                }                  
+            }).fail(function(jqxhr, code, exception) {
+                // should never happen (HTTP error code always matches JSON 'code')
+                show_result('Couldn\'t retrieve updated entity!');
+            });
+        } else {
+            // should never happen (HTTP error code always matches JSON 'code')
+            show_result('Error!');
         }
-    });
+
+        $('#update_btn').attr('disabled', '');
+        $('#update_btn').addClass('disabled');
+    }
+
+    make_ajax_form('create', done_create_func); 
+    make_ajax_form('update', done_update_func);
     
-    $('.update_btn').live('click', function() {
-        //load the form with item to update
+    $('.update_btn').live('click', function() {     
+        var update_form = $('#update_form');
+        var btn = $(this);
+
         
+        // toggle other update buttons
+        $('.update_btn').each(function() {
+            $(this).removeAttr('disabled');
+        });
+
+        // disable update buttons (the one clicked and form button below)
+        $(this).attr('disabled', '');
+        $('#update_btn').attr('disabled', '');
+        $('#update_btn').addClass('disabled');
+
+        $.ajax({
+                type: 'GET',
+                url: '/rest/Widget/' + $(this).attr('data-id'),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8"
+         }).done(function(data, code, jqxhr) {
+            var code = data['code'];
+            var message = data['message'];
+                        
+            if (code == 200) {
+                //load the form with item to update
+                $.each(message, function(key, value) {
+                    var input = update_form.find('#' + key);
+                    if (input.parent().hasClass('datepicker')) {
+                        var parent = input.parent();
+                        parent.data('date', value);
+                        parent.datepicker('update');
+                    } 
+
+                    input.attr('value', value);
+                    input.val(value);
+                });
+
+                $('#update_btn').removeAttr('disabled');
+                $('#update_btn').removeClass('disabled');
+                $('#update_btn').data('id', btn.data('id')); // assign widget id for updating
+            } else {
+                // should never happen (HTTP error code always matches JSON 'code')
+                var summary_cell = $(this).parents('tr').nth-child(2);
+                var summary = summary_cell.html();
+
+                summary_cell.html(message).delay().fadeOut(slow, function () {
+                    summary_cell.html(summary);
+                });
+
+                $(this).removeAttr('disabled');
+            }
+        }).fail(function(jqxhr, code, exception) {
+            // should never happen (HTTP error code always matches JSON 'code')
+            // TODO: Error handling
+            var data = $.parseJSON(jqxhr.responseText);
+            var code = data['code'];
+            var message = data['message'];
+
+            var summary_cell = $(this).parents('tr').nth-child(2);
+            var summary = summary_cell.html();
+
+            summary_cell.html(message).delay().fadeOut(slow, function () {
+                summary_cell.html(summary);
+            });
+
+            $(this).removeAttr('disabled');
+        });
     });
     
     $('.delete_btn').live('click', function() {
         //delete item
+        $.ajax({
+                type: 'DELETE',
+                url: '/rest/Widget/' + $(this).attr('data-id'),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8"
+         }).done(function(data, code, jqxhr) {
+            var code = data['code'];
+            var message = data['message'];
+                        
+            if (code == 200) {
+
+            } else {
+                // should never happen (HTTP error code always matches JSON 'code')
+            }                  
+        }).fail(function(jqxhr, code, exception) {
+            // should never happen (HTTP error code always matches JSON 'code')
+        });
     });
 
-    $('#datepicker').datepicker();
+    $('div[id$="datepicker"]').datepicker();
+
 });

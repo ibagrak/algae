@@ -13,8 +13,8 @@ It comes chock-full of goodies you always wanted but never could get (until now)
     * Email authentication
     * Others (untested)
 * Simple API & RESTful API code, including
-	* HTML form generation from GAE Models
-	* GAE Model updates from HTML forms
+	* Auto-generate HTML forms from GAE models
+	* AJAX updates to GAE models
 * jQuery form validation
 * Basic testing infrastructure (WIP)
 * and more..

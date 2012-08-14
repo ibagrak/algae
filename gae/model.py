@@ -23,12 +23,14 @@ class RESTModel(db.Model):
     def validate(cls, kvs):
         pass
     
+    # returns an entity based on id
     @classmethod
     def get(cls, i):
         return cls.get_by_id(i)
     
+    # creates a new entity
     @classmethod
-    def put(cls, kvs):
+    def put(cls, kvs, entity = None):
         
         # prevent malicious overwriting of system attrs
         for k in kvs.keys(): 
@@ -50,17 +52,22 @@ class RESTModel(db.Model):
             elif isinstance(v, db.DateProperty):
                 kvs[k] = datetime.strptime(kvs[k], settings.DATE_FORMAT).date()
             elif isinstance(v, db.LinkProperty):
-                kvs[k] = kvs[k]
+                kvs[k] = kvs[k] #TODO: verify URL
             elif isinstance(v, db.EmailProperty):
-                kvs[k] = kvs[k]
+                kvs[k] = kvs[k] #TODO: verify email address
             else:
                 raise UnsupportedFieldTypeError(v)
         
-        # validate key/value pairs (semantic validation, assume type validation is done)
+        # validate key/value pairs (semantic validation, assume type checking is done)
         cls.validate(kvs)
         
         try:
-            entity = cls(**kvs)
+            if not entity:
+                entity = cls(**kvs)
+            else: 
+                for k in kvs.keys(): 
+                    setattr(entity, k, kvs[k])
+
             db.put(entity)
         except Exception as e: 
             logging.error("Couldn't put entity: %s" % kvs)
@@ -69,10 +76,13 @@ class RESTModel(db.Model):
         
         return entity
     
+    # updates existing entity based on id
     @classmethod
     def post(cls, i, kvs):
-        return cls.put(kvs)
+        entity = cls.get_by_id(i)
+        return cls.put(kvs, entity = entity)
     
+    # deletes an entity based on id
     @classmethod
     def delete(cls, i):
         item = cls.get_by_id(i)
@@ -136,8 +146,3 @@ class Widget(RESTModel):
     email_field = db.EmailProperty(required = True)
     link_field = db.LinkProperty(required = True)
     date_field = db.DateProperty(required = True)
-
-    
-
-    
-    

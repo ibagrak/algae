@@ -20,7 +20,7 @@ def to_dict(model):
             output[key] = value
         elif isinstance(value, datetime.date):
             # Convert date/datetime to ms-since-epoch ("new Date()").
-            output[key] = 'date:' + str(value)
+            output[key] = value.strftime(settings.DATE_FORMAT)
             #ms = time.mktime(value.utctimetuple())
             #ms += getattr(value, 'microseconds', 0) / 1000
             #output[key] = int(ms)
