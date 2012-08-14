@@ -215,8 +215,8 @@ class BaseRESTHandler(BaseAPIHandler):
     
     def delete(self, obj_t, identifier, *args):
         cls = getattr(sys.modules['model'], obj_t)
-        obj = cls.delete(identifier)
-        return json.encode(obj)
+        obj = cls.delete(int(identifier))
+        return self.prep_json_response(200, message = json.encode(obj))
     
 def handle_404(request, response, exception):
     template = jinja_environment.get_template("404.html")

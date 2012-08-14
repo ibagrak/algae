@@ -313,6 +313,7 @@ $(document).ready( function() {
             show_result('Error!');
         }
 
+        // after update is submitted, the button becomes disabled again until next row is selected
         $('#update_btn').attr('disabled', '');
         $('#update_btn').addClass('disabled');
     }
@@ -363,7 +364,7 @@ $(document).ready( function() {
                 $('#update_btn').data('id', btn.data('id')); // assign widget id for updating
             } else {
                 // should never happen (HTTP error code always matches JSON 'code')
-                var summary_cell = $(this).parents('tr').nth-child(2);
+                var summary_cell = btn.parents('tr').find('td:nth-child(2)');
                 var summary = summary_cell.html();
 
                 summary_cell.html(message).delay().fadeOut(slow, function () {
@@ -379,7 +380,7 @@ $(document).ready( function() {
             var code = data['code'];
             var message = data['message'];
 
-            var summary_cell = $(this).parents('tr').nth-child(2);
+            var summary_cell = btn.parents('tr').find('td:nth-child(2)');
             var summary = summary_cell.html();
 
             summary_cell.html(message).delay().fadeOut(slow, function () {
@@ -391,6 +392,8 @@ $(document).ready( function() {
     });
     
     $('.delete_btn').live('click', function() {
+        var btn = $(this);
+
         //delete item
         $.ajax({
                 type: 'DELETE',
@@ -402,12 +405,28 @@ $(document).ready( function() {
             var message = data['message'];
                         
             if (code == 200) {
-
+                btn.parents('tr').remove();
             } else {
                 // should never happen (HTTP error code always matches JSON 'code')
+                var summary_cell = btn.parents('tr').find('td:nth-child(2)');
+                var summary = summary_cell.html();
+
+                summary_cell.html(message).delay().fadeOut(slow, function () {
+                    summary_cell.html(summary);
+                });
             }                  
         }).fail(function(jqxhr, code, exception) {
             // should never happen (HTTP error code always matches JSON 'code')
+            var data = $.parseJSON(jqxhr.responseText);
+            var code = data['code'];
+            var message = data['message'];
+
+            var summary_cell = btn.parents('tr').find('td:nth-child(2)');
+            var summary = summary_cell.html();
+
+            summary_cell.html(message).delay().fadeOut(slow, function () {
+                summary_cell.html(summary);
+            });
         });
     });
 
