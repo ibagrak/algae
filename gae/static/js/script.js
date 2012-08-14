@@ -151,9 +151,10 @@ $(document).ready( function() {
             
             var restore = function() {
                 // Restore
-                // only restore children inputs of controls (doesn't apply to datepicker)
+                // only restore children inputs of controls or checkboxes (doesn't apply to datepicker)
                 frm.find('.controls > :input').removeAttr('disabled');
                 frm.find('.controls > :input').val('');
+                frm.find('.checkbox > :input').removeAttr('disabled');
                 btn.removeAttr('disabled');
             };
             

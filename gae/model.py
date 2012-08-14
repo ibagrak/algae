@@ -84,10 +84,10 @@ class RESTModel(db.Model):
     
     # deletes an entity based on id
     @classmethod
-    def delete(cls, i):
+    def delete1(cls, i):
         item = cls.get_by_id(i)
         if item: 
-            del item
+            item.delete()
             return True
         
         return False
