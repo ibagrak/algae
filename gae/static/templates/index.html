@@ -10,21 +10,97 @@ Home
 {% endblock %}
 
 {% block content %}
-    <h1>User management</h1>
+<header class="jumbotron masthead">
+  <div class="inner">
+    <h1>Algae</h1>
+  </div>
+  <p>Application Template for Google App Engine</p>
+</header>
+<div class="tabbable"> 
+    <ul id="tabs" class="nav nav-tabs">
+      <li class="active"> <a href="#users"><h3>Users</h3></a></li>
+      <li><a href="#api"><h3>RESTful APIs<h3></a></li>
+      <li><a href="#css"><h3>LESS Stylesheets<h3></a></li>
+      <li class="pull-right"><a href="#css"><h3>About<h3></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="users">
+        {% if logged_in %}
+          <p>Signed in as <img style="max-width:100px" src = "{{ current_user.pic }}"> at <a href="{{ current_user.profile }}">{{ current_user.username }}</a>. <a href="/logout">Logout</a>
+        {% else %}
+          No one is signed in. Sign in with:
+          <ul>
+            <li><a href="/auth/facebook">Facebook</a>
+            <li><a href="/auth/twitter">Twitter</a>
+            <li><a data-toggle="modal" href="#signup">Sign up</a> or <a data-toggle="modal" href="#signin">Sign in</a> with email
+          </ul>
+        {% endif %}
+        <h3>Session support</h3>
+     
+        <p>Reload this page. The number of pageviews should increase. 
     
-    <p>
-    {% if logged_in %}
-      <p>Signed in as <img src = "{{ current_user.pic }}"> at <a href="{{ current_user.profile }}">{{ current_user.username }}</a>.
-      <p><a href="/logout">Logout</a>
-    {% else %}
-      No one is signed in. Sign in with:
-      <ul>
-        <li><a href="/auth/facebook">Facebook</a>
-        <li><a href="/auth/twitter">Twitter</a>
-        <li><a data-toggle="modal" href="#signup">Sign up</a> or <a data-toggle="modal" href="#signin">Sign in</a> with email
-      </ul>
-    {% endif %}
-    
+        <p>Pageviews: {{pageviews}}
+      </div>
+      <div class="tab-pane" id="api">
+        <p>The create form and the list of entities below are automatically generated from model definitions in <code>/gae/model.py</code>. 
+        You can change <code>SAMPLE_ENTITY</code> variable to select the model to manipulate.
+        
+        <h3>Create Entity</h3>
+        <p>Enter value(s) and click "Create". A new widget should appear in "Update/Delete" section.
+        
+        {{ forms.form('create', 'Create', '', form) }}
+        
+        <h3>Update/Delete Entity</h3>
+        
+        <script id="entity-row" type="text/html">
+        <tr>      
+          <td data-id=${id}>${id}</td>
+          <td>${obj}</td>
+          <td>
+            <button type="submit" class="btn update_btn" data-id=${id}><i class="icon-edit"></i> Update</button> 
+            <button type="submit" class="btn delete_btn" data-id=${id}><i class="icon-trash"></i> Delete</button>
+          </td>
+        </tr>
+        </script>
+      
+        <table id="entities" class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th class="span9">Summary</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for widget in widgets %}
+            <tr>
+              <td>{{widget.key().id()}}</td>
+              <td>{{widget.str}}</td>
+              <td><button type="submit" class="btn update_btn" data-id="{{widget.key().id()}}"><i class="icon-edit"></i> Update</button> 
+              <button type="submit" class="btn delete_btn" data-id="{{widget.key().id()}}"><i class="icon-trash"></i> Delete</button></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        
+        {{ forms.form('update', 'Update', 'disabled', form) }}
+      </div>
+      <div class="tab-pane" id="css">
+        <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. 
+        <p>Modify <code>/gae/static/css/less/app.less</code> to change application-specific styles. Recompile styles by running 
+        <code>npm run-script less</code> from <code>/gae/static</code>
+        
+        <p>If <code>npm run-script less</code> command fails:
+        <ul>
+          <li>Install npm.
+          <li>Run <code>npm init</code>
+          <li>Accept all defaults (keep pressing Enter)
+          <li>Run <code>npm install less --save</code> to install LESS
+          <li>Run <code>npm run-script less</code> again. 
+        </ul>
+      </div>
+  </div>
+
     <div class="tri-state modal hide" id="signup">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">×</button>
@@ -92,69 +168,6 @@ Home
       </div>
     </div>
     
-    <h1>RESTful API</h1>
-    <p>The create form and the list of entities below are automatically generated from model definitions in <code>/gae/model.py</code>. 
-    You can change <code>SAMPLE_ENTITY</code> variable to select the model to manipulate.
-    
-    <h3>Create Entity</h3>
-    <p>Enter value(s) and click "Create". A new widget should appear in "Update/Delete" section.
-    
-    {{ forms.form('create', 'Create', '', form) }}
-    
-    <h3>Update/Delete Entity</h3>
-    
-    <script id="entity-row" type="text/html">
-    <tr>      
-      <td data-id=${id}>${id}</td>
-      <td>${obj}</td>
-      <td>
-        <button type="submit" class="btn update_btn" data-id=${id}><i class="icon-edit"></i> Update</button> 
-        <button type="submit" class="btn delete_btn" data-id=${id}><i class="icon-trash"></i> Delete</button>
-      </td>
-    </tr>
-    </script>
-  
-    <table id="entities" class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th class="span9">Summary</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for widget in widgets %}
-        <tr>
-          <td>{{widget.key().id()}}</td>
-          <td>{{widget.str}}</td>
-          <td><button type="submit" class="btn update_btn" data-id="{{widget.key().id()}}"><i class="icon-edit"></i> Update</button> 
-          <button type="submit" class="btn delete_btn" data-id="{{widget.key().id()}}"><i class="icon-trash"></i> Delete</button></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    
-    {{ forms.form('update', 'Update', 'disabled', form) }}
-    
-    <h1>LESS Stylesheets</h1>
-    <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. 
-    <p>Modify <code>/gae/static/css/less/app.less</code> to change application-specific styles. Recompile styles by running 
-    <code>npm run-script less</code> from <code>/gae/static</code>
-    
-    <p>If <code>npm run-script less</code> command fails:
-    <ul>
-      <li>Install npm.
-      <li>Run <code>npm init</code>
-      <li>Accept all defaults (keep pressing Enter)
-      <li>Run <code>npm install less --save</code> to install LESS
-      <li>Run <code>npm run-script less</code> again. 
-    </ul>
-    
-    <h1>Session support</h1>
-    
-    <p>Reload this page. The number of pageviews should increase. 
-    
-    <p>Pageviews: {{pageviews}}
     
 {% endblock %}
     

@@ -74,7 +74,6 @@ $(document).ready( function() {
                         url: '/' + action,
                         data: kvs,
                     }).done(function(data, code, jqxhr) {
-                        var data = $.parseJSON(data);
                         var code = data['code'];
                         var message = data['message'];
                         
@@ -433,4 +432,8 @@ $(document).ready( function() {
 
     $('div[id$="datepicker"]').datepicker();
 
+    $('#tabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
 });

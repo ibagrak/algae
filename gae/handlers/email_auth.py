@@ -113,7 +113,7 @@ class EmailAuthHandler(common.BaseAPIHandler):
                                subject = "%s Email Confirmation" % settings.APP_ID, 
                                body = settings.EMAIL_CONFIRM_BODY % (kwargs['username'], link))
                 logging.info("sending out confirm link: %s", link)
-                self.prep_json_response(200)
+                return self.prep_json_response(200)
             else:
                 return self.prep_json_response(402, key = 'duplicate')
         else:

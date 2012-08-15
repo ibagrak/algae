@@ -1,11 +1,20 @@
 {% extends "layout.html" %}
 
-{% block scripts %}
+{% block title %}
+Email Confirmation
+{% endblock %}
 
+{% block scripts %}
+  
 {% endblock %}
 
 {% block content %}
-    <h1>Email Confirmation</h1>
-    
-    {{confirm_status}} <a href='/'>Sign In.</a>
+	<header class="jumbotron masthead">
+	  <div class="inner">
+	    <h1>Algae</h1>
+	  </div>
+	  <p>Application Template for Google App Engine</p>
+	</header>
+	<hr class="soften">
+	{{confirm_status}} <a href='/'>Sign In.</a>
 {% endblock %}

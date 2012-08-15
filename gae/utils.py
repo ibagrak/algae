@@ -4,6 +4,8 @@ Created on Aug 6, 2012
 @author: ibagrak
 '''
 import datetime, time, re
+import hashlib
+import urllib
 from google.appengine.ext import db
 
 import settings
@@ -35,7 +37,7 @@ def to_dict(model):
     return output
 
 def to_gravatar_url(email): 
-    return "http://www.gravatar.com/avatar/" + hashlib.md5(email).hexdigest() + "?d=" + urllib.quote(settings.HOME_URL + '/static/images/anonymous.png')
+    return "http://www.gravatar.com/avatar/" + hashlib.md5(email).hexdigest() + "?d=" + urllib.quote(settings.HOME_URL + ':8085' + '/img/algae.png')
 
 email_re = re.compile(
     r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"  # dot-atom
