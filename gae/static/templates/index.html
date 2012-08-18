@@ -25,6 +25,8 @@ Algae is an application template for Google App Engine
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="users">
+        <h3>Profiles</h3>
+
         {% if logged_in %}
           <p>Signed in as <img style="max-width:100px" src = "{{ current_user.pic }}"> via <a href="{{ current_user.profile }}">{{ current_user.username }}</a>. <a href="/logout">Logout</a>
         {% else %}
@@ -35,7 +37,7 @@ Algae is an application template for Google App Engine
             <li><a data-toggle="modal" href="#signup">Sign up</a> or <a data-toggle="modal" href="#signin">Sign in</a> with email
           </ul>
         {% endif %}
-        <h3>Session support</h3>
+        <h3>Sessions</h3>
      
         <p>Reload this page. The number of pageviews should increase. 
     
