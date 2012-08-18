@@ -108,7 +108,7 @@ class EmailAuthHandler(common.BaseAPIHandler):
                 user.put()
                 
                 link = "http://%s.appspot.com/email-confirm?token=%s&email=%s" % (settings.APP_ID, token, kwargs['email']) 
-                mail.send_mail(sender = "%s Notifier <noreply@%s.appspot.com>" % (settings.APP_ID, settings.APP_ID), 
+                mail.send_mail(sender = "%s Notifier <%s>" % (settings.APP_ID, settings.EMAIL_SENDER), 
                                to = kwargs['email'],
                                subject = "%s Email Confirmation" % settings.APP_ID, 
                                body = settings.EMAIL_CONFIRM_BODY % (kwargs['username'], link))

@@ -37,7 +37,7 @@ def to_dict(model):
     return output
 
 def to_gravatar_url(email): 
-    return "http://www.gravatar.com/avatar/" + hashlib.md5(email).hexdigest() + "?d=" + urllib.quote(settings.HOME_URL + ':8085' + '/img/algae.png')
+    return "http://www.gravatar.com/avatar/" + hashlib.md5(email).hexdigest() + "?d=" + urllib.quote(settings.HOME_URL + '/img/algae.png')
 
 email_re = re.compile(
     r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"  # dot-atom

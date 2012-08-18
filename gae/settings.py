@@ -3,9 +3,9 @@ from google.appengine.api.app_identity import get_default_version_hostname, get_
 
 from secrets import SESSION_KEY
 
-if 'SERVER_SOFTWARE' in os.environ:
-    DEBUG = os.environ['SERVER_SOFTWARE'].startswith('Dev')
-    HOME_URL = 'http://localhost'
+if 'SERVER_SOFTWARE' in os.environ and os.environ['SERVER_SOFTWARE'].startswith('Dev'):
+    DEBUG = True
+    HOME_URL = 'http://localhost' + ':8085'
 else:
     DEBUG = False
     HOME_URL = 'http://' + get_default_version_hostname()
@@ -62,8 +62,12 @@ DATE_FORMAT = "%d-%m-%Y"
 EMAIL_CONFIRM_BODY = """ 
 Hello, %s!
 
-Click the link to confirm your email address: %s
+Please click the link below to confirm your email address: 
 
-Thanks 
+%s
+
+Thank you. 
 
 """ 
+
+EMAIL_SENDER = "ilya.bagrak@gmail.com"

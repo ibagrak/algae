@@ -19,7 +19,7 @@ import utils
 from handlers import jinja_environment
 
 def get_json_error(code, key = None, message = None, *args):
-    logging.error(json.encode(get_error(code, key = key, message = message, *args)))
+    logging.info(json.encode(get_error(code, key = key, message = message, *args)))
     return json.encode(get_error(code, key = key, message = message, *args))
 
 def get_error(code, key = None, message = None, *args):
@@ -29,25 +29,6 @@ def get_error(code, key = None, message = None, *args):
         return {'code' : code, 'message' : settings.API_CODES[code][key]}
     else:
         return {'code' : code, 'message' : settings.API_CODES[code]}
-    
-def logapi(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        logging.debug("API call: %s args: %s kwargs: %s" % (func.__name__, args[1:], kwargs))
-        res = func(*args, **kwargs)
-        logging.debug("API call: %s result: %s" % (func.__name__, res))
-        return res
-    
-    return wrapper
-
-def loghandler(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        logging.debug("HTML Request: %s args: %s kwargs: %s" % (func.__name__, args[1:], kwargs))
-        res = func(*args, **kwargs)
-        return res
-    
-    return wrapper
                 
 class BaseHandler(webapp2.RequestHandler):
     # if we don't have this then spammy head requests would clutter the error log
@@ -56,12 +37,21 @@ class BaseHandler(webapp2.RequestHandler):
         
     def handle_exception(self, exception, debug_mode):    
         logging.exception(exception)
+        self.response.clear()
+
         if debug_mode:
             lines = ''.join(traceback.format_exception(*sys.exc_info()))
-            self.response.clear()
             self.response.write('<pre>%s</pre>' % (cgi.escape(lines, quote=True)))
         else:
-            self.abort(404)
+            # If the exception is a HTTPException, use its error code.
+            # Otherwise use a generic 500 error code.
+            if isinstance(exception, webapp2.HTTPException):
+                code = exception.code
+            else:
+                code = 500
+            
+            self.response.set_status(code)
+            self.response.out.write(jinja_environment.get_template("generic_error.html").render({'code' : 500}))
             
     def dispatch(self):
         # Get a session store for this request.
@@ -219,9 +209,12 @@ class BaseRESTHandler(BaseAPIHandler):
         return self.prep_json_response(200, message = json.encode(obj))
     
 def handle_404(request, response, exception):
-    template = jinja_environment.get_template("404.html")
     response.set_status(404)
-    response.out.write(template.render())
+    response.out.write(jinja_environment.get_template("404.html").render({'code' : 404}))
+
+def handle_500(request, response, exception): 
+    response.set_status(500)
+    response.out.write(jinja_environment.get_template("generic_error.html").render({'code' : 500}))
     
 
     

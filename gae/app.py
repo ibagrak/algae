@@ -34,6 +34,7 @@ application = webapp2.WSGIApplication(routes,
                                       config = settings.app_config)
 
 application.error_handlers[404] = common.handle_404
+application.error_handlers[500] = common.handle_500
 
 def main():
     application.run()

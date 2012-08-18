@@ -2,19 +2,19 @@
 
 Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed. 
 
-It comes chock-full of goodies you always wanted but never could get (until now):
+It comes chock-full of goodies you always wanted but couldn't get by default and in one neat package:
 
 * [HTML5 Boilerplate](http://html5boilerplate.com)
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/index.html)
 * [Less Stylesheets](http://lesscss.org/) + [Font Awesome](http://fortawesome.github.com/Font-Awesome/)
-* User management, including code for:
+* User account framework, including code for:
     * Twitter authentication
     * Facebook authentication
     * Email authentication
-    * Others (untested)
-* Simple API & RESTful API code, including
-	* Auto-generate HTML forms from GAE models
-	* AJAX updates to GAE models
+    * Others (Work in progress)
+* Plain and RESTful style API bootstrap code, including
+	* Auto-generation of HTML forms from GAE data models
+	* Seamless entity CRUD via AJAX
 * jQuery form validation
 * Basic testing infrastructure (WIP)
 * and more..
@@ -23,7 +23,7 @@ Finally, an App Engine template you can write home about.
 
 ## Quick start
 
-1. It's real. See the live demo (WIP)
+1. It's real. See [live demo](http://green-algae.appspot.com)
 2. Clone the git repo - `git clone git://github.com/algae/algae.git`
 3. Modify application name in `app.yaml`
 4. Populate `secrets.py.template` with secrets and rename it to `secrets.py`

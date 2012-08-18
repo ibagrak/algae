@@ -2,7 +2,7 @@
 {% import 'forms.html' as forms %}
 
 {% block title %}
-Home
+Algae is an application template for Google App Engine
 {% endblock %}
 
 {% block scripts %}
@@ -21,12 +21,12 @@ Home
       <li class="active"> <a href="#users"><h3>Users</h3></a></li>
       <li><a href="#api"><h3>RESTful APIs<h3></a></li>
       <li><a href="#css"><h3>LESS Stylesheets<h3></a></li>
-      <li class="pull-right"><a href="#css"><h3>About<h3></a></li>
+      <li class="pull-right"><a href="#about"><h3>About<h3></a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="users">
         {% if logged_in %}
-          <p>Signed in as <img style="max-width:100px" src = "{{ current_user.pic }}"> at <a href="{{ current_user.profile }}">{{ current_user.username }}</a>. <a href="/logout">Logout</a>
+          <p>Signed in as <img style="max-width:100px" src = "{{ current_user.pic }}"> via <a href="{{ current_user.profile }}">{{ current_user.username }}</a>. <a href="/logout">Logout</a>
         {% else %}
           No one is signed in. Sign in with:
           <ul>
@@ -42,10 +42,11 @@ Home
         <p>Pageviews: {{pageviews}}
       </div>
       <div class="tab-pane" id="api">
+        <h3>Create Entity</h3>
+
         <p>The create form and the list of entities below are automatically generated from model definitions in <code>/gae/model.py</code>. 
         You can change <code>SAMPLE_ENTITY</code> variable to select the model to manipulate.
-        
-        <h3>Create Entity</h3>
+
         <p>Enter value(s) and click "Create". A new widget should appear in "Update/Delete" section.
         
         {{ forms.form('create', 'Create', '', form) }}
@@ -98,6 +99,34 @@ Home
           <li>Run <code>npm install less --save</code> to install LESS
           <li>Run <code>npm run-script less</code> again. 
         </ul>
+      </div>
+      <div class="tab-pane" id="about">
+        <p>Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed. </p>
+
+        <p>It comes chock-full of goodies you always wanted but never could get (until now):<p>
+
+        <ul>
+          <li><a href="http://html5boilerplate.com">HTML5 Boilerplate</a></li>
+          <li><a href="http://twitter.github.com/bootstrap/index.html">Twitter Bootstrap</a></li>
+          <li><a href="http://lesscss.org/">LESS Stylesheets</a> + <a href="http://fortawesome.github.com/Font-Awesome/">Font Awesome</a></li>
+          <li>User account framework, including: 
+            <ul>
+              <li>Twitter authentication</li>
+              <li>Facebook authentication</li>
+              <li>Email authentication</li>
+              <li>Others - Work in progress</li>
+            </ul>
+          <li>Plain and RESTful style API bootstrap code:</li>
+            <ul>
+              <li>Auto-generate HTML forms from GAE data model</li>
+              <li>Seamless entity CRUD via AJAX</li>
+            </ul>
+          <li>jQuery form validation</li>
+          <li>Basic testing infrastructure (Work in progress)</li>
+          <li>and more..</li>
+        </ul>
+        
+        <p>Finally, an App Engine template you can write home about.</p>
       </div>
   </div>
 

@@ -5,7 +5,7 @@ Created on Jun 14, 2012
 '''
 import logging
 
-import simpleauth
+from libs import simpleauth
 import secrets
 import common
 
