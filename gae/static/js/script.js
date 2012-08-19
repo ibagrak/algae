@@ -157,11 +157,11 @@ $(document).ready( function() {
                 btn.removeAttr('disabled');
             };
             
-            var show_result = function() {
+            var show_result = function(msg) {
                 // hide form & show result
-                result.html('Success!');
+                result.html(msg);
                 result.show();
-                result.fadeOut('slow');
+                result.fadeOut(3000);
             };
             
             $(frm).validate({
@@ -227,8 +227,7 @@ $(document).ready( function() {
                     // Restore
                     restore();
                     
-                    result.html('So sorry! ' + message);
-                    result.show();  
+                    show_result('So sorry! ' + message);
                 }); 
             }
         });
@@ -411,7 +410,7 @@ $(document).ready( function() {
                 var summary_cell = btn.parents('tr').find('td:nth-child(2)');
                 var summary = summary_cell.html();
 
-                summary_cell.html(message).delay().fadeOut(slow, function () {
+                summary_cell.html(message).fadeOut(3000, function () {
                     summary_cell.html(summary);
                 });
             }                  
@@ -424,7 +423,7 @@ $(document).ready( function() {
             var summary_cell = btn.parents('tr').find('td:nth-child(2)');
             var summary = summary_cell.html();
 
-            summary_cell.html(message).delay().fadeOut(slow, function () {
+            summary_cell.html(message).fadeOut(3000, function () {
                 summary_cell.html(summary);
             });
         });

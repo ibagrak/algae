@@ -52,9 +52,6 @@ COOKIE_TEMPLATE = { 'id'        : 0,     #session id
                     'authed'    : False, 
                     'active'    : True }
 
-# Model that will be used to demo ReSTful APIs
-SAMPLE_ENTITY = 'Widget'
-
 DATE_FORMAT_HTML = "dd-mm-yyyy"
 DATE_FORMAT = "%d-%m-%Y"
 

@@ -13,7 +13,7 @@
     "node": "*"
   },
   "scripts": {
-    "less": "./node_modules/.bin/lessc --compress ./css/less/bootstrap.less > css/bootstrap.css ; cat css/h5bp.css >> css/site.css ;  cat css/bootstrap.css >> css/site.css"
+    "less": "./node_modules/.bin/lessc --compress ./css/less/bootstrap.less > css/bootstrap.css ; cat css/h5bp.css > css/site.css ;  cat css/bootstrap.css >> css/site.css"
   },
   "repository": {
     "type": "git",

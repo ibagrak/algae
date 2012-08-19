@@ -4,6 +4,7 @@ import settings
 from handlers import index, api, common, email_auth
 
 routes = [webapp2.Route('/',                  handler = index.Index),
+          webapp2.Route('/login_only',        handler = index.WithLogin),
           
           # email authentication routes
           webapp2.Route('/email-confirm',     handler = email_auth.EmailConfirm),

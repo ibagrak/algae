@@ -12,7 +12,14 @@ class Index(common.BaseHandler):
         
         self.prep_html_response('index.html', 
                                 { 'pageviews' : self.session['pageviews'], 
-                                                'widgets' : db.Query(model.Widget).order('-__key__').fetch(5), 
-                                                'form' : model.generate_model_form(model.Widget)})
-        
+                                'widgets' : db.Query(model.Widget).order('-__key__').fetch(5), 
+                                'form' : model.generate_model_form(model.Widget)})
 
+
+class WithLogin(common.BaseHandler):
+	@common.with_login
+	def get(self):
+		self.prep_html_response('index.html', 
+                                { 'pageviews' : self.session['pageviews'], 
+                                'widgets' : db.Query(model.Widget).order('-__key__').fetch(5), 
+                                'form' : model.generate_model_form(model.Widget)})

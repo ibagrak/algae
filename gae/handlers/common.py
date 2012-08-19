@@ -29,7 +29,18 @@ def get_error(code, key = None, message = None, *args):
         return {'code' : code, 'message' : settings.API_CODES[code][key]}
     else:
         return {'code' : code, 'message' : settings.API_CODES[code]}
-                
+
+def with_login(func):
+    def _with_login(*args, **kwargs):
+        self = args[0]
+        if not self.logged_in and issubclass(args[0].__class__, BaseAPIHandler):
+            return args[0].prep_json_response(401)
+        elif not args[0].logged_in and issubclass(args[0].__class__, BaseHandler):
+            return args[0].prep_html_response("generic_error.html", { 'code' : 401 })
+
+        func(*args, **kwargs)
+    return _with_login
+
 class BaseHandler(webapp2.RequestHandler):
     # if we don't have this then spammy head requests would clutter the error log
     def head(self):
@@ -172,8 +183,8 @@ class BaseAPIHandler(BaseHandler):
 
 class BaseRESTHandler(BaseAPIHandler):
     
+    @with_login
     def put(self, obj_t, *args):
-        logging.error("put contents: %s", self.request.body)
         kvs = json.decode(self.request.body)
         
         # find model class
@@ -203,6 +214,7 @@ class BaseRESTHandler(BaseAPIHandler):
 
         return self.prep_json_response(200, message = obj)
     
+    @with_login
     def delete(self, obj_t, identifier, *args):
         cls = getattr(sys.modules['model'], obj_t)
         obj = cls.delete1(int(identifier))

@@ -10,6 +10,7 @@ Algae is an application template for Google App Engine
 {% endblock %}
 
 {% block content %}
+<a href="https://github.com/algae"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
 <header class="jumbotron masthead">
   <div class="inner">
     <h1>Algae</h1>
@@ -18,9 +19,10 @@ Algae is an application template for Google App Engine
 </header>
 <div class="tabbable"> 
     <ul id="tabs" class="nav nav-tabs">
-      <li class="active"> <a href="#users"><h3>Users</h3></a></li>
-      <li><a href="#api"><h3>RESTful APIs<h3></a></li>
-      <li><a href="#css"><h3>LESS Stylesheets<h3></a></li>
+      <li class="active"> <a href="#users"><h3><i class="icon-user"></i> Users</h3></a></li>
+      <li><a href="#api"><h3><i class="icon-cogs"></i> RESTful APIs<h3></a></li>
+      <li><a href="#security"><h3><i class="icon-lock"></i> Security<h3></a></li>
+      <li><a href="#css"><h3><i class="icon-tint"></i> LESS Stylesheets<h3></a></li>
       <li class="pull-right"><a href="#about"><h3>About<h3></a></li>
     </ul>
     <div class="tab-content">
@@ -43,13 +45,16 @@ Algae is an application template for Google App Engine
     
         <p>Pageviews: {{pageviews}}
       </div>
-      <div class="tab-pane" id="api">
+      <div class="tab-pane span8 " id="api">
         <h3>Create Entity</h3>
 
-        <p>The create form and the list of entities below are automatically generated from model definitions in <code>/gae/model.py</code>. 
-        You can change <code>SAMPLE_ENTITY</code> variable to select the model to manipulate.
+        <p>The forms below are automatically generated from model definitions in <code>/gae/model.py</code>. 
+        <code>generate_model_form()</code> in <code>/gae/model.py</code> converts the model to a dictionary of template variables, and <code>/gae/static/templates/forms.html</code> macro generates the corresponding HTML.
 
-        <p>Enter value(s) and click "Create". A new widget should appear in "Update/Delete" section.
+        <div class="well">
+          <span class="label label-info">Heads up!</span>
+          Only logged in users are authorized to create new entities. See Security tab for how to modify these rules for your app.
+        </div>
         
         {{ forms.form('create', 'Create', '', form) }}
         
@@ -70,8 +75,8 @@ Algae is an application template for Google App Engine
           <thead>
             <tr>
               <th>ID</th>
-              <th class="span9">Summary</th>
-              <th>Action</th>
+              <th class="span3">Summary</th>
+              <th class="">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -86,14 +91,19 @@ Algae is an application template for Google App Engine
           </tbody>
         </table>
         
+        <div class="well">
+          <span class="label label-info">Heads up!</span>
+          Only logged in users are authorized to delete entities. See Security tab for how to modify these rules for your app.
+        </div>
+
         {{ forms.form('update', 'Update', 'disabled', form) }}
       </div>
-      <div class="tab-pane" id="css">
+      <div class="tab-pane span8" id="css">
         <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. 
-        <p>Modify <code>/gae/static/css/less/app.less</code> to change application-specific styles. Recompile styles by running 
+        <p><code>/gae/static/css/less/app.less</code> contains application-specific styles. You can recompile updated styles by running 
         <code>npm run-script less</code> from <code>/gae/static</code>
         
-        <p>If <code>npm run-script less</code> command fails:
+        <p>If <code>npm run-script less</code> command fails:</p>
         <ul>
           <li>Install npm.
           <li>Run <code>npm init</code>
@@ -102,10 +112,11 @@ Algae is an application template for Google App Engine
           <li>Run <code>npm run-script less</code> again. 
         </ul>
       </div>
-      <div class="tab-pane" id="about">
-        <p>Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed. </p>
+      <div class="tab-pane span8" id="about">
+        <p><strong>Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed.</strong></p>
 
-        <p>It comes chock-full of goodies you always wanted but never could get (until now):<p>
+        <p>It integrates de facto industry standards (like Twitter Bootstrap and HTML5 Boilerplate) with features every web app needs, so you don't waste any time re-inventing the wheel.</p>
+        <p>Here is what you get:<p>
 
         <ul>
           <li><a href="http://html5boilerplate.com">HTML5 Boilerplate</a></li>
@@ -129,6 +140,11 @@ Algae is an application template for Google App Engine
         </ul>
         
         <p>Finally, an App Engine template you can write home about.</p>
+      </div>
+      <div class="tab-pane span8" id="security">
+        <p>A Python decorator -- <code>@with_login</code> -- can be used on any method of <code>BaseHandler</code> or <code>BaseAPIHandler</code> (or their subclasses) to prevent unauthenticated users from viewing certain pages or calling APIs. </p>
+
+        For instance, this <a href="/login_only">page</a> can only be viewed after you login.
       </div>
   </div>
 
