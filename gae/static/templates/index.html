@@ -10,23 +10,21 @@ Algae is an application template for Google App Engine
 {% endblock %}
 
 {% block content %}
-<a href="https://github.com/algae"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
-<header class="jumbotron masthead">
-  <div class="inner">
-    <h1>Algae</h1>
-  </div>
-  <p>Application Template for Google App Engine</p>
-</header>
+<!-- github ribbon !-->
+<a href="https://github.com/ibagrak/algae"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+<!-- tabbed content !-->
 <div class="tabbable"> 
-    <ul id="tabs" class="nav nav-tabs">
-      <li class="active"> <a href="#users"><h3><i class="icon-user"></i> Users</h3></a></li>
-      <li><a href="#api"><h3><i class="icon-cogs"></i> RESTful APIs<h3></a></li>
-      <li><a href="#security"><h3><i class="icon-lock"></i> Security<h3></a></li>
-      <li><a href="#css"><h3><i class="icon-tint"></i> LESS Stylesheets<h3></a></li>
-      <li class="pull-right"><a href="#about"><h3>About<h3></a></li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="users">
+  <ul id="tabs" class="nav nav-tabs">
+    <li class="active"> <a href="#users"><h3><i class="icon-user"></i> Users</h3></a></li>
+    <li><a href="#api"><h3><i class="icon-cogs"></i> RESTful APIs<h3></a></li>
+    <li><a href="#security"><h3><i class="icon-lock"></i> Security<h3></a></li>
+    <li><a href="#css"><h3><i class="icon-tint"></i> LESS Stylesheets<h3></a></li>
+    <li class="pull-right"><a href="#about"><h3>About<h3></a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active row" id="users">
+      <div class="span8">
         <h3>Profiles</h3>
 
         {% if logged_in %}
@@ -36,7 +34,7 @@ Algae is an application template for Google App Engine
           <ul>
             <li><a href="/auth/facebook">Facebook</a>
             <li><a href="/auth/twitter">Twitter</a>
-            <li><a data-toggle="modal" href="#signup">Sign up</a> or <a data-toggle="modal" href="#signin">Sign in</a> with email
+            <li><a data-toggle="modal" href="#signup">Sign up</a> or <a data-toggle="modal" href="#signin">sign in</a> with email
           </ul>
         {% endif %}
         <h3>Sessions</h3>
@@ -45,7 +43,10 @@ Algae is an application template for Google App Engine
     
         <p>Pageviews: {{pageviews}}
       </div>
-      <div class="tab-pane span8 " id="api">
+    </div>
+
+    <div class="tab-pane row" id="api">
+      <div class="span8" >
         <h3>Create Entity</h3>
 
         <p>The forms below are automatically generated from model definitions in <code>/gae/model.py</code>. 
@@ -98,7 +99,10 @@ Algae is an application template for Google App Engine
 
         {{ forms.form('update', 'Update', 'disabled', form) }}
       </div>
-      <div class="tab-pane span8" id="css">
+    </div>
+
+    <div class="tab-pane row" id="css">
+      <div class="span8" >
         <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. 
         <p><code>/gae/static/css/less/app.less</code> contains application-specific styles. You can recompile updated styles by running 
         <code>npm run-script less</code> from <code>/gae/static</code>
@@ -112,8 +116,11 @@ Algae is an application template for Google App Engine
           <li>Run <code>npm run-script less</code> again. 
         </ul>
       </div>
-      <div class="tab-pane span8" id="about">
-        <p><strong>Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed.</strong></p>
+    </div>
+
+    <div class="tab-pane row" id="about">
+      <div class="span8" >
+        <h4>Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed, or your money back.</h4>
 
         <p>It integrates de facto industry standards (like Twitter Bootstrap and HTML5 Boilerplate) with features every web app needs, so you don't waste any time re-inventing the wheel.</p>
         <p>Here is what you get:<p>
@@ -139,82 +146,91 @@ Algae is an application template for Google App Engine
           <li>and more..</li>
         </ul>
         
-        <p>Finally, an App Engine template you can write home about.</p>
+        <h4>Finally, an App Engine template you can write home about.</h4>
       </div>
-      <div class="tab-pane span8" id="security">
+    </div>
+
+    <div class="tab-pane row" id="security">
+      <div class="span8" >
         <p>A Python decorator -- <code>@with_login</code> -- can be used on any method of <code>BaseHandler</code> or <code>BaseAPIHandler</code> (or their subclasses) to prevent unauthenticated users from viewing certain pages or calling APIs. </p>
 
         For instance, this <a href="/login_only">page</a> can only be viewed after you login.
       </div>
+    </div>
+  </div> <!-- tab-content !-->
+</div> <!-- tabbable !-->
+
+<!-- modal popups for email signin/signup !-->
+<div class="tri-state modal hide" id="signup">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Sign up with your email address</h3>
   </div>
 
-    <div class="tri-state modal hide" id="signup">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>Sign up with your email address</h3>
-      </div>
+  <div class="modal-body">
+    <form id="signup_form" class="form-horizontal" name="email-signup">
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label" for="username">Username</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge required" id="username">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="email">Email address</label>
+          <div class="controls">
+            <input type="email" class="input-xlarge required email" id="email">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="password_raw">Password</label>
+          <div class="controls">
+            <input type="password" class="input-xlarge required" id="password_raw">
+          </div>
+        </div>
+      </fieldset>
+    </form>
+    <div class="form_result"></div>
+  </div>
+  
+  <div class="modal-footer">
+    <a id="signup_btn" href="#" class="btn btn-primary submit">Sign Up</a>
+  </div>
+</div>
+
+<div class="tri-state modal hide" id="signin">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Sign in</h3>
+  </div>
+
+  <div class="modal-body">
+     <form class="form-horizontal" name="email-signin">
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label" for="email">Email address</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge required email" id="email">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="password">Password</label>
+          <div class="controls">
+            <input type="password" class="input-xlarge required" id="password">
+          </div>
+        </div>
+      </fieldset>
+    </form>
+    <div class="form_result"></div>
+  </div>
+  <div class="modal-footer">
+    <a id="signin_btn" href="#" class="btn btn-primary submit">Sign In</a>
+  </div>
+</div>
     
-      <div class="modal-body">
-        <form id="signup_form" class="form-horizontal" name="email-signup">
-          <fieldset>
-            <div class="control-group">
-              <label class="control-label" for="username">Username</label>
-              <div class="controls">
-                <input type="text" class="input-xlarge required" id="username">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="email">Email address</label>
-              <div class="controls">
-                <input type="email" class="input-xlarge required email" id="email">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="password_raw">Password</label>
-              <div class="controls">
-                <input type="password" class="input-xlarge required" id="password_raw">
-              </div>
-            </div>
-          </fieldset>
-        </form>
-        <div class="form_result"></div>
-      </div>
-      
-      <div class="modal-footer">
-        <a id="signup_btn" href="#" class="btn btn-primary submit">Sign Up</a>
-      </div>
-    </div>
-    
-    <div class="tri-state modal hide" id="signin">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>Sign in</h3>
-      </div>
-    
-      <div class="modal-body">
-         <form class="form-horizontal" name="email-signin">
-          <fieldset>
-            <div class="control-group">
-              <label class="control-label" for="email">Email address</label>
-              <div class="controls">
-                <input type="text" class="input-xlarge required email" id="email">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="password">Password</label>
-              <div class="controls">
-                <input type="password" class="input-xlarge required" id="password">
-              </div>
-            </div>
-          </fieldset>
-        </form>
-        <div class="form_result"></div>
-      </div>
-      <div class="modal-footer">
-        <a id="signin_btn" href="#" class="btn btn-primary submit">Sign In</a>
-      </div>
-    </div>
-    
-    
+
+<footer>
+ 
+</footer>
 {% endblock %}
     

@@ -33,18 +33,44 @@
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-  <header>
-
-  </header>
-  <div role="main">
-    <div class="container">
-    {% block content %} {% endblock %}
+   
+  <!-- part of sticky footer magic !-->
+  <div class="wrapper">
+     <!-- masthead !-->
+    <header class="jumbotron masthead">
+      <div class="inner">
+        <h1>Algae</h1>
+      </div>
+      <p>Application Template for Google App Engine</p>
+    </header>
+  
+    
+    <div role="main">  
+      <div class="container">
+      {% block content %} {% endblock %}
+      </div>
     </div>
+
+    <!-- part of sticky footer magic !-->
+    <div class="push"></div>
   </div>
-  <footer>
 
+  <footer class="footer container">
+
+    <div class="row">
+      <div class="span10">
+        <img style="max-width: 60px" src="/img/algae.png"/>
+    
+        Algae was created by Ilya Bagrak, who <a href="http://twitter.com/ibagrak">tweets</a>,
+        <a href="http://codercofounder.wordpress.com">blogs</a>, and will respond to all <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;tf=1&amp;to=replace-with-ilya.replace-with-bagrak@gmail.com" target="_blank">email</a>.
+        &copy; 2012 Ilya Bagrak.
+      </div>
+      <div class="span2">
+
+          <img style="padding-top:12px;" src="https://developers.google.com/appengine/images/appengine-noborder-120x30.gif" alt="Powered by Google App Engine" />
+        </div>
+    </div> 
   </footer>
-
 
   <!-- JavaScript at the bottom for fast page loading -->
 
