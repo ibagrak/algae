@@ -13,11 +13,11 @@ class AuthHandler(common.BaseHandler, simpleauth.SimpleAuthHandler):
     """Authentication handler for OAuth 2.0, 1.0(a) and OpenID."""
 
     USER_ATTRS = {
-      'google'   : {
-        'picture': 'pic',
-        'name'   : 'username',
-        'link'   : 'profile'
-      },
+      # 'google'   : {
+      #   'picture': 'pic',
+      #   'name'   : 'username',
+      #   'link'   : 'profile'
+      # },
       'facebook' : {
         'id'     : lambda id: ('pic', 'http://graph.facebook.com/{0}/picture?type=large'.format(id)),
         'name'   : 'username',

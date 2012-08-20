@@ -25,8 +25,11 @@ Algae is an application template for Google App Engine
   <div class="tab-content">
     <div class="tab-pane active row" id="users">
       <div class="span8">
-        <h3>Profiles</h3>
 
+        <h3>Profiles</h3>
+        <blockquote>
+        <p><code>gae/handlers/oauth.py</code> and <code>gae/handlers/email_auth.py</code> request handlers are responsible for processing OAuth and email user authentication. <code>USER_ATTR</code> dictionary in <code>gae/handlers/oauth.py</code> defines how user fields map between different services (identity providers) and the app's internal user model. The rest is a lot of magical Python code.
+        </blockquote>
         {% if logged_in %}
           <p>Signed in as <img style="max-width:100px" src = "{{ current_user.pic }}"> via <a href="{{ current_user.profile }}">{{ current_user.username }}</a>. <a href="/logout">Logout</a>
         {% else %}
@@ -38,6 +41,9 @@ Algae is an application template for Google App Engine
           </ul>
         {% endif %}
         <h3>Sessions</h3>
+        <blockquote>
+        Sessions are tracked by encrypted, client-side cookies. <code>COOKIE_TEMPLATE</code> variable in <code>gae/settings.py</code> defines the cookie content, and <code>session</code> dictionary can be accessed in every request handler. 
+        </blockquote>
      
         <p>Reload this page. The number of pageviews should increase. 
     
@@ -47,19 +53,30 @@ Algae is an application template for Google App Engine
 
     <div class="tab-pane row" id="api">
       <div class="span8" >
-        <h3>Create Entity</h3>
+        <blockquote>
+        <p>Full CRUD access to models is supported via POST, PUT, GET, and DELETE AJAX calls. See <code>gae/static/js/script.js</code> for sample code. The calls are routed via <code>BaseRESTHandler</code> in <code>gae/handlers/common.py</code></p>
 
-        <p>The forms below are automatically generated from model definitions in <code>/gae/model.py</code>. 
-        <code>generate_model_form()</code> in <code>/gae/model.py</code> converts the model to a dictionary of template variables, and <code>/gae/static/templates/forms.html</code> macro generates the corresponding HTML.
+        <p>The forms below are automatically generated from model definitions in <code>gae/model.py</code>. 
+        <code>generate_model_form()</code> in <code>gae/model.py</code> converts the model to a dictionary of template variables, and <code>gae/static/templates/forms.html</code> macro generates the corresponding HTML.</p>
+        </blockquote>
+        <h3>Create Entity</h3>
+        <blockquote>
+        
 
         <div class="well">
           <span class="label label-info">Heads up!</span>
           Only logged in users are authorized to create new entities. See Security tab for how to modify these rules for your app.
         </div>
-        
+        </blockquote>
         {{ forms.form('create', 'Create', '', form) }}
         
         <h3>Update/Delete Entity</h3>
+        <blockquote>
+        <div class="well">
+          <span class="label label-info">Heads up!</span>
+          Only logged in users are authorized to delete entities. See Security tab for how to modify these rules for your app.
+        </div>
+        </blockquote>
         
         <script id="entity-row" type="text/html">
         <tr>      
@@ -92,20 +109,16 @@ Algae is an application template for Google App Engine
           </tbody>
         </table>
         
-        <div class="well">
-          <span class="label label-info">Heads up!</span>
-          Only logged in users are authorized to delete entities. See Security tab for how to modify these rules for your app.
-        </div>
-
         {{ forms.form('update', 'Update', 'disabled', form) }}
       </div>
     </div>
 
     <div class="tab-pane row" id="css">
-      <div class="span8" >
+      <div class="span8">
+
         <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. 
-        <p><code>/gae/static/css/less/app.less</code> contains application-specific styles. You can recompile updated styles by running 
-        <code>npm run-script less</code> from <code>/gae/static</code>
+        <p><code>gae/static/css/less/app.less</code> contains application-specific styles. You can recompile updated styles by running 
+        <code>npm run-script less</code> from <code>gae/static</code>
         
         <p>If <code>npm run-script less</code> command fails:</p>
         <ul>
@@ -120,9 +133,10 @@ Algae is an application template for Google App Engine
 
     <div class="tab-pane row" id="about">
       <div class="span8" >
-        <h4>Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed, or your money back.</h4>
+        <h4>Algae is designed to get you app running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed, or your money back.</h4>
 
-        <p>It integrates de facto industry standards (like Twitter Bootstrap and HTML5 Boilerplate) with features every web app needs, so you don't waste any time re-inventing the wheel.</p>
+        <p>It integrates de facto industry standards (like Twitter Bootstrap and HTML5 Boilerplate) with features every web app needs, so you don't waste time re-inventing the wheel.</p>
+
         <p>Here is what you get:<p>
 
         <ul>
@@ -134,7 +148,7 @@ Algae is an application template for Google App Engine
               <li>Twitter authentication</li>
               <li>Facebook authentication</li>
               <li>Email authentication</li>
-              <li>Others - Work in progress</li>
+              <li>Others (<em>Work in progress</em>)</li>
             </ul>
           <li>Plain and RESTful style API bootstrap code:</li>
             <ul>
@@ -142,11 +156,11 @@ Algae is an application template for Google App Engine
               <li>Seamless entity CRUD via AJAX</li>
             </ul>
           <li>jQuery form validation</li>
-          <li>Basic testing infrastructure (Work in progress)</li>
+          <li>Basic testing infrastructure (<em>Work in progress</em>)</li>
           <li>and more..</li>
         </ul>
         
-        <h4>Finally, an App Engine template you can write home about.</h4>
+        <h4>Finally, a GAE template to write home about!</h4>
       </div>
     </div>
 
