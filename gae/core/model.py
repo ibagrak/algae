@@ -6,7 +6,6 @@ Created on Mar 29, 2012
 import logging
 import re
 from datetime import datetime
-import webapp2
 from webapp2_extras import json
 
 import settings

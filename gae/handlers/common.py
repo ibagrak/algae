@@ -14,7 +14,7 @@ from webapp2_extras import sessions, json, auth
 from jinja2.runtime import TemplateNotFound
 
 import settings
-import model
+from core import model
 import utils
 from handlers import jinja_environment
 

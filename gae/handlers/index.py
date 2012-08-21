@@ -1,6 +1,6 @@
 import common
 import logging
-import model
+from core import model
 
 from google.appengine.ext import db
 
