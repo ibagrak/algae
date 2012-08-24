@@ -1,4 +1,5 @@
 import unittest
+import copy
 
 from google.appengine.ext import testbed
 
@@ -15,8 +16,6 @@ class ModelTestCase(unittest.TestCase):
 		# Then activate the testbed, which prepares the service stubs for use.
 		self.testbed.activate()
 
-		self.testbed.setup_env(app_id='green-algae')
-
 		# Next, declare which service stubs you want to use.
 		self.testbed.init_datastore_v3_stub()
 		self.testbed.init_memcache_stub()
@@ -25,16 +24,41 @@ class ModelTestCase(unittest.TestCase):
 		self.testbed.deactivate()
 
 	def test_create(self):
-		model.Widget.put(self.fixture_widget)
+		widget = copy.copy(self.fixture_widget)
+		model.Widget.put(widget)
 
 		self.assertEqual(1, len(model.Widget.all().fetch(2)))
 
 	def test_read(self):
-		pass
+		widget = copy.copy(self.fixture_widget)
+		widget['int_field'] = 123
+
+		entity = model.Widget.put(widget)
+		
+		self.assertNotEqual(None, entity)
+
+		entity = model.Widget.get(entity.key().id())
+		self.assertEqual(entity.int_field, 123)
 
 	def test_update(self):
-		pass
+		widget = copy.copy(self.fixture_widget)
+		identifier = model.Widget.put(widget).key().id()
+
+		widget = copy.copy(self.fixture_widget)
+		widget['int_field'] = 234
+		widget['email_field'] = 'ibagrak@co.co'
+		widget['boolean_field'] = False
+
+		entity = model.Widget.post(identifier, widget)
+		self.assertEqual(entity.int_field, 234)
+		self.assertEqual(entity.email_field, 'ibagrak@co.co')
+		self.assertEqual(entity.boolean_field, False)
 
 	def test_delete(self):
-		pass
+		widget = copy.copy(self.fixture_widget)
+		identifier = model.Widget.put(widget).key().id()
 
+		self.assertEqual(model.Widget.delete1(identifier), True)
+
+		self.assertEqual(0, len(model.Widget.all().fetch(2)))
+		

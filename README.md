@@ -2,20 +2,23 @@
 
 Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed. 
 
-It comes chock-full of goodies you always wanted but couldn't get by default and in one neat package:
+It integrates de facto industry standards (like Twitter Bootstrap and HTML5 Boilerplate) with features every web app needs, so you don't waste time, every time, re-inventing the wheel.
+
+Here is what you get: 
 
 * [HTML5 Boilerplate](http://html5boilerplate.com)
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/index.html)
 * [Less Stylesheets](http://lesscss.org/) + [Font Awesome](http://fortawesome.github.com/Font-Awesome/)
-* User account framework, including code for:
+* User account framework, including:
     * Twitter authentication
     * Facebook authentication
     * Email authentication
     * Others (Work in progress)
-* Plain and RESTful style API bootstrap code, including
+* Plain and RESTful-style API bootstrap code, including
 	* Auto-generation of HTML forms from GAE data models
 	* Seamless entity CRUD via AJAX
 * jQuery form validation
+* Datepicker plugin
 * Basic testing infrastructure (WIP)
 * and more..
 

@@ -57,7 +57,7 @@ class RESTModel(db.Model):
             else:
                 raise UnsupportedFieldTypeError(v)
         
-        # validate key/value pairs (semantic validation, assume type checking is done)
+        # validate key/value pairs (semantic validation, assume type checking is finished)
         cls.validate(kvs)
         
         try:
