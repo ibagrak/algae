@@ -36,7 +36,8 @@ Finally, an App Engine template you can write home about.
 
 By Gosh, it's on Github, so please contribute.
 
-To sweeten the deal, 1st legit pull request earns you $3. 3 pull requests gets you contributor status.
+To sweeten the deal, first legit pull request earns you $3 (or coffee, if you want to meet the author in person). 
+Three legit pull requests gets you contributor status. Author reserves the right to define legit.
 
 ## Project information
 
@@ -54,4 +55,4 @@ Still wondering what this is all about? Contact the [author](http://twitter.com/
 
 ### Everything else:
 
-Everything else is licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
+Everything else is licensed under [MIT License](http://opensource.org/licenses/mit-license.php).
