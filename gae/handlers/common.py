@@ -5,9 +5,6 @@ import traceback
 import hashlib
 import os
 
-
-from functools import wraps
-
 import webapp2
 
 from webapp2_extras import sessions, json, auth
@@ -188,7 +185,7 @@ class BaseRESTHandler(BaseAPIHandler):
         kvs = json.decode(self.request.body)
         
         # find model class
-        cls = getattr(sys.modules['model'], obj_t)
+        cls = getattr(sys.modules['core.model'], obj_t)
         
         # dispatch put to that model class. all model classes need to a subclass model.RESTModel
         obj = utils.to_dict(cls.put(kvs))
@@ -196,7 +193,7 @@ class BaseRESTHandler(BaseAPIHandler):
         return self.prep_json_response(200, message = obj)
 
     def get(self, obj_t, identifier, *args):
-        cls = getattr(sys.modules['model'], obj_t)
+        cls = getattr(sys.modules['core.model'], obj_t)
         
         # dispatch put to that model class. all model classes need to a subclass model.RESTModel
         obj = utils.to_dict(cls.get(int(identifier)))
@@ -204,11 +201,10 @@ class BaseRESTHandler(BaseAPIHandler):
         return self.prep_json_response(200, message = obj)
 
     def post(self, obj_t, identifier, *args):
-        logging.error("post contents: %s", self.request.body)
         kvs = json.decode(self.request.body)
 
         # find model class
-        cls = getattr(sys.modules['model'], obj_t)
+        cls = getattr(sys.modules['core.model'], obj_t)
 
         obj = utils.to_dict(cls.post(int(identifier), kvs))
 
@@ -216,7 +212,7 @@ class BaseRESTHandler(BaseAPIHandler):
     
     @with_login
     def delete(self, obj_t, identifier, *args):
-        cls = getattr(sys.modules['model'], obj_t)
+        cls = getattr(sys.modules['core.model'], obj_t)
         obj = cls.delete1(int(identifier))
         return self.prep_json_response(200, message = json.encode(obj))
     

@@ -26,11 +26,12 @@ Algae is an application template for Google App Engine
   </ul>
   <div class="tab-content">
     <div class="tab-pane active row" id="users">
-      <div class="span8">
+      <div class="span12">
 
         <h3>Profiles</h3>
         <blockquote>
-        <p><code>gae/handlers/oauth.py</code> and <code>gae/handlers/email_auth.py</code> request handlers are responsible for processing OAuth and email user authentication. <code>USER_ATTR</code> dictionary in <code>gae/handlers/oauth.py</code> defines how user fields map between different services (identity providers) and the app's internal user model. The rest is a lot of magical Python code.
+        <code>gae/handlers/oauth.py</code> and <code>gae/handlers/email_auth.py</code> request handlers are responsible for processing OAuth and email user authentication. <br>
+        <code>USER_ATTR</code> dictionary in <code>gae/handlers/oauth.py</code> defines how user fields map between different services (identity providers) and the app's internal user model. The rest is a lot of smart Python code you needn't worry about.
         </blockquote>
         {% if logged_in %}
           <p>Signed in as <img style="max-width:100px" src = "{{ current_user.pic }}"> via <a href="{{ current_user.profile }}">{{ current_user.username }}</a>. <a href="/logout">Logout</a>
@@ -54,12 +55,12 @@ Algae is an application template for Google App Engine
     </div>
 
     <div class="tab-pane row" id="api">
-      <div class="span8" >
+      <div class="span12" >
         <blockquote>
-        <p>Full CRUD access to models is supported via POST, PUT, GET, and DELETE AJAX calls. See <code>gae/static/js/script.js</code> for sample code. The calls are routed via <code>BaseRESTHandler</code> in <code>gae/handlers/common.py</code></p>
-
-        <p>The forms below are automatically generated from model definitions in <code>gae/model.py</code>. 
-        <code>generate_model_form()</code> in <code>gae/model.py</code> converts the model to a dictionary of template variables, and <code>gae/static/templates/forms.html</code> macro generates the corresponding HTML.</p>
+        Full CRUD access to models is supported via POST, PUT, GET, and DELETE AJAX calls. See <code>gae/static/js/script.js</code> for sample code. The calls are routed via <code>BaseRESTHandler</code> in <code>gae/handlers/common.py</code>
+        <br>
+        The forms below are automatically generated from model definitions in <code>gae/model.py</code>. 
+        <code>generate_model_form()</code> in <code>gae/model.py</code> converts the model to a dictionary of template variables, and <code>gae/static/templates/forms.html</code> macro generates the corresponding HTML.
         </blockquote>
         <h3>Create Entity</h3>
         <blockquote>
@@ -95,7 +96,7 @@ Algae is an application template for Google App Engine
           <thead>
             <tr>
               <th>ID</th>
-              <th class="span3">Summary</th>
+              <th class="span9">Summary</th>
               <th class="">Action</th>
             </tr>
           </thead>
@@ -135,7 +136,7 @@ Algae is an application template for Google App Engine
 
     <div class="tab-pane row" id="about">
       <div class="span8" >
-        <h4>Algae is designed to get you app running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed, or your money back.</h4>
+        <p class="lead">Algae is designed to get you app running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed, or your money back.</p>
 
         <p>It integrates de facto industry standards (like Twitter Bootstrap and HTML5 Boilerplate) with features every web app needs, so you don't waste time re-inventing the wheel.</p>
 
@@ -162,15 +163,28 @@ Algae is an application template for Google App Engine
           <li>and more..</li>
         </ul>
         
-        <h4>Finally, a GAE template to write home about!</h4>
+        <p class="lead">Finally, a GAE template to write home about!</p>
       </div>
     </div>
 
     <div class="tab-pane row" id="security">
-      <div class="span8" >
+      <div class="span12" >
         <p>A Python decorator -- <code>@with_login</code> -- can be used on any method of <code>BaseHandler</code> or <code>BaseAPIHandler</code> (or their subclasses) to prevent unauthenticated users from viewing certain pages or calling APIs. </p>
 
         For instance, this <a href="/login_only">page</a> can only be viewed after you login.
+      </div>
+    </div>
+
+    <div class="tab-pane row" id="test">
+      <div class="span12" >
+        <p>Simply run <code>% python tests/testrunner.py /usr/local/google_appengine .</code> from command line to execute unit and API tests. </p> If the above command fails, make sure that <code>webtest</code> and <code>unittest2</code> Python modules are installed. 
+
+      </div>
+    </div>
+    <div class="tab-pane row" id="rpc">
+      <div class="span12" >
+        <p>Stay tuned...</p>
+
       </div>
     </div>
   </div> <!-- tab-content !-->

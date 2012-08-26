@@ -1,13 +1,14 @@
-import unittest
+import unittest2
 import copy
 
 from google.appengine.ext import testbed
+from webapp2_extras import json
 
 from core import model
 
-class ModelTestCase(unittest.TestCase):
+class ModelTestCase(unittest2.TestCase):
 
-	fixture_widget = {"int_field":1,"email_field":"i@co.co","boolean_field":True,"date_field":"12-02-2012","text_field":"daf","id":2,"string_field":"dfa","link_field":"http://i.co"}
+	fixture_widget = json.decode('{"int_field":1,"email_field":"i@co.co","boolean_field":true,"date_field":"12-02-2012","text_field":"daf","id":2,"string_field":"dfa","link_field":"http://i.co"}')
 
 	def setUp(self):
 		# First, create an instance of the Testbed class.

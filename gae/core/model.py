@@ -4,7 +4,6 @@ Created on Mar 29, 2012
 @author: ibagrak
 '''
 import logging
-import re
 from datetime import datetime
 from webapp2_extras import json
 
@@ -131,7 +130,7 @@ def generate_model_form(cls, with_key = False):
             d['class'] = 'url'
 
         else:
-            raise UnsupportedFieldTypeError(v)
+            raise UnsupportedFieldTypeError(k)
         
         form.append(d)
         
