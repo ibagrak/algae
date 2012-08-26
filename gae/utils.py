@@ -3,7 +3,7 @@ Created on Aug 6, 2012
 
 @author: ibagrak
 '''
-import datetime, time, re
+import datetime, re
 import hashlib
 import urllib
 from google.appengine.ext import db

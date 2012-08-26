@@ -145,24 +145,6 @@ class BaseAPIHandler(BaseHandler):
         self.response.clear()
         self.response.headers['Content-Type'] = 'application/json'
         self.response.write(json.encode(result))
-        
-    def get(self, *args):
-        action = self.request.get('action')
-        args = self.request.GET
-        
-        args['user'] = model.User.get_user_from_session(self.session['id'])
-        for arg in args:
-            args[arg] = self.request.get(arg)
-        
-        if not 'action' in args or not args['action'] in settings.APIS:
-            result = get_error(400, key = 'unsupported')
-        else:    
-            result = getattr(self, action)(args)
-        
-        self.response.clear()
-        self.response.set_status(result['code'])
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.write(json.encode(result))
 
     def put(self):
         pass

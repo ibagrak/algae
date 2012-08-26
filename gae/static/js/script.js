@@ -1,7 +1,42 @@
 /* Author: @ibagrak */
 
 $(document).ready( function() {
-    
+    // attach datepicker fields
+    $('div[id$="datepicker"]').datepicker();
+
+    // enable tabs on the index page
+    $('#tabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+
+    // setup validation to play well with default Twitter bootstrap classes
+    $('form').each(function () {
+        $(this).validate({
+            errorClass:     "error",
+            errorElement:   "span", // class='help-inline'
+
+            highlight: function(element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
+                } else {
+                    $(element).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
+                }
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
+                } else {
+                    $(element).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
+                }
+            }
+        });
+    });
+
+    /* 
+    Email authentication popups and forms
+    */
+
     // modal popup can be in 2 states: hidden or shown
     // when shown: it can be in 3 states: 
     // 1. start state - form shown and validating input, button active
@@ -14,7 +49,7 @@ $(document).ready( function() {
     $('.tri-state').each(function () {
         var modal = $(this);
         var frm = $(this).find('form');
-        var btn = $(this).find('.submit');
+        var btn = $(this).find('button[type=submit]');
         var orig_btn_label = btn.html();
         var result = $(this).find('.form_result');
         var action = frm.attr('name');
@@ -37,10 +72,11 @@ $(document).ready( function() {
         });
           
         // submit button callback
-        btn.live('click', function() {
+        btn.click(function(e) {
             // restore form after error message
             if (btn.hasClass('restore')) {
                 btn.removeClass('restore');
+                btn.appendTo(btn.parents().find('.btn_container'));
                 
                 // enable form  
                 frm.find(':input').removeAttr('disabled');
@@ -53,84 +89,78 @@ $(document).ready( function() {
             // submit button normally
             } else {
                 var kvs = {}
-                if (frm.validate().form()) {
-                    frm.find(":input").each(function() {
-                        if ($(this).attr('type') == 'password') {
-                            kvs[$(this).attr('id')] = MD5($(this).val());
+                var invalid_fields = false;
+
+                frm.find(":input").each(function() {
+                    if (!frm.validate().element($(this)))
+                        invalid_fields = true;
+
+                    if ($(this).attr('type') == 'password') {
+                        kvs[$(this).attr('id')] = MD5($(this).val());
+                    } else {
+                        kvs[$(this).attr('id')] = $(this).val();
+                    }
+                });
+                
+                if (invalid_fields) 
+                    return false;
+
+                // Disable form
+                frm.find(':input').attr('disabled', '');
+                
+                // Disable button
+                btn.attr('disabled', '');
+                btn.html('Sending...');
+                
+                $.ajax({
+                    type: 'GET',
+                    url: '/' + action,
+                    data: kvs,
+                }).done(function(data, code, jqxhr) {
+                    var code = data['code'];
+                    var message = data['message'];
+                    
+                    if (code == 200) { // success
+                        // if we were trying to signin reload with new session on success
+                        if (action == 'email-signin') {
+                            location.reload();
                         } else {
-                            kvs[$(this).attr('id')] = $(this).val();
+                            // hide form & show result
+                            result.html('Success!');
+                            frm.hide();
+                            result.show();
+                            
+                            btn.hide();
                         }
-                    });
+                    } else {
+                        // should never happen (HTTP error code always matches JSON 'code')
+                    }
+                }).fail(function(jqxhr, code, exception) {
+                    // TODO: Error handling
+                    var data = $.parseJSON(jqxhr.responseText);
+                    var code = data['code'];
+                    var message = data['message'];
                     
-                    // Disable form
-                    frm.find(':input').attr('disabled', '');
+                    result.html('So sorry! ' + message);
+                    frm.hide();
+                    result.show();  
                     
-                    // Disable button
-                    btn.attr('disabled', '');
-                    btn.html('Sending...');
-                    
-                    $.ajax({
-                        type: 'GET',
-                        url: '/' + action,
-                        data: kvs,
-                    }).done(function(data, code, jqxhr) {
-                        var code = data['code'];
-                        var message = data['message'];
-                        
-                        if (code == 200) { // success
-                            // if we were trying to signin reload with new session on success
-                            if (action == 'email-signin') {
-                                location.reload();
-                            } else {
-                                // hide form & show result
-                                result.html('Success!');
-                                frm.hide();
-                                result.show();
-                                
-                                btn.hide();
-                            }
-                        } else {
-                            // should never happen (HTTP error code always matches JSON 'code')
-                        }
-                    }).fail(function(jqxhr, code, exception) {
-                        // TODO: Error handling
-                        var data = $.parseJSON(jqxhr.responseText);
-                        var code = data['code'];
-                        var message = data['message'];
-                        
-                        result.html('So sorry! ' + message);
-                        frm.hide();
-                        result.show();  
-                        
-                        btn.removeAttr('disabled');
-                        btn.html('Try again');
-                        btn.addClass('restore');
-                    }); 
-                }
+                    btn.removeAttr('disabled');
+                    btn.html('Try again');
+                    btn.addClass('restore');
+
+                    btn.appendTo(btn.parents('.modal-footer'));
+                }); 
             }  
         });
         
-        // setup validation to play well with default Twitter bootstrap classes
-        frm.validate({
-            errorClass:     "error",
-            errorElement:   "span", // class='help-inline'
-            highlight: function(element, errorClass, validClass) {
-                if (element.type === 'radio') {
-                    this.findByName(element.name).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
-                } else {
-                    $(element).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
-                }
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                if (element.type === 'radio') {
-                    this.findByName(element.name).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
-                } else {
-                    $(element).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
-                }
-            }
-        });
+        
     });
     
+    /* 
+    REST API CRUD forms
+    */
+
     var make_ajax_form = function (type, done_func) {
         var btn_selector = '#' + type + '_btn';
 
@@ -163,73 +193,58 @@ $(document).ready( function() {
                 result.show();
                 result.fadeOut(3000);
             };
-            
-            $(frm).validate({
-                errorClass:      "error",
-                errorElement:    "span", 
-        
-                highlight: function(element, errorClass, validClass) {
-                    if (element.type === 'radio') {
-                        this.findByName(element.name).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
-                    } else {
-                        $(element).parent("div").parent("div").removeClass(validClass).addClass(errorClass);
-                    }
-                },
-                unhighlight: function(element, errorClass, validClass) {
-                    if (element.type === 'radio') {
-                        this.findByName(element.name).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
-                    } else {
-                        $(element).parent("div").parent("div").removeClass(errorClass).addClass(validClass);
-                    }
+
+            var kvs = {}
+            var invalid_fields = false;
+
+            frm.find(":input").each(function() {
+                if (!$(this).hasClass('dp') && !$(this).hasClass('checkbox') && !frm.validate().element($(this)))
+                    invalid_fields = true;
+
+                if ($(this).attr('type') == 'password') {
+                    kvs[$(this).attr('id')] = MD5($(this).val());
+                } else {
+                    kvs[$(this).attr('id')] = $(this).val();
                 }
             });
 
-            var kvs = {}
-            
-            if (frm.validate().form()) {
-                frm.find(":input").each(function() {
-                    if ($(this).attr('type') == 'password') {
-                        kvs[$(this).attr('id')] = MD5($(this).val());
-                    } else {
-                        kvs[$(this).attr('id')] = $(this).val();
-                    }
-                });
+            if (invalid_fields) 
+                return false;
 
-                // Disable form
-                frm.find(':input').attr('disabled', '');
+            // Disable form
+            frm.find(':input').attr('disabled', '');
+            
+            // Disable button
+            btn.attr('disabled', '');
+            
+            var kvs = JSON.stringify(kvs);
+            
+            $.ajax({
+                type: t,
+                url: URL,
+                data: kvs,
+                dataType: "json",
+                processData: false,
+                contentType: "application/json; charset=utf-8"
+            }).done(function(data, code, jqxhr) {
+                // Restore
+                restore();
                 
-                // Disable button
-                btn.attr('disabled', '');
+                if (done_func) {
+                    done_func(data, show_result);
+                }
                 
-                var kvs = JSON.stringify(kvs);
+            }).fail(function(jqxhr, code, exception) {
+                // TODO: Error handling
+                var data = $.parseJSON(jqxhr.responseText);
+                var code = data['code'];
+                var message = data['message'];
                 
-                $.ajax({
-                    type: t,
-                    url: URL,
-                    data: kvs,
-                    dataType: "json",
-                    processData: false,
-                    contentType: "application/json; charset=utf-8"
-                }).done(function(data, code, jqxhr) {
-                    // Restore
-                    restore();
-                    
-                    if (done_func) {
-                        done_func(data, show_result);
-                    }
-                    
-                }).fail(function(jqxhr, code, exception) {
-                    // TODO: Error handling
-                    var data = $.parseJSON(jqxhr.responseText);
-                    var code = data['code'];
-                    var message = data['message'];
-                    
-                    // Restore
-                    restore();
-                    
-                    show_result('So sorry! ' + message);
-                }); 
-            }
+                // Restore
+                restore();
+                
+                show_result('So sorry! ' + message);
+            }); 
         });
     }
     
@@ -429,10 +444,7 @@ $(document).ready( function() {
         });
     });
 
-    $('div[id$="datepicker"]').datepicker();
-
-    $('#tabs a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
+    /* 
+    RPC API forms
+    */
 });

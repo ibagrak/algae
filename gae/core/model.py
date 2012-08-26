@@ -112,6 +112,7 @@ def generate_model_form(cls, with_key = False):
 
         elif isinstance(t, db.TextProperty):
             d['element'] = 'textarea'
+            d['class'] = 'textarea'
 
         elif isinstance(t, db.DateProperty):
             d['element'] = 'text'
@@ -120,6 +121,7 @@ def generate_model_form(cls, with_key = False):
 
         elif isinstance(t, db.BooleanProperty):
             d['element'] = 'checkbox'
+            d['class'] = 'checkbox'
 
         elif isinstance(t, db.EmailProperty):
             d['element'] = 'text'
@@ -144,3 +146,6 @@ class Widget(RESTModel):
     email_field = db.EmailProperty(required = True)
     link_field = db.LinkProperty(required = True)
     date_field = db.DateProperty(required = True)
+
+class EmailAddr():
+    email_field = db.EmailProperty(required = True)

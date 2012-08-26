@@ -11,7 +11,7 @@
               <input type="text" class="input-xlarge optional disabled {{field.class}}" id="{{field.id}}" disabled>
             {% elif field.class == 'date' %}
               <div id="{{name}}_datepicker" class="input-append date datepicker" data-date="12-02-2012" data-date-format="{{field.format}}">
-                <input size="16" type="text" value="12-02-2012" id="{{field.id}}" disabled>
+                <input size="16" type="text" class="dp" value="12-02-2012" id="{{field.id}}" disabled>
                 <span class="add-on"><i class="icon-calendar"></i></span>
               </div>
             {% else %}

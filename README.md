@@ -50,7 +50,10 @@ Still wondering what this is all about? Contact the [author](http://twitter.com/
 * jQuery: MIT/GPL license
 * Modernizr: MIT/BSD license
 * Normalize.css: Public Domain
+* HTML5 Boilerplate: MIT
 * simpleauth: MIT
+* Twitter Bootstrap: Apache License v2.0
+* Font Awesome: CC BY 3.0
 * More undocumented licenses (WIP)
 
 ### Everything else:

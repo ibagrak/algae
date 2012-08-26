@@ -117,7 +117,7 @@ Algae is an application template for Google App Engine
     </div>
 
     <div class="tab-pane row" id="css">
-      <div class="span8">
+      <div class="span12">
 
         <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. 
         <p><code>gae/static/css/less/app.less</code> contains application-specific styles. You can recompile updated styles by running 
@@ -135,7 +135,7 @@ Algae is an application template for Google App Engine
     </div>
 
     <div class="tab-pane row" id="about">
-      <div class="span8" >
+      <div class="span12" >
         <p class="lead">Algae is designed to get you app running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed, or your money back.</p>
 
         <p>It integrates de facto industry standards (like Twitter Bootstrap and HTML5 Boilerplate) with features every web app needs, so you don't waste time re-inventing the wheel.</p>
@@ -183,8 +183,48 @@ Algae is an application template for Google App Engine
     </div>
     <div class="tab-pane row" id="rpc">
       <div class="span12" >
-        <p>Stay tuned...</p>
+        <h3>Change Email Address</h3>
+        <blockquote>
+        <div class="well">
+          <span class="label label-info">Heads up!</span>
+          Only logged in users can change their email address. You can <a href="/">login here</a>.
+        </div>
+        </blockquote>
 
+        <form id="change_email_form" class="form-horizontal">
+          <fieldset>
+            <div class="control-group">
+              <label class="control-label" for="email">Email Address</label>
+              <div class="controls">
+                <input type="text" class="input-xlarge required email" id="email" val="None">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button id="change_email_btn" type="submit" class="btn btn-primary"><i class="icon-edit"></i> Change</button> 
+              <span class="form_result"></span>
+            </div>
+
+          </fieldset>
+        </form>
+
+        <h3>Mailing List</h3>
+        <form id="signup_mailing_list_form" class="form-horizontal">
+          <fieldset>
+            <div class="control-group">
+              <label class="control-label" for="email">Email Address</label>
+              <div class="controls">
+                <input type="text" class="input-xlarge required email" id="email" val="None">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button id="signup_mailing_list_btn" type="submit" class="btn btn-primary"><i class="icon-bolt"></i> Signup</button> 
+              <span class="form_result"></span>
+            </div>
+
+          </fieldset>
+        </form>
       </div>
     </div>
   </div> <!-- tab-content !-->
@@ -203,19 +243,19 @@ Algae is an application template for Google App Engine
         <div class="control-group">
           <label class="control-label" for="username">Username</label>
           <div class="controls">
-            <input type="text" class="input-xlarge required" id="username">
+            <input type="text" class="input-xlarge required" id="username" val="None">
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="email">Email address</label>
           <div class="controls">
-            <input type="email" class="input-xlarge required email" id="email">
+            <input type="text" class="input-xlarge required email" id="email" val="None">
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="password_raw">Password</label>
           <div class="controls">
-            <input type="password" class="input-xlarge required" id="password_raw">
+            <input type="password" class="input-xlarge required" id="password_raw" val="None">
           </div>
         </div>
       </fieldset>
@@ -224,7 +264,11 @@ Algae is an application template for Google App Engine
   </div>
   
   <div class="modal-footer">
-    <a id="signup_btn" href="#" class="btn btn-primary submit">Sign Up</a>
+    <div class="row">
+      <div class="btn_container offset2">
+        <button id="signup_btn" type="submit" class="btn btn-primary">Sign Up</button> 
+      </div>
+    </div>
   </div>
 </div>
 
@@ -253,14 +297,15 @@ Algae is an application template for Google App Engine
     </form>
     <div class="form_result"></div>
   </div>
+
   <div class="modal-footer">
-    <a id="signin_btn" href="#" class="btn btn-primary submit">Sign In</a>
+    <div class="row">
+      <div class="btn_container offset2">
+        <button id="signin_btn" type="submit" class="btn btn-primary">Sign In</button> 
+      </div>
+    </div>
   </div>
 </div>
-    
 
-<footer>
- 
-</footer>
 {% endblock %}
     

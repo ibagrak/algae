@@ -22,7 +22,7 @@ app_config = {
 }
 
 # List of valid APIs
-APIS = frozenset({'test_api'})
+APIS = frozenset({'signup_mailing_list', 'change_email_addr'})
 
 #200 OK - Everything worked as expected.
 #400 Bad Request - Often missing a required parameter.
@@ -36,7 +36,8 @@ API_CODES  = { 200 : 'Success',
                       'password'    : 'Invalid password', 
                       'email_password' : 'Invalid email or password', 
                       'unsupported' : 'Unsupported API', 
-                      'missing'     : 'Not all parameter present'}, 
+                      'missing'     : 'Not all parameter present', 
+                      'noemail'     : 'Email not valid'}, 
                401 : 'Unauthorized', 
                402 : {'unconfirmed' : 'Email has not been confirmed.', 
                       'duplicate'   : 'User already exists.'},
