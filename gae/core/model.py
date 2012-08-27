@@ -147,5 +147,5 @@ class Widget(RESTModel):
     link_field = db.LinkProperty(required = True)
     date_field = db.DateProperty(required = True)
 
-class EmailAddr():
-    email_field = db.EmailProperty(required = True)
+class EmailAddr(db.Model):
+    email = db.EmailProperty(required = True)

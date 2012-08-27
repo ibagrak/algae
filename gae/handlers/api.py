@@ -1,35 +1,29 @@
-import json
-import settings
+from google.appengine.ext import db
 
+import settings
 from core import model
 import common
 
 class RPCHandler(common.BaseAPIHandler):
     
-    def get(self, *args):
-        action = self.request.get('action')
+    def get(self, action, *args):
         args = self.request.GET
         
-        args['user'] = model.User.get_user_from_session(self.session['id'])
         for arg in args:
             args[arg] = self.request.get(arg)
         
-        if not 'action' in args or not args['action'] in settings.APIS:
-            result = common.get_error(400, key = 'unsupported')
+        if not action in settings.APIS:
+            self.prep_json_response(400, key = 'unsupported')
         else:    
-            result = getattr(self, action)(args)
-        
-        self.response.clear()
-        self.response.set_status(result['code'])
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.write(json.encode(result))
+            getattr(self, action)(args)
 
     def signup_mailing_list(self, args):
     	if 'email' in args:
-			model.EmailAddr(email = args['email']).put()
-			return self.get_error(200, message = "Thanks for signing up!")
+            # TODO check for duplicates
+            db.put(model.EmailAddr(email = args['email']))
+            self.prep_json_response(200, message = "Thanks for signing up!")
     	else:
-    		return self.get_error(400, key = "noemail")
+    		self.prep_json_response(400, key = "noemail")
 
     @common.with_login
     def change_email_addr(self, args):
@@ -37,9 +31,9 @@ class RPCHandler(common.BaseAPIHandler):
     		self.current_user.email = args['email']
     		self.current_user.put()
 
-    		return self.get_error(200, message = "Email updated!")
+    		self.prep_json_response(200, message = "Email updated!")
     	else:
-    		return self.get_error(400, key = "noemail")
+    		self.prep_json_response(400, key = "noemail")
 
 class RESTHandler(common.BaseRESTHandler):
 	

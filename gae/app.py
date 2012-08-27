@@ -27,7 +27,7 @@ routes = [webapp2.Route('/',                  handler = index.Index),
                         handler = common.BaseRESTHandler), 
           
           # RPC API
-          webapp2.Route('/rpc',               handler = api.RPCHandler), 
+          webapp2.Route('/rpc/<action>',               handler = api.RPCHandler), 
           ]                             
                                        
 application = webapp2.WSGIApplication(routes,   

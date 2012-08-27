@@ -92,7 +92,7 @@ $(document).ready( function() {
                 var invalid_fields = false;
 
                 frm.find(":input").each(function() {
-                    if (!frm.validate().element($(this)))
+                    if (!$(this).hasClass('dp') && !$(this).hasClass('checkbox') && !frm.validate().element($(this)))
                         invalid_fields = true;
 
                     if ($(this).attr('type') == 'password') {
@@ -153,13 +153,28 @@ $(document).ready( function() {
                 }); 
             }  
         });
-        
-        
     });
     
     /* 
     REST API CRUD forms
     */
+
+    // helpers
+    var restore = function(frm, btn) {
+        // Restore
+        // only restore children inputs of controls or checkboxes (doesn't apply to datepicker)
+        frm.find('.controls > :input').removeAttr('disabled');
+        frm.find('.controls > :input').val('');
+        frm.find('.checkbox > :input').removeAttr('disabled');
+        btn.removeAttr('disabled');
+    };
+            
+    var show_result = function(result, msg) {
+        // hide form & show result
+        result.html(msg);
+        result.show();
+        result.fadeOut(3000);
+    };
 
     var make_ajax_form = function (type, done_func) {
         var btn_selector = '#' + type + '_btn';
@@ -177,23 +192,6 @@ $(document).ready( function() {
             var btn = $(this);
             var frm = $(this).parents('form');
             var result = $(this).siblings('.form_result');
-            
-            var restore = function() {
-                // Restore
-                // only restore children inputs of controls or checkboxes (doesn't apply to datepicker)
-                frm.find('.controls > :input').removeAttr('disabled');
-                frm.find('.controls > :input').val('');
-                frm.find('.checkbox > :input').removeAttr('disabled');
-                btn.removeAttr('disabled');
-            };
-            
-            var show_result = function(msg) {
-                // hide form & show result
-                result.html(msg);
-                result.show();
-                result.fadeOut(3000);
-            };
-
             var kvs = {}
             var invalid_fields = false;
 
@@ -228,10 +226,10 @@ $(document).ready( function() {
                 contentType: "application/json; charset=utf-8"
             }).done(function(data, code, jqxhr) {
                 // Restore
-                restore();
+                restore(frm, btn);
                 
                 if (done_func) {
-                    done_func(data, show_result);
+                    done_func(data, result);
                 }
                 
             }).fail(function(jqxhr, code, exception) {
@@ -241,16 +239,16 @@ $(document).ready( function() {
                 var message = data['message'];
                 
                 // Restore
-                restore();
+                restore(frm, btn);
                 
-                show_result('So sorry! ' + message);
+                show_result(result, 'So sorry! ' + message);
             }); 
         });
     }
     
     // if PUT API call is successful, we want to retrieve the new item and place it in the table below
     // this function is a parameter to make_ajax_form()
-    var done_create_func = function (data, show_result) {
+    var done_create_func = function (data, result) {
         var code = data['code'];
         var message = data['message'];
                     
@@ -268,26 +266,26 @@ $(document).ready( function() {
                 
                 if (code == 200) {  
                     // hide form & show result
-                    show_result('Success!');
+                    show_result(result, 'Success!');
                     
                     $("#entity-row").tmpl([{id : data['message']['id'], obj : JSON.stringify(data['message'])}]).prependTo("#entities > tbody");
                 } else {
                     // should never happen (HTTP error code always matches JSON 'code')
-                    show_result('Couldn\'t retrieve created entity!');
+                    show_result(result, 'Couldn\'t retrieve created entity!');
                 }                  
             }).fail(function(jqxhr, code, exception) {
                 // should never happen (HTTP error code always matches JSON 'code')
-                show_result('Couldn\'t retrieve created entity!');
+                show_result(result, 'Couldn\'t retrieve created entity!');
             });
         } else {
             // should never happen (HTTP error code always matches JSON 'code')
-            show_result('Error!');
+            show_result(result, 'Error!');
         }                
     }
 
     // if POST API call is successful, we want to update the item summary in the table
     // this function is a parameter to make_ajax_form()
-    var done_update_func = function (data, show_result) {
+    var done_update_func = function (data, result) {
         var code = data['code'];
         var message = data['message'];
                     
@@ -305,9 +303,9 @@ $(document).ready( function() {
                 
                 if (code == 200) {  
                     // hide form & show result
-                    show_result('Success!');
+                    show_result(result, 'Success!');
                     
-                    // FIXME: wonky
+                    // TODO: fix wonky code
                     var btn_selector = '.update_btn[data-id=\"' + id + '\"]';
                     var btn = $(btn_selector);
                     var summary_cell = btn.parents('tr').find('td:nth-child(2)');
@@ -316,15 +314,15 @@ $(document).ready( function() {
                     summary_cell.html(JSON.stringify(message));
                 } else {
                     // should never happen (HTTP error code always matches JSON 'code')
-                    show_result('Couldn\'t retrieve updated entity!');
+                    show_result(result, 'Couldn\'t retrieve updated entity!');
                 }                  
             }).fail(function(jqxhr, code, exception) {
                 // should never happen (HTTP error code always matches JSON 'code')
-                show_result('Couldn\'t retrieve updated entity!');
+                show_result(result, 'Couldn\'t retrieve updated entity!');
             });
         } else {
             // should never happen (HTTP error code always matches JSON 'code')
-            show_result('Error!');
+            show_result(result, 'Error!');
         }
 
         // after update is submitted, the button becomes disabled again until next row is selected
@@ -335,6 +333,7 @@ $(document).ready( function() {
     make_ajax_form('create', done_create_func); 
     make_ajax_form('update', done_update_func);
     
+    // needs to be live because some of these buttons are created at runtime
     $('.update_btn').live('click', function() {     
         var update_form = $('#update_form');
         var btn = $(this);
@@ -351,10 +350,10 @@ $(document).ready( function() {
         $('#update_btn').addClass('disabled');
 
         $.ajax({
-                type: 'GET',
-                url: '/rest/Widget/' + $(this).attr('data-id'),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8"
+            type: 'GET',
+            url: '/rest/Widget/' + $(this).attr('data-id'),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8"
          }).done(function(data, code, jqxhr) {
             var code = data['code'];
             var message = data['message'];
@@ -405,6 +404,7 @@ $(document).ready( function() {
         });
     });
     
+    // needs to be live because some of these buttons are created at runtime
     $('.delete_btn').live('click', function() {
         var btn = $(this);
 
@@ -447,4 +447,65 @@ $(document).ready( function() {
     /* 
     RPC API forms
     */
+    $('#change_email_btn, #signup_mailing_list_btn').click(function () {
+        var btn = $(this);
+        var frm = $(this).parents('form');
+        var result = $(this).siblings('.form_result');
+        var kvs = {}
+        var invalid_fields = false;
+        var action = frm.attr('name');
+
+        frm.find(":input").each(function() {
+            if (!$(this).hasClass('dp') && !$(this).hasClass('checkbox') && !frm.validate().element($(this)))
+                invalid_fields = true;
+
+            if ($(this).attr('type') == 'password') {
+                kvs[$(this).attr('id')] = MD5($(this).val());
+            } else {
+                kvs[$(this).attr('id')] = $(this).val();
+            }
+        });
+
+        if (invalid_fields) 
+            return false;
+
+        // Disable form
+        frm.find(':input').attr('disabled', '');
+        
+        // Disable button
+        btn.attr('disabled', '');
+        
+        $.ajax({
+            type: 'GET',
+            url: '/rpc/' + action,
+            data: kvs,
+        }).done(function(data, code, jqxhr) {
+            var code = data['code'];
+            var message = data['message'];
+
+            // Restore
+            restore(frm, btn);
+                
+            if (code == 200) {  
+                // hide form & show result
+                if (action == 'change_email')
+                    show_result(result, 'Email updated!');
+                else
+                    show_result(result, 'Thanks for signing up');
+            } else {
+                // should never happen (HTTP error code always matches JSON 'code')
+                show_result(result, 'So sorry! ' + message);
+            }                  
+        }).fail(function(jqxhr, code, exception) {
+            // TODO: Error handling
+            var data = $.parseJSON(jqxhr.responseText);
+            var code = data['code'];
+            var message = data['message'];
+            
+            // Restore
+            restore(frm, btn);
+            
+            show_result(result, 'So sorry! ' + message);
+        }); 
+    });
 });
