@@ -19,8 +19,9 @@ class RPCHandler(common.BaseAPIHandler):
 
     def signup_mailing_list(self, args):
     	if 'email' in args:
-            # TODO check for duplicates
-            db.put(model.EmailAddr(email = args['email']))
+            if not db.Query(model.EmailAddr).filter("email =", args['email']).get():
+                db.put(model.EmailAddr(email = args['email']))
+                
             self.prep_json_response(200, message = "Thanks for signing up!")
     	else:
     		self.prep_json_response(400, key = "noemail")
