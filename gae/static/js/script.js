@@ -488,7 +488,7 @@ $(document).ready( function() {
                 
             if (code == 200) {  
                 // hide form & show result
-                if (action == 'change_email')
+                if (action == 'change_email_addr') 
                     show_result(result, 'Email updated!');
                 else
                     show_result(result, 'Thanks for signing up');
