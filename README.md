@@ -1,6 +1,6 @@
 # Algae is an application template for [Google App Engine](http://https://developers.google.com/appengine/)
 
-Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed or your back.
+Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed or your money back.
 
 Algae integrates de facto industry standards (like Twitter Bootstrap and HTML5 Boilerplate) with features every web app needs (like user management and third-party authentication). It's flexible, functional, and easy to use.
 
