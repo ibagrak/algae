@@ -4,6 +4,7 @@ import sys
 import traceback
 import hashlib
 import os
+from functools import wraps
 
 import webapp2
 
@@ -28,6 +29,7 @@ def get_error(code, key = None, message = None, *args):
         return {'code' : code, 'message' : settings.API_CODES[code]}
 
 def with_login(func):
+	@wraps(func)
     def _with_login(*args, **kwargs):
         self = args[0]
         if not self.logged_in and issubclass(args[0].__class__, BaseAPIHandler):
@@ -104,6 +106,8 @@ class BaseHandler(webapp2.RequestHandler):
         self.session['pageviews'] = self.session['pageviews'] + 1
     
     def prep_html_response(self, template_name, template_vars={}):
+        # set header for IE to use edge (no "compatibility")
+        self.response.headers.add_header("X-UA-Compatible", "IE=Edge,chrome=1")
         # Preset values for the template
         values = {
           'url_for'      : self.uri_for,

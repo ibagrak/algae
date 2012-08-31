@@ -1,6 +1,6 @@
 # Algae is an application template for [Google App Engine](http://https://developers.google.com/appengine/)
 
-Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed or your back.
+Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed or your money back.
 
 Algae integrates de facto industry standards (like Twitter Bootstrap and HTML5 Boilerplate) with features every web app needs (like user management and third-party authentication). It's flexible, functional, and easy to use.
 
@@ -30,9 +30,10 @@ Finally, an App Engine template you can write home about.
 2. Clone the git repo - `git clone git://github.com/algae/algae.git`
 3. Modify application name in `app.yaml`
 4. Populate `secrets.py.template` with secrets and rename it to `secrets.py`
-5. [Register](https://appengine.google.com/) your new app with Google
-6. Deploy
-7. Off you go!
+5. For local testing make sure you have required libraries (e.g. [lxml](http://lxml.de/installation.html)) installed
+6. [Register](https://appengine.google.com/) your new app with Google
+7. Deploy
+8. Off you go!
 
 ## Contributing
 
