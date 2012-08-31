@@ -104,6 +104,8 @@ class BaseHandler(webapp2.RequestHandler):
         self.session['pageviews'] = self.session['pageviews'] + 1
     
     def prep_html_response(self, template_name, template_vars={}):
+        # set header for IE to use edge (no "compatibility")
+        self.response.headers.add_header("X-UA-Compatible", "IE=Edge,chrome=1")
         # Preset values for the template
         values = {
           'url_for'      : self.uri_for,

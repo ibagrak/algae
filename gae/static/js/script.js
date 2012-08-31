@@ -1,6 +1,9 @@
 /* Author: @ibagrak */
 
 $(document).ready( function() {
+    // remove ugly IE shadow around links / tabs
+    $("a").focus(function() { $(this).blur(); });
+
     // attach datepicker fields
     $('div[id$="datepicker"]').datepicker();
 

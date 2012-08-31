@@ -32,9 +32,14 @@ handlers:
 - url: /js
   static_dir: static/js 
 
+- url: /font/(.*\.eot)
+  static_files: static/font/\1
+  upload: static/font/(.*\.eot)
+  mime_type: font/eot
+
 - url: /font
   static_dir: static/font
-  
+
 - url: /.*
   script: app.application
   
