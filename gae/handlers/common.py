@@ -4,6 +4,7 @@ import sys
 import traceback
 import hashlib
 import os
+from functools import wraps
 
 import webapp2
 
@@ -28,6 +29,7 @@ def get_error(code, key = None, message = None, *args):
         return {'code' : code, 'message' : settings.API_CODES[code]}
 
 def with_login(func):
+	@wraps(func)
     def _with_login(*args, **kwargs):
         self = args[0]
         if not self.logged_in and issubclass(args[0].__class__, BaseAPIHandler):
