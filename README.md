@@ -30,9 +30,10 @@ Finally, an App Engine template you can write home about.
 2. Clone the git repo - `git clone git://github.com/algae/algae.git`
 3. Modify application name in `app.yaml`
 4. Populate `secrets.py.template` with secrets and rename it to `secrets.py`
-5. [Register](https://appengine.google.com/) your new app with Google
-6. Deploy
-7. Off you go!
+5. For local testing make sure you have required libraries (e.g. [lxml](http://lxml.de/installation.html)) installed
+6. [Register](https://appengine.google.com/) your new app with Google
+7. Deploy
+8. Off you go!
 
 ## Contributing
 

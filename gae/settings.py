@@ -5,6 +5,8 @@ from secrets import SESSION_KEY
 
 if 'SERVER_SOFTWARE' in os.environ and os.environ['SERVER_SOFTWARE'].startswith('Dev'):
     DEBUG = True
+    # don't worry if you are running on another port, currently this
+    # is not heavily used
     HOME_URL = 'http://localhost' + ':8085'
 else:
     DEBUG = False
