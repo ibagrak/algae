@@ -39,6 +39,3 @@ application.error_handlers[500] = common.handle_500
 
 def main():
     application.run()
-
-if __name__ == "__main__":
-    main()

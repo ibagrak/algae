@@ -1,7 +1,7 @@
 application: green-algae
 version: 1
 runtime: python27
-threadsafe: false
+threadsafe: true
 api_version: 1
 
 default_expiration: "14d"
@@ -11,9 +11,6 @@ builtins:
 - appstats: on
 
 handlers:
-- url: /remote_api
-  script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
-  
 - url: /favicon.ico
   static_files: static/img/favicon.ico
   upload: static/img/favicon.ico
@@ -35,11 +32,16 @@ handlers:
 - url: /js
   static_dir: static/js 
 
+- url: /font/(.*\.eot)
+  static_files: static/font/\1
+  upload: static/font/(.*\.eot)
+  mime_type: font/eot
+
 - url: /font
   static_dir: static/font
-  
+
 - url: /.*
-  script: app.py
+  script: app.application
   
 libraries:
 - name: jinja2

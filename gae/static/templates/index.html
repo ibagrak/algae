@@ -37,6 +37,7 @@ Algae is an application template for Google App Engine
           No one is signed in. Sign in with:
           <ul>
             <li><a href="/auth/facebook">Facebook</a>
+            <li><a href="/auth/google">Google</a>
             <li><a href="/auth/twitter">Twitter</a>
             <li><a data-toggle="modal" href="#signup">Sign up</a> or <a data-toggle="modal" href="#signin">sign in</a> with email
           </ul>
@@ -57,8 +58,8 @@ Algae is an application template for Google App Engine
         <blockquote>
         Full CRUD access to models is supported via POST, PUT, GET, and DELETE AJAX calls. See <code>gae/static/js/script.js</code> for sample code. The calls are routed via <code>BaseRESTHandler</code> in <code>gae/handlers/common.py</code>
         <br>
-        The forms below are automatically generated from model definitions in <code>gae/model.py</code>. 
-        <code>generate_model_form()</code> in <code>gae/model.py</code> converts the model to a dictionary of template variables, and <code>gae/static/templates/forms.html</code> macro generates the corresponding HTML.
+        The forms below are automatically generated from model definitions in <code>gae/code/model.py</code>. 
+        <code>generate_model_form()</code> in <code>gae/code/model.py</code> converts the model to a dictionary of template variables, and <code>gae/static/templates/forms.html</code> macro generates the corresponding HTML.
         </blockquote>
         <h3>Create Entity</h3>
         <blockquote>
