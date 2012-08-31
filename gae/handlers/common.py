@@ -30,15 +30,15 @@ def get_error(code, key = None, message = None, *args):
 
 def with_login(func):
 	@wraps(func)
-    def _with_login(*args, **kwargs):
-        self = args[0]
-        if not self.logged_in and issubclass(args[0].__class__, BaseAPIHandler):
-            return args[0].prep_json_response(401)
-        elif not args[0].logged_in and issubclass(args[0].__class__, BaseHandler):
-            return args[0].prep_html_response("generic_error.html", { 'code' : 401 })
+        def _with_login(*args, **kwargs):
+            self = args[0]
+            if not self.logged_in and issubclass(args[0].__class__, BaseAPIHandler):
+                return args[0].prep_json_response(401)
+            elif not args[0].logged_in and issubclass(args[0].__class__, BaseHandler):
+                return args[0].prep_html_response("generic_error.html", { 'code' : 401 })
 
-        func(*args, **kwargs)
-    return _with_login
+            func(*args, **kwargs)
+        return _with_login
 
 class BaseHandler(webapp2.RequestHandler):
     # if we don't have this then spammy head requests would clutter the error log

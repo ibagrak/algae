@@ -59,8 +59,7 @@ DATE_FORMAT_HTML = "dd-mm-yyyy"
 DATE_FORMAT = "%d-%m-%Y"
 
 # Email Authentication
-EMAIL_CONFIRM_BODY = 
-""" 
+EMAIL_CONFIRM_BODY = """ 
 Hello, %s!
 
 Please click the link below to confirm your email address: 
