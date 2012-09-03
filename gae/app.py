@@ -1,7 +1,7 @@
 import webapp2
 
 import settings
-from handlers import index, api, common, email_auth
+from handlers import index, api, common, email_auth, locale
 
 routes = [webapp2.Route('/',                  handler = index.Index),
           webapp2.Route('/login_only',        handler = index.WithLogin),
@@ -18,6 +18,9 @@ routes = [webapp2.Route('/',                  handler = index.Index),
           # common logout
           webapp2.Route('/logout', handler='handlers.oauth.AuthHandler:logout', name='logout'),
           
+          # i18n manual locale change
+          webapp2.Route('/locale/<locale>', handler=locale.SetLocale),
+
           # REST API
           webapp2.Route('/rest/<obj_t>s', 
                         methods = ['PUT'], 

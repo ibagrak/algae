@@ -1,0 +1,559 @@
+# German (Germany) translations for PROJECT.
+# Copyright (C) 2012 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2012-09-03 10:59+0200\n"
+"PO-Revision-Date: 2012-09-02 12:15+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: de_DE <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: libs/httplib2/__init__.py:394
+#, python-format
+msgid "Content purported to be compressed with %s but failed to decompress."
+msgstr "Inhalt anscheinend mit %s komprimiert aber entpacken ist fehlgeschlagen."
+
+#: libs/httplib2/__init__.py:504
+#, python-format
+msgid "Unsupported value for qop: %s."
+msgstr "Wert %s ist für qop nicht unterstützt."
+
+#: libs/httplib2/__init__.py:507 libs/httplib2/__init__.py:570
+#, python-format
+msgid "Unsupported value for algorithm: %s.algorithm"
+msgstr "Wert %s.algorithm ist für algorithm nicht unterstützt."
+
+#: libs/httplib2/__init__.py:567
+msgid "The challenge doesn't contain a server nonce, or this one is empty."
+msgstr "Die Challenge enthält kein Server-generiertes Nonce, oder sie ist leer."
+
+#: libs/httplib2/__init__.py:573
+#, python-format
+msgid "Unsupported value for pw-algorithm: %s.pw-algorithm"
+msgstr "Wert %s.pw-algorithm ist nicht unterstützt für pw-algorithm."
+
+#: libs/httplib2/__init__.py:1220
+msgid "Redirected but the response is missing a Location: header."
+msgstr "Redirect, wobei aber ein Location: header fehlt."
+
+#: static/templates/generic_error.html:8
+msgid "Page Not Found"
+msgstr "Seite nicht gefunden"
+
+#: static/templates/generic_error.html:18
+msgid "Sorry. A serious error has occured."
+msgstr "Es tut mir leid. Ein schwerwiegender Fehler ist aufgetreten."
+
+#: static/templates/generic_error.html:19
+msgid "Return home."
+msgstr "Zurück zur Startseite."
+
+#: static/templates/generic_error.html:21
+#, python-format
+msgid "Code: %(code)s"
+msgstr ""
+
+#: static/templates/index.html:5
+msgid "Algae is an application template for Google App Engine"
+msgstr "Algae ist ein Anwendungs-Template für Google App Engine"
+
+#: static/templates/index.html:17
+msgid "Users"
+msgstr "Benutzer"
+
+#: static/templates/index.html:18
+msgid "RESTful"
+msgstr ""
+
+#: static/templates/index.html:19
+msgid "RPC"
+msgstr ""
+
+#: static/templates/index.html:20
+msgid "Security"
+msgstr "Sicherheit"
+
+#: static/templates/index.html:21
+msgid "CSS/LESS"
+msgstr "CSS/LESS"
+
+#: static/templates/index.html:22
+msgid "Testing"
+msgstr "Testen"
+
+#: static/templates/index.html:23
+msgid "I18N"
+msgstr ""
+
+#: static/templates/index.html:24
+msgid "About"
+msgstr "Über"
+
+#: static/templates/index.html:30
+msgid "Profiles"
+msgstr ""
+
+#: static/templates/index.html:32
+msgid ""
+"\n"
+"        <code>gae/handlers/oauth.py</code> and "
+"<code>gae/handlers/email_auth.py</code> request handlers are responsible "
+"for processing OAuth and email user authentication. <br>\n"
+"        <code>USER_ATTR</code> dictionary in "
+"<code>gae/handlers/oauth.py</code> defines how user fields map between "
+"different services (identity providers) and the app's internal user "
+"model. The rest is a lot of smart Python code you needn't worry about.\n"
+msgstr ""
+"        <code>gae/handlers/oauth.py</code> und "
+"<code>gae/handlers/email_auth.py</code> Request Handler sind für das "
+"Verarbeiten von OAuth und Email Benutzerauthentifikation zuständig. <br>"
+"\n"
+"        <code>USER_ATTR</code> Dictionary in "
+"<code>gae/handlers/oauth.py</code> definiert wie Benutzerfelder zwischen "
+"den unterschiedlichen Authentifizierungs-Services (Providern) und dem "
+"internen User-Modell zugeordnet werden. Der Rest ist ein Haufen "
+"intelligenter Python-Code, kein Grund sich um den zu kümmern.\n"
+
+#: static/templates/index.html:38
+#, python-format
+msgid ""
+"\n"
+"          <p>Signed in as <img style=\"max-width:100px\" src = "
+"\"%(pic)s\"> via <a href=\"%(profile)s\">%(username)s</a>. <a "
+"href=\"/logout\">Logout</a>\n"
+"          "
+msgstr ""
+"\n"
+"<p>Angemeldet als <img style=\"max-width:100px\" src = \"%(pic)s\"> via "
+"<a href=\"%(profile)s\">%(username)s</a>. <a "
+"href=\"/logout\">Abmelden</a>\n"
+"\""
+
+#: static/templates/index.html:42
+msgid ""
+"\n"
+"          No one is signed in. Sign in with:\n"
+"          <ul>\n"
+"            <li><a href=\"/auth/facebook\">Facebook</a>\n"
+"            <li><a href=\"/auth/google\">Google</a>\n"
+"            <li><a href=\"/auth/twitter\">Twitter</a>\n"
+"            <li><a data-toggle=\"modal\" href=\"#signup\">Sign up</a> or "
+"<a data-toggle=\"modal\" href=\"#signin\">sign in</a> with email\n"
+"          </ul>\n"
+"          "
+msgstr ""
+"\n"
+"          Niemand ist angemeldet. Bitte anmelden mit:\n"
+"          <ul>\n"
+"            <li><a href=\"/auth/facebook\">Facebook</a>\n"
+"            <li><a href=\"/auth/google\">Google</a>\n"
+"            <li><a href=\"/auth/twitter\">Twitter</a>\n"
+"            <li><a data-toggle=\"modal\" "
+"href=\"#signup\">Registrieren</a> oder <a data-toggle=\"modal\" "
+"href=\"#signin\">Anmelden</a> mit Email und Passwort\n"
+"          </ul>\n"
+
+#: static/templates/index.html:52
+msgid "Sessions"
+msgstr "Sessions"
+
+#: static/templates/index.html:54
+#, python-format
+msgid ""
+"\n"
+"        Sessions are tracked by encrypted, client-side cookies. "
+"<code>COOKIE_TEMPLATE</code> variable in <code>gae/settings.py</code> "
+"defines the cookie content, and <code>session</code> dictionary can be "
+"accessed in every request handler. \n"
+"        </blockquote>\n"
+"     \n"
+"        <p>Reload this page. The number of pageviews should increase. \n"
+"    \n"
+"        <p>Pageviews: %(pageviews)s\n"
+"        "
+msgstr ""
+"\n"
+"        Sessions werden mit verschlüsslten Cookies verfolgt. Die "
+"<code>COOKIE_TEMPLATE</code>-Variable in <code>gae/settings.py</code> "
+"definiert den Inhalt, und das <code>session</code>-Dictionary kann von "
+"jedem Request-Handler angesprochen werden. \n"
+"        </blockquote>\n"
+"     \n"
+"        <p>Diese Seite neuladen, und die Anzahl der Seitenzugriffe sollte"
+" sich erhöhen. \n"
+"    \n"
+"        <p>Seitenzugriffe: %(pageviews)s\n"
+"        "
+
+#: static/templates/index.html:68
+msgid ""
+"\n"
+"        Full CRUD access to models is supported via POST, PUT, GET, and "
+"DELETE AJAX calls. See <code>gae/static/js/script.js</code> for sample "
+"code. The calls are routed via <code>BaseRESTHandler</code> in "
+"<code>gae/handlers/common.py</code>\n"
+"        <br>\n"
+"        The forms below are automatically generated from model "
+"definitions in <code>gae/code/model.py</code>. \n"
+"        <code>generate_model_form()</code> in "
+"<code>gae/core/model.py</code> converts the model to a dictionary of "
+"template variables, and <code>gae/static/templates/forms.html</code> "
+"macro generates the corresponding HTML.\n"
+"        "
+msgstr ""
+"        Vollständiger CRUD-Zugriff auf die Modelle wird mit POST, PUT, "
+"GET und DELETE AJAX-Aufrufen gestattet. Siehe "
+"<code>gae/static/js/script.js</code> für Beispiel-Code. Die Aufrufe "
+"werden mit dem <code>BaseRESTHandler</code> in "
+"<code>gae/handlers/common.py</code> verarbeitet.<br>\n"
+"        Die Formulare werden automatisch von den Model-Definitionen in "
+"<code>gae/code/model.py</code> erstellt.\n"
+"        Die Function <code>generate_mode_form()</code> in "
+"<code>gae/core/model.py</code> wandelt das Model in ein Dictionary von "
+"Template-Variablen um, und <code>gae/static/templates/forms.html</code> "
+"Macro generiert das entsprechende HTML.\n"
+
+#: static/templates/index.html:75
+msgid "Create Entity"
+msgstr "Element anlegen"
+
+#: static/templates/index.html:80 static/templates/index.html:91
+#: static/templates/index.html:213
+msgid "Heads up!"
+msgstr "Achtung!"
+
+#: static/templates/index.html:81
+msgid ""
+"\n"
+"          Only logged in users are authorized to create new entities. See"
+" Security tab for how to modify these rules for your app.\n"
+"          "
+msgstr ""
+"Nur angemeldete Benutzer können neue Elemente anlegen. Das Tab Sicherheit"
+" erklärt wie diese Regeln in der Anwendung angepasst werden können.\n"
+
+#: static/templates/index.html:88
+msgid "Update/Delete Entity"
+msgstr "Ändern/Löschen eines Elements"
+
+#: static/templates/index.html:92
+msgid ""
+"\n"
+"          Only logged in users are authorized to delete entities. See "
+"Security tab for how to modify these rules for your app.\n"
+"          "
+msgstr ""
+"Nur angemeldete Benutzer können Elemente löschen. Das Tab Sicherheit "
+"erklärt wie diese Regeln in der Anwendung angepasst werden können.\n"
+
+#: static/templates/index.html:103 static/templates/index.html:122
+msgid "Update"
+msgstr "Ändern"
+
+#: static/templates/index.html:104 static/templates/index.html:123
+msgid "Delete"
+msgstr "Löschen"
+
+#: static/templates/index.html:112
+msgid "ID"
+msgstr "ID"
+
+#: static/templates/index.html:113
+msgid "Summary"
+msgstr "Zusammenfassung"
+
+#: static/templates/index.html:114
+msgid "Action"
+msgstr "Aktion"
+
+#: static/templates/index.html:135
+msgid ""
+"\n"
+"        <p><span class=\"app-less-verify\">If this text appears in "
+"blue</span>, then LESS stylesheets are working. \n"
+"        <p><code>gae/static/css/less/app.less</code> contains "
+"application-specific styles. You can recompile updated styles by running"
+" \n"
+"        <code>npm run-script less</code> from <code>gae/static</code>\n"
+"        \n"
+"        <p>If <code>npm run-script less</code> command fails:</p>\n"
+"        <ul>\n"
+"          <li>Install npm.\n"
+"          <li>Run <code>npm init</code>\n"
+"          <li>Accept all defaults (keep pressing Enter)\n"
+"          <li>Run <code>npm install less --save</code> to install LESS\n"
+"          <li>Run <code>npm run-script less</code> again. \n"
+"        </ul>\n"
+"        "
+msgstr ""
+"\n"
+"        <p><span class=\"app-less-verify\">Wenn dieser Text in Blau "
+"erscheint</span>, dann funktionieren die LESS Stylesheets. \n"
+"        <p><code>gae/static/css/less/app.less</code> enthält "
+"Applikations-spezifische Styles. Mit dem Befehl \n"
+"        <code>npm run-script less</code> aufgerufen im Verzeichnis "
+"<code>gae/static</code>\n"
+"werden die Stylesheets von LESS auf CSS übersetzt.\n"
+"        <p>Falls der Befehl <code>npm run-script less</code> versagt:</p>"
+"\n"
+"        <ul>\n"
+"          <li>Installiere npm.\n"
+"          <li>Rufe <code>npm init</code> auf\n"
+"          <li>Alle Standardwerte annehmen (einfach Enter drücken)\n"
+"          <li>Rufe <code>npm install less --save</code> auf um LESS zu "
+"installieren\n"
+"          <li>Rufe wieder <code>npm run-script less</code> auf. \n"
+"        </ul>\n"
+
+#: static/templates/index.html:154
+msgid ""
+"Algae is designed to get you app running on Google App Engine in less "
+"than 3 minutes and 42 seconds. Guaranteed, or your money back."
+msgstr ""
+"Algae ist entworfen worden um Ihre Anwendung in weniger als 3 Minuten 42 "
+"Sekunden auf Google App Engine zum Laufen zu bringen. Mit Geld-zurück-"
+"Garantie."
+
+#: static/templates/index.html:156
+msgid ""
+"Algae integrates de facto industry standards (like Twitter Bootstrap and "
+"HTML5 Boilerplate) with features every web app needs (like user "
+"management and third-party authentication). It's flexible, functional, "
+"and easy to use."
+msgstr ""
+"Algae integriert de-facto Industriestandards (wie z.B. Twitter Bootstrap "
+"und HTML5 Boilerplate) mit Eigenschaften die jede Web-Andwendung braucht "
+"(wie Benutzermanagement und Authentifizierung über Drittanwendungen). Es "
+"ist flexibel, funktionell und einfach zu verwenden."
+
+#: static/templates/index.html:158
+msgid "Here is what you get:"
+msgstr "Das ist dabei:"
+
+#: static/templates/index.html:164
+msgid "User account framework, including: "
+msgstr "Benutzerverwaltungsframework, einschließlich:"
+
+#: static/templates/index.html:166
+msgid "Twitter authentication"
+msgstr "Anmeldung über Twitter"
+
+#: static/templates/index.html:167
+msgid "Google authentication"
+msgstr "Anmeldung über Google"
+
+#: static/templates/index.html:168
+msgid "Facebook authentication"
+msgstr "Anmeldung über Facebook"
+
+#: static/templates/index.html:169
+msgid "Email authentication"
+msgstr "Anmeldung mit Email/Passwort"
+
+#: static/templates/index.html:170
+msgid "Others (<em>Work in progress</em>)"
+msgstr "Andere (<em>in Arbeit</em>)"
+
+#: static/templates/index.html:172
+msgid "Plain and RESTful style API bootstrap code:"
+msgstr "Einfacher und RESTful API Start-Code:"
+
+#: static/templates/index.html:174
+msgid "Auto-generate HTML forms from GAE data model"
+msgstr "Automatische Erzeugung von HTML-Formularen aus GAE-Datenmodell"
+
+#: static/templates/index.html:175
+msgid "Seamless entity CRUD via AJAX"
+msgstr "Nahtloses CRUD mittels AJAX"
+
+#: static/templates/index.html:177
+msgid "jQuery form validation"
+msgstr "jQuery Formular-Überprüfung"
+
+#: static/templates/index.html:178
+msgid "Basic testing infrastructure (<em>Work in progress</em>)"
+msgstr "Einfache Test-Infrstruktur (<em>in Arbeit</em>)"
+
+#: static/templates/index.html:179
+msgid "and more.."
+msgstr "und mehr.."
+
+#: static/templates/index.html:182
+msgid "Finally, a GAE template to write home about!"
+msgstr "Endlich, ein GAE Template von dem man erzählen kann!"
+
+#: static/templates/index.html:188
+msgid ""
+"A Python decorator -- <code>@with_login</code> -- can be used on any "
+"method of <code>BaseHandler</code> or <code>BaseAPIHandler</code> (or "
+"their subclasses) to prevent unauthenticated users from viewing certain "
+"pages or calling APIs."
+msgstr ""
+"Ein Python-Dekorator -- <code>@with_login</code> -- kann auf jede Methode"
+" von <code>BaseHandler</code> oder <code>BaseAPIHandler</code> (oder "
+"deren Unterklassen) angewendet werden, um unangemeldeten Benutzern das "
+"Sehen einzelner Seiten oder den Aufruf einzelner APIs zu verwehren."
+
+#: static/templates/index.html:190
+msgid ""
+"For instance, this <a href=\"/login_only\">page</a> can only be viewed "
+"after you login."
+msgstr ""
+"Ein Beispiel: diese <a href=\"/login_only\">Seite</a> kann nur gesehen "
+"werden, nachdem man angemeldet ist."
+
+#: static/templates/index.html:196
+msgid ""
+"Simply run <code>python tests/testrunner.py /usr/local/google_appengine "
+".</code> from command line to execute unit and API tests."
+msgstr ""
+"Rufe <code>python tests/testrunner.py /usr/local/google_appengine "
+".</code> von der Befehlszeite auf, um die Unit- und API-Tests "
+"durchzuführen."
+
+#: static/templates/index.html:197
+msgid ""
+"If the above command fails, make sure that <code>webtest</code> and "
+"<code>unittest2</code> Python modules are installed."
+msgstr ""
+"Falls das obige Kommando fehlschlägt, stelle sicher dass die "
+"<code>webtest</code> und <code>unittest2</code> Python-Module installiert"
+" sind."
+
+#: static/templates/index.html:202
+msgid ""
+"Algae comes preconfigured for internationalization, so your application "
+"can speak multiple languages."
+msgstr ""
+"Algae kommt mit allem was für Internationalisierung notwendig ist, "
+"damit kann Ihre Anwendung mehrere Sprachen sprechen."
+
+#: static/templates/index.html:203
+msgid ""
+"To use this feature, make sure you have both <code>jinja2</code> and "
+"<code>babel</code> installed to compile the translations for Algae."
+msgstr ""
+"Um dieses Feature auszunutzen, stellen Sie sicher dass sowohl "
+"<code>jinja2</code> als auch <code>babel</code> lokal installiert sind."
+
+#: static/templates/index.html:204
+msgid ""
+"Instuctions can be found <a href=\"http://webapp-"
+"improved.appspot.com/tutorials/i18n.html\">here</a> and <a "
+"href=\"http://jinja.pocoo.org/docs/templates/#i18n-in-"
+"templates\">here</a>."
+msgstr ""
+"Anleitungen können <a href=\"http://webapp-"
+"improved.appspot.com/tutorials/i18n.html\">hier</a> und <a "
+"href=\"http://jinja.pocoo.org/docs/templates/#i18n-in-"
+"templates\">hier</a> gefunden werden"
+
+#: static/templates/index.html:205
+msgid "View this page in <a href=\"/locale/de_DE\">German</a>"
+msgstr "Diese Seite in <a href=\"/locale/en_US\">Englisch</a> ansehen"
+
+#: static/templates/index.html:210
+msgid "Change Email Address"
+msgstr "Ändere E-Mail Adresse"
+
+#: static/templates/index.html:214
+msgid ""
+"\n"
+"          Only logged in users can change their email address. You can <a"
+" href=\"/\">login here</a>.\n"
+"          "
+msgstr ""
+"\n"
+"          Nur angemeldete Benutzer können ihre E-Mail Adresse anpassen. "
+"<a href=\"/\">Hier</a> kann man sich anmelden.\n"
+
+#: static/templates/index.html:223 static/templates/index.html:241
+#: static/templates/index.html:276 static/templates/index.html:311
+msgid "Email address"
+msgstr "E-Mail Adresse"
+
+#: static/templates/index.html:230
+msgid "Change"
+msgstr "Ändern"
+
+#: static/templates/index.html:237
+msgid "Add To Mailing List"
+msgstr "Zur Mailing-Liste hinzufügen"
+
+#: static/templates/index.html:248 static/templates/index.html:295
+msgid "Sign Up"
+msgstr "Registrieren"
+
+#: static/templates/index.html:263
+msgid "Sign up with your email address"
+msgstr "Mit E-Mail-Adresse registrieren"
+
+#: static/templates/index.html:270
+msgid "Username"
+msgstr "Benutzername"
+
+#: static/templates/index.html:282 static/templates/index.html:317
+msgid "Password"
+msgstr "Passwort"
+
+#: static/templates/index.html:304
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: static/templates/index.html:330
+msgid "Sign In"
+msgstr "Anmelden"
+
+#: static/templates/layout.html:32
+msgid "Your browser is <em>ancient!</em>"
+msgstr "Ihr Browser ist <em>steinalt!</em>"
+
+#: static/templates/layout.html:32
+msgid ""
+"<a href=\"http://browsehappy.com/\">Upgrade to a different browser</a> or"
+" <a href=\"http://www.google.com/chromeframe/?redirect=true\">install "
+"Google Chrome Frame</a> to experience this site."
+msgstr ""
+"<a href=\"http://browsehappy.com/\">Aktualisieren Sie auf einen anderen "
+"Browser, oder <a "
+"href=\"http://www.google.com/chromeframe/?redirect=true\">installieren "
+"Sie Google Chrome Frame</a> um diese Seite anzusehen."
+
+#: static/templates/layout.html:42
+#, fuzzy
+msgid "Application Template for Google App Engine"
+msgstr "Algae ist ein Anwendungs-Template für Google App Engine"
+
+#: static/templates/layout.html:92
+msgid ""
+"Algae was created by Ilya Bagrak, who <a "
+"href=\"http://twitter.com/ibagrak\">tweets</a>,\n"
+"        <a href=\"http://codercofounder.wordpress.com\">blogs</a>, and "
+"responds to all <a "
+"href=\"https://mail.google.com/mail/?view=cm&amp;fs=1&amp;tf=1&amp;to"
+"=replace-with-ilya.replace-with-bagrak@gmail.com\" "
+"target=\"_blank\">email</a>."
+msgstr ""
+"Algae ist ein Werk von Ilya Bagrak, der <a "
+"href=\"http://twitter.com/ibagrak\">twittert</a>,\n"
+" <a href=\"http://codercofounder.wordpress.com\">bloggt</a>, und auf alle"
+" <a href=\"https://mail.google.com/mail/?view=cm&amp;fs=1&amp;tf=1&amp;to"
+"=replace-with-ilya.replace-with-bagrak@gmail.com\" "
+"target=\"_blank\">E-Mails</a> antwortet."
+
+#~ msgid "RESTful APIs"
+#~ msgstr "REST APIs"
+
+#~ msgid "RPC-style APIs"
+#~ msgstr "RPC APIs"
+

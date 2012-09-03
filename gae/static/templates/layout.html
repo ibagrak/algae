@@ -8,10 +8,6 @@
 <head>
   <meta charset="utf-8">
 
-  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
-       More info: h5bp.com/i/378 -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
   <title>{% block title %} {%endblock%}</title>
   <meta name="description" content="">
 
@@ -33,7 +29,7 @@
 <body>
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
-  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  <!--[if lt IE 7]><p class=chromeframe>{% trans %}Your browser is <em>ancient!</em>{% endtrans %} {% trans %}<a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.{% endtrans %}</p><![endif]-->
    
   <!-- part of sticky footer magic !-->
   <div class="wrapper">
@@ -43,7 +39,7 @@
         <h1>Algae</h1>
       </div>
 
-      <p>Application Template for Google App Engine</p>
+      <p>{% trans %}Application Template for Google App Engine{% endtrans %}</p>
       
       <div class="bs-docs-social">
         <div style="margin-right:auto;margin-left:auto;width:500px;">
@@ -93,8 +89,8 @@
       <div class="span10">
         <img style="max-width: 60px" src="/img/algae.png"/>
     
-        Algae was created by Ilya Bagrak, who <a href="http://twitter.com/ibagrak">tweets</a>,
-        <a href="http://codercofounder.wordpress.com">blogs</a>, and responds to all <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;tf=1&amp;to=replace-with-ilya.replace-with-bagrak@gmail.com" target="_blank">email</a>.
+        {% trans %}Algae was created by Ilya Bagrak, who <a href="http://twitter.com/ibagrak">tweets</a>,
+        <a href="http://codercofounder.wordpress.com">blogs</a>, and responds to all <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;tf=1&amp;to=replace-with-ilya.replace-with-bagrak@gmail.com" target="_blank">email</a>.{% endtrans %}
         &copy; 2012 Ilya Bagrak.
       </div>
       <div class="span2">

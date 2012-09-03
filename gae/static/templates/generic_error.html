@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-Page Not Found
+{% trans %}Page Not Found{% endtrans %}
 {% endblock %}
 
 {% block scripts %}
@@ -15,8 +15,8 @@ Page Not Found
 {% block content %}
 	<hr class="soften">
     
-    <p>Sorry. A serious error has occured.</p>
-   	<p><a href="/">Return home.</a></p>
+    <p>{% trans %}Sorry. A serious error has occured.{% endtrans %}</p>
+   	<p><a href="/">{% trans %}Return home.{% endtrans %}</a></p>
 
-   	<p>Code: {{code}}</p>
+   	<p>{% trans %}Code: {{code}}{% endtrans %}</p>
 {% endblock %}

@@ -8,7 +8,7 @@ from functools import wraps
 
 import webapp2
 
-from webapp2_extras import sessions, json, auth
+from webapp2_extras import sessions, json, auth, i18n
 from jinja2.runtime import TemplateNotFound
 
 import settings
@@ -22,11 +22,14 @@ def get_json_error(code, key = None, message = None, *args):
 
 def get_error(code, key = None, message = None, *args):
     if message:
-        return {'code' : code, 'message' : message}
+        text = message
     elif key: 
-        return {'code' : code, 'message' : settings.API_CODES[code][key]}
+        text = settings.API_CODES[code][key]
     else:
-        return {'code' : code, 'message' : settings.API_CODES[code]}
+        text = settings.API_CODES[code]
+    # try to translate the text
+    text = i18n.gettext(text)
+    return {'code' : code, 'message' : text }
 
 def with_login(func):
 	@wraps(func)
@@ -67,6 +70,9 @@ class BaseHandler(webapp2.RequestHandler):
         # Get a session store for this request.
         self.session_store = sessions.get_store(request=self.request)
 
+        # Set the loale
+        i18n.get_i18n().set_locale(self.locale)
+
         try:
             # Dispatch the request.
             webapp2.RequestHandler.dispatch(self)
@@ -87,6 +93,37 @@ class BaseHandler(webapp2.RequestHandler):
         # Returns a session using the default cookie key.
         return session
     
+    @webapp2.cached_property
+    def locale(self):
+        if 'locale' in self.session:
+            return self.session['locale']
+        else:
+            # find good locale from accept-language header
+            header = self.request.headers.get('Accept-Language', '')
+            locales = [locale.split(';')[0] for locale in header.split(',')]
+            available = settings.AVAILABLE_LOCALES
+            # 1. find exact match
+            for locale in locales:
+                if locale in available:
+                    self.session['locale'] = locale
+                    return locale
+            # 2. find match in substring
+            for locale in locales:
+                len1 = len(locale)
+                locales2 = [ l for l in available if l[0:(len1-1)] == locale ]
+                if len(locales2)>0:
+                    self.session['locale'] = locales2[0]
+                    return locales2[0]
+            # 3. find match in two-character match only
+            for l2 in [ locale[0:1] for locale in locales ]:
+                locales2 = [ l for l in available if l[0:1] == l2 ]
+                if len(locales2)>0:
+                    self.session['locale'] = locales2[0]
+                    return locales2[0]
+            # 4. return first available locale as fallback
+            self.session['locale'] = available[0]
+            return available[0]
+
     @webapp2.cached_property
     def auth(self):
         return auth.get_auth()

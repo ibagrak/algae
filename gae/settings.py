@@ -5,8 +5,6 @@ from secrets import SESSION_KEY
 
 if 'SERVER_SOFTWARE' in os.environ and os.environ['SERVER_SOFTWARE'].startswith('Dev'):
     DEBUG = True
-    # don't worry if you are running on another port, currently this
-    # is not heavily used
     HOME_URL = 'http://localhost' + ':8085'
 else:
     DEBUG = False
@@ -22,6 +20,9 @@ app_config = {
     'user_attributes': []
   }
 }
+
+# i18n config
+AVAILABLE_LOCALES = ['en_US', 'de_DE']
 
 # List of valid APIs
 APIS = frozenset({'signup_mailing_list', 'change_email_addr'})
