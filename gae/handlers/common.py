@@ -28,7 +28,10 @@ def get_error(code, key = None, message = None, *args):
     else:
         text = settings.API_CODES[code]
     # try to translate the text
-    text = i18n.gettext(text)
+    try:
+      text = i18n.gettext(text)
+    except Exception:
+      pass
     return {'code' : code, 'message' : text }
 
 def with_login(func):
