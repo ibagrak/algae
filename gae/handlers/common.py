@@ -118,8 +118,8 @@ class BaseHandler(webapp2.RequestHandler):
                     self.session['locale'] = locales2[0]
                     return locales2[0]
             # 3. find match in two-character match only
-            for l2 in [ locale[0:1] for locale in locales ]:
-                locales2 = [ l for l in available if l[0:1] == l2 ]
+            for l2 in [ locale[0:2] for locale in locales ]:
+                locales2 = [ l for l in available if l[0:2] == l2 ]
                 if len(locales2)>0:
                     self.session['locale'] = locales2[0]
                     return locales2[0]
