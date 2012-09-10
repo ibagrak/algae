@@ -5,7 +5,7 @@ from secrets import SESSION_KEY
 
 if 'SERVER_SOFTWARE' in os.environ and os.environ['SERVER_SOFTWARE'].startswith('Dev'):
     DEBUG = True
-    HOME_URL = 'http://localhost' + ':8083'
+    HOME_URL = 'http://localhost' + ':8085'
 else:
     DEBUG = False
     HOME_URL = 'http://' + get_default_version_hostname()
