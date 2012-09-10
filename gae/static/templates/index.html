@@ -161,7 +161,7 @@
 
         <p>{% trans %}Algae integrates de facto industry standards (like Twitter Bootstrap and HTML5 Boilerplate) with features every web app needs (like user management and third-party authentication). It's flexible, functional, and easy to use.{% endtrans %}</p>
 
-        <p>{% trans %}Here is what you get:{% endtrans %}<p>
+        <p>{% trans %}Here is what you get:{% endtrans %}</p>
 
         <ul>
           <li><a href="http://html5boilerplate.com">HTML5 Boilerplate</a></li>
@@ -175,11 +175,13 @@
               <li>{% trans %}Email authentication{% endtrans %}</li>
               <li>{% trans %}Others (<em>Work in progress</em>){% endtrans %}</li>
             </ul>
-          <li>{% trans %}Plain and RESTful style API bootstrap code:{% endtrans %}</li>
+          </li>
+          <li>{% trans %}Plain and RESTful style API bootstrap code:{% endtrans %}
             <ul>
               <li>{% trans %}Auto-generate HTML forms from GAE data model{% endtrans %}</li>
               <li>{% trans %}Seamless entity CRUD via AJAX{% endtrans %}</li>
             </ul>
+          </li>
           <li>{% trans %}jQuery form validation{% endtrans %}</li>
           <li>{% trans %}Basic testing infrastructure (<em>Work in progress</em>){% endtrans %}</li>
           <li>{% trans %}and more..{% endtrans %}</li>
@@ -216,7 +218,7 @@
       <div class="span12" >
         <p>{% trans %}Algae comes preconfigured for internationalization, so your application can speak multiple languages.{% endtrans %}</p>
         <p>{% trans %}To use this feature, make sure you have both <code>jinja2</code> and <code>babel</code> installed to compile the translations for Algae.{% endtrans %}</p>
-        <p>{% trans %}Instuctions can be found <a href="http://webapp-improved.appspot.com/tutorials/i18n.html">here</a> and <a href="http://jinja.pocoo.org/docs/templates/#i18n-in-templates">here</a>.{% endtrans %}</p>
+        <p>{% trans %}Instructions can be found <a href="http://webapp-improved.appspot.com/tutorials/i18n.html">here</a> and <a href="http://jinja.pocoo.org/docs/templates/#i18n-in-templates">here</a>.{% endtrans %}</p>
         <p>{% trans %}View this page in <a href="/locale/de_DE">German</a>{% endtrans %}
       </div>
     </div>
@@ -236,9 +238,9 @@
         <form id="change_email_addr_form" class="form-horizontal" name="change_email_addr">
           <fieldset>
             <div class="control-group">
-              <label class="control-label" for="email">{% trans %}Email address{% endtrans %}</label>
+              <label class="control-label" for="email_change">{% trans %}Email address{% endtrans %}</label>
               <div class="controls">
-                <input type="text" class="input-xlarge required email" id="email" val="None">
+                <input type="text" class="input-xlarge required email" id="email_change" val="None">
               </div>
             </div>
 
@@ -255,9 +257,9 @@
         <form id="signup_mailing_list_form" class="form-horizontal" name="signup_mailing_list">
           <fieldset>
             <div class="control-group">
-              <label class="control-label" for="email">{% trans %}Email address{% endtrans %}</label>
+              <label class="control-label" for="email_mailinglist">{% trans %}Email address{% endtrans %}</label>
               <div class="controls">
-                <input type="text" class="input-xlarge required email" id="email" val="None">
+                <input type="text" class="input-xlarge required email" id="email_mailinglist" val="None">
               </div>
             </div>
 
@@ -291,9 +293,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="email">{% trans %}Email address{% endtrans %}</label>
+          <label class="control-label" for="email_signup">{% trans %}Email address{% endtrans %}</label>
           <div class="controls">
-            <input type="text" class="input-xlarge required email" id="email" val="None">
+            <input type="text" class="input-xlarge required email" id="email_signup" val="None">
           </div>
         </div>
         <div class="control-group">
@@ -324,9 +326,9 @@
      <form class="form-horizontal" name="email-signin">
       <fieldset>
         <div class="control-group">
-          <label class="control-label" for="email">{% trans %}Email address{% endtrans %}</label>
+          <label class="control-label" for="email_signin">{% trans %}Email address{% endtrans %}</label>
           <div class="controls">
-            <input type="text" class="input-xlarge required email" id="email">
+            <input type="text" class="input-xlarge required email" id="email_signin">
           </div>
         </div>
         <div class="control-group">
