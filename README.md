@@ -11,6 +11,7 @@ Here is what you get:
 * [Less Stylesheets](http://lesscss.org/) + [Font Awesome](http://fortawesome.github.com/Font-Awesome/)
 * User account framework, including:
     * Twitter authentication
+    * Google authentication
     * Facebook authentication
     * Email authentication
     * Others (Work in progress)
@@ -19,6 +20,7 @@ Here is what you get:
 	* Seamless entity CRUD via AJAX
 * [jQuery form validation](http://docs.jquery.com/Plugins/Validation)
 * [jQuery datepicker](http://www.eyecon.ro/bootstrap-datepicker)
+* I18N support based on [babel](http://babel.edgewall.org) and [pytz](http://pypi.python.org/pypi/gaepytz)
 * Basic testing infrastructure with [Webtest](http://webtest.readthedocs.org/en/latest/)
 * and more..
 
