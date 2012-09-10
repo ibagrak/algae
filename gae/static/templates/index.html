@@ -147,9 +147,9 @@
           <li>Install npm.
           <li>Run <code>npm init</code>
           <li>Accept all defaults (keep pressing Enter)
-          <li>Run <code>npm install less --save</code> to install LESS
-          <li>Run <code>npm install uglify-js --save</code> to install Javascript minimizer.
-          <li>Run <code>npm run-script less</code> again. 
+          <li>Run <code>$ npm install less --save</code> to install LESS
+          <li>Run <code>$ npm install uglify-js --save</code> to install Javascript minimizer.
+          <li>Run <code>$ npm run-script less; npm run-script js</code> to generate site CSS and minified Javascript.
         </ul>
         {% endtrans %}
       </div>
@@ -199,8 +199,17 @@
 
     <div class="tab-pane row" id="test">
       <div class="span12" >
-        <p>{% trans %}Simply run <code>python tests/testrunner.py /usr/local/google_appengine .</code> from command line to execute unit and API tests.{% endtrans %}</p>
-           {% trans %}If the above command fails, make sure that <code>webtest</code> and <code>unittest2</code> Python modules are installed.{% endtrans %}
+        <p>{% trans %}Simply run <code>$ python tests/testrunner.py /usr/local/google_appengine .</code> from command line to execute unit and API tests.{% endtrans %}</p>
+        
+        {% trans %}<p>If the above command fails, make sure that <code>webtest</code> and <code>unittest2</code> Python modules are installed and that <code>APPLICATION_ID</code> and <code>SERVER_SOFTWARE</code> environment variables are set correctly, as they are required by <code>testrunner.py</code> script to run.</p>
+
+        <p>Here is how to set environment variables:</p>
+        <p>
+        <ul class="unstyled">
+          <li><code>$ export SERVER_SOFTWARE=Dev</code>
+          <li><code>$ export APPLICATION_ID=green-algae</code> 
+        </ul></p>
+        {% endtrans %}
       </div>
     </div>
     <div class="tab-pane row" id="i18n">
