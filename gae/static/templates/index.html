@@ -14,20 +14,20 @@
 <!-- tabbed content !-->
 <div class="tabbable"> 
   <ul id="tabs" class="nav nav-tabs">
-    <li class="active"> <a href="#users"><h3><i class="icon-user"></i> {% trans %}Users{% endtrans %}</h3></a></li>
-    <li><a href="#api"><h3><i class="icon-cogs"></i> {% trans %}RESTful{% endtrans %}</h3></a></li>
-    <li><a href="#rpc"><h3><i class="icon-cogs"></i> {% trans %}RPC{% endtrans %}</h3></a></li>
-    <li><a href="#security"><h3><i class="icon-lock"></i> {% trans %}Security{% endtrans %}</h3></a></li>
-    <li><a href="#css"><h3><i class="icon-tint"></i> {% trans %}CSS/LESS{% endtrans %}</h3></a></li>
-    <li><a href="#test"><h3><i class="icon-fire"></i> {% trans %}Testing{% endtrans %}</h3></a></li>
-    <li><a href="#i18n"><h3><i class="icon-bullhorn"></i> {% trans %}I18N{% endtrans %}</h3></a></li>
-    <li class="pull-right"><a href="#about"><h3>{% trans %}About{% endtrans %}</h3></a></li>
+    <li class="active"> <a href="#users"><h4><i class="icon-user"></i> {% trans %}Users{% endtrans %}</h4></a></li>
+    <li><a href="#api"><h4><i class="icon-cogs"></i> {% trans %}RESTful{% endtrans %}</h4></a></li>
+    <li><a href="#rpc"><h4><i class="icon-cogs"></i> {% trans %}RPC{% endtrans %}</h4></a></li>
+    <li><a href="#security"><h4><i class="icon-lock"></i> {% trans %}Security{% endtrans %}</h4></a></li>
+    <li><a href="#css"><h4><i class="icon-tint"></i> {% trans %}CSS/LESS{% endtrans %}</h4></a></li>
+    <li><a href="#i18n"><h4><i class="icon-bullhorn"></i> {% trans %}I18N{% endtrans %}</h4></a></li>
+    <li><a href="#test"><h4><i class="icon-fire"></i> {% trans %}Testing{% endtrans %}</h4></a></li>
+    <li class="pull-right"><a href="#about"><h4>{% trans %}About{% endtrans %}</h4></a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active row" id="users">
       <div class="span12">
 
-        <h3>{%trans %}Profiles{% endtrans %}</h3>
+        <h4>{%trans %}Profiles{% endtrans %}</h4>
         <blockquote>
 {% trans %}
         <code>gae/handlers/oauth.py</code> and <code>gae/handlers/email_auth.py</code> request handlers are responsible for processing OAuth and email user authentication. <br>
@@ -49,7 +49,7 @@
           </ul>
           {% endtrans %}
         {% endif %}
-        <h3>{% trans %}Sessions{% endtrans %}</h3>
+        <h4>{% trans %}Sessions{% endtrans %}</h4>
         <blockquote>
         {% trans %}
         Sessions are tracked by encrypted, client-side cookies. <code>COOKIE_TEMPLATE</code> variable in <code>gae/settings.py</code> defines the cookie content, and <code>session</code> dictionary can be accessed in every request handler. 
@@ -72,7 +72,7 @@
         <code>generate_model_form()</code> in <code>gae/core/model.py</code> converts the model to a dictionary of template variables, and <code>gae/static/templates/forms.html</code> macro generates the corresponding HTML.
         {% endtrans %}
         </blockquote>
-        <h3>{% trans %}Create Entity{% endtrans %}</h3>
+        <h4>{% trans %}Create Entity{% endtrans %}</h4>
         <blockquote>
         
 
@@ -85,7 +85,7 @@
         </blockquote>
         {{ forms.form('create', 'Create', '', form) }}
         
-        <h3>{% trans %}Update/Delete Entity{% endtrans %}</h3>
+        <h4>{% trans %}Update/Delete Entity{% endtrans %}</h4>
         <blockquote>
         <div class="well">
           <span class="label label-info">{% trans %}Heads up!{% endtrans %}</span>
@@ -143,6 +143,7 @@
           <li>Run <code>npm init</code>
           <li>Accept all defaults (keep pressing Enter)
           <li>Run <code>npm install less --save</code> to install LESS
+          <li>Run <code>npm install uglify-js --save</code> to install Javascript minimizer.
           <li>Run <code>npm run-script less</code> again. 
         </ul>
         {% endtrans %}
@@ -207,7 +208,8 @@
     </div>
     <div class="tab-pane row" id="rpc">
       <div class="span12" >
-        <h3>{% trans %}Change Email Address{% endtrans %}</h3>
+        <h4>{% trans %}Change Email Address{% endtrans %}</h4>
+
         <blockquote>
         <div class="well">
           <span class="label label-info">{% trans %}Heads up!{% endtrans %}</span>
@@ -234,7 +236,8 @@
           </fieldset>
         </form>
 
-        <h3>{% trans %}Add To Mailing List{% endtrans %}</h3>
+        <h4>{% trans %}Add To Mailing List{% endtrans %}</h4>
+
         <form id="signup_mailing_list_form" class="form-horizontal" name="signup_mailing_list">
           <fieldset>
             <div class="control-group">
@@ -260,7 +263,8 @@
 <div class="tri-state modal hide" id="signup">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">×</button>
-    <h3>{% trans %}Sign up with your email address{% endtrans %}</h3>
+    <h4>{% trans %}Sign up with your email address{% endtrans %}</h4>
+
   </div>
 
   <div class="modal-body">
@@ -290,10 +294,8 @@
   </div>
   
   <div class="modal-footer">
-    <div class="row">
-      <div class="btn_container offset2">
-        <button id="signup_btn" type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button> 
-      </div>
+    <div class="btn_container offset2">
+      <button id="signup_btn" type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button> 
     </div>
   </div>
 </div>
@@ -301,7 +303,7 @@
 <div class="tri-state modal hide" id="signin">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">×</button>
-    <h3>{% trans %}Sign in{% endtrans %}</h3>
+    <h4>{% trans %}Sign in{% endtrans %}</h4>
   </div>
 
   <div class="modal-body">
@@ -325,10 +327,8 @@
   </div>
 
   <div class="modal-footer">
-    <div class="row">
-      <div class="btn_container offset2">
-        <button id="signin_btn" type="submit" class="btn btn-primary">{% trans %}Sign In{% endtrans %}</button> 
-      </div>
+    <div class="btn_container offset2">
+      <button id="signin_btn" type="submit" class="btn btn-primary">{% trans %}Sign In{% endtrans %}</button> 
     </div>
   </div>
 </div>

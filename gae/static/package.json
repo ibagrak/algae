@@ -5,7 +5,8 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "less": "~1.3.0"
+    "less": "~1.3.0",
+    "uglify-js": "~1.3.3"
   },
   "devDependencies": {},
   "optionalDependencies": {},
@@ -13,7 +14,8 @@
     "node": "*"
   },
   "scripts": {
-    "less": "./node_modules/.bin/lessc --compress ./css/less/bootstrap.less > css/bootstrap.css ; cat css/h5bp.css > css/site.css ;  cat css/bootstrap.css >> css/site.css; ./node_modules/.bin/lessc --compress ./css/less/font-awesome-ie7.less > ./css/font-awesome-ie7.css"
+    "less": "./node_modules/.bin/lessc --compress ./css/less/bootstrap.less > css/bootstrap.css ; cat css/h5bp.css > css/site.css ;  cat css/bootstrap.css >> css/site.css; ./node_modules/.bin/lessc --compress ./css/less/font-awesome-ie7.less > ./css/font-awesome-ie7.css",
+    "js": "cat ./js/bs/bootstrap-transition.js ./js/bs/bootstrap-alert.js ./js/bs/bootstrap-button.js ./js/bs/bootstrap-carousel.js ./js/bs/bootstrap-collapse.js ./js/bs/bootstrap-dropdown.js ./js/bs/bootstrap-modal.js ./js/bs/bootstrap-tooltip.js ./js/bs/bootstrap-popover.js ./js/bs/bootstrap-scrollspy.js ./js/bs/bootstrap-tab.js ./js/bs/bootstrap-typeahead.js ./js/bs/bootstrap-affix.js ./js/plugins.js ./js/script.js > js/combined.js; ./node_modules/.bin/uglifyjs js/combined.js > js/min.js"
   },
   "repository": {
     "type": "git",
