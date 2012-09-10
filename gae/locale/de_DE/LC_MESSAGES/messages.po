@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-09-03 10:59+0200\n"
+"POT-Creation-Date: 2012-09-10 23:28+0200\n"
 "PO-Revision-Date: 2012-09-02 12:15+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: de_DE <LL@li.org>\n"
@@ -71,39 +71,39 @@ msgstr "Algae ist ein Anwendungs-Template für Google App Engine"
 msgid "Users"
 msgstr "Benutzer"
 
-#: static/templates/index.html:18
+#: static/templates/index.html:21
 msgid "RESTful"
 msgstr ""
 
-#: static/templates/index.html:19
+#: static/templates/index.html:22
 msgid "RPC"
 msgstr ""
 
-#: static/templates/index.html:20
+#: static/templates/index.html:25
 msgid "Security"
 msgstr "Sicherheit"
 
-#: static/templates/index.html:21
+#: static/templates/index.html:26
 msgid "CSS/LESS"
 msgstr "CSS/LESS"
 
-#: static/templates/index.html:22
-msgid "Testing"
-msgstr "Testen"
-
-#: static/templates/index.html:23
+#: static/templates/index.html:27
 msgid "I18N"
 msgstr ""
 
-#: static/templates/index.html:24
+#: static/templates/index.html:28
+msgid "Testing"
+msgstr "Testen"
+
+#: static/templates/index.html:29
 msgid "About"
 msgstr "Über"
 
-#: static/templates/index.html:30
+#: static/templates/index.html:35
 msgid "Profiles"
-msgstr ""
+msgstr "Profile"
 
-#: static/templates/index.html:32
+#: static/templates/index.html:37
 msgid ""
 "\n"
 "        <code>gae/handlers/oauth.py</code> and "
@@ -121,10 +121,10 @@ msgstr ""
 "        <code>USER_ATTR</code> Dictionary in "
 "<code>gae/handlers/oauth.py</code> definiert wie Benutzerfelder zwischen "
 "den unterschiedlichen Authentifizierungs-Services (Providern) und dem "
-"internen User-Modell zugeordnet werden. Der Rest ist ein Haufen "
-"intelligenter Python-Code, kein Grund sich um den zu kümmern.\n"
+"internen User-Modell zugeordnet werden. Der Rest wird von "
+"cleverem Python-Code gemacht, um den Sie sich keine Sorgen machen müssen.\n"
 
-#: static/templates/index.html:38
+#: static/templates/index.html:43
 #, python-format
 msgid ""
 "\n"
@@ -139,7 +139,7 @@ msgstr ""
 "href=\"/logout\">Abmelden</a>\n"
 "\""
 
-#: static/templates/index.html:42
+#: static/templates/index.html:47
 msgid ""
 "\n"
 "          No one is signed in. Sign in with:\n"
@@ -163,11 +163,11 @@ msgstr ""
 "href=\"#signin\">Anmelden</a> mit Email und Passwort\n"
 "          </ul>\n"
 
-#: static/templates/index.html:52
+#: static/templates/index.html:57
 msgid "Sessions"
 msgstr "Sessions"
 
-#: static/templates/index.html:54
+#: static/templates/index.html:59
 #, python-format
 msgid ""
 "\n"
@@ -183,19 +183,19 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"        Sessions werden mit verschlüsslten Cookies verfolgt. Die "
+"        Sessions werden mit verschlüsslten Cookies realisiert. Die "
 "<code>COOKIE_TEMPLATE</code>-Variable in <code>gae/settings.py</code> "
-"definiert den Inhalt, und das <code>session</code>-Dictionary kann von "
-"jedem Request-Handler angesprochen werden. \n"
+"liefert die Standardwerte, und das <code>session</code>-Dictionary kann "
+"von jedem Request-Handler angesprochen werden. \n"
 "        </blockquote>\n"
 "     \n"
-"        <p>Diese Seite neuladen, und die Anzahl der Seitenzugriffe sollte"
-" sich erhöhen. \n"
+"        <p>Ein Beispiel: Die Seitenzugriffe werden in der Session "
+"gezählt. Beim Neuladen sollte sich diese Zahl hier erhöhen. \n"
 "    \n"
 "        <p>Seitenzugriffe: %(pageviews)s\n"
 "        "
 
-#: static/templates/index.html:68
+#: static/templates/index.html:73
 msgid ""
 "\n"
 "        Full CRUD access to models is supported via POST, PUT, GET, and "
@@ -223,16 +223,16 @@ msgstr ""
 "Template-Variablen um, und <code>gae/static/templates/forms.html</code> "
 "Macro generiert das entsprechende HTML.\n"
 
-#: static/templates/index.html:75
+#: static/templates/index.html:80
 msgid "Create Entity"
 msgstr "Element anlegen"
 
-#: static/templates/index.html:80 static/templates/index.html:91
-#: static/templates/index.html:213
+#: static/templates/index.html:85 static/templates/index.html:96
+#: static/templates/index.html:220
 msgid "Heads up!"
 msgstr "Achtung!"
 
-#: static/templates/index.html:81
+#: static/templates/index.html:86
 msgid ""
 "\n"
 "          Only logged in users are authorized to create new entities. See"
@@ -242,11 +242,11 @@ msgstr ""
 "Nur angemeldete Benutzer können neue Elemente anlegen. Das Tab Sicherheit"
 " erklärt wie diese Regeln in der Anwendung angepasst werden können.\n"
 
-#: static/templates/index.html:88
+#: static/templates/index.html:93
 msgid "Update/Delete Entity"
 msgstr "Ändern/Löschen eines Elements"
 
-#: static/templates/index.html:92
+#: static/templates/index.html:97
 msgid ""
 "\n"
 "          Only logged in users are authorized to delete entities. See "
@@ -256,27 +256,28 @@ msgstr ""
 "Nur angemeldete Benutzer können Elemente löschen. Das Tab Sicherheit "
 "erklärt wie diese Regeln in der Anwendung angepasst werden können.\n"
 
-#: static/templates/index.html:103 static/templates/index.html:122
+#: static/templates/index.html:108 static/templates/index.html:127
 msgid "Update"
 msgstr "Ändern"
 
-#: static/templates/index.html:104 static/templates/index.html:123
+#: static/templates/index.html:109 static/templates/index.html:128
 msgid "Delete"
 msgstr "Löschen"
 
-#: static/templates/index.html:112
+#: static/templates/index.html:117
 msgid "ID"
 msgstr "ID"
 
-#: static/templates/index.html:113
+#: static/templates/index.html:118
 msgid "Summary"
 msgstr "Zusammenfassung"
 
-#: static/templates/index.html:114
+#: static/templates/index.html:119
 msgid "Action"
 msgstr "Aktion"
 
-#: static/templates/index.html:135
+#: static/templates/index.html:140
+#, fuzzy
 msgid ""
 "\n"
 "        <p><span class=\"app-less-verify\">If this text appears in "
@@ -292,6 +293,8 @@ msgid ""
 "          <li>Run <code>npm init</code>\n"
 "          <li>Accept all defaults (keep pressing Enter)\n"
 "          <li>Run <code>npm install less --save</code> to install LESS\n"
+"          <li>Run <code>npm install uglify-js --save</code> to install "
+"Javascript minimizer.\n"
 "          <li>Run <code>npm run-script less</code> again. \n"
 "        </ul>\n"
 "        "
@@ -315,84 +318,83 @@ msgstr ""
 "          <li>Rufe wieder <code>npm run-script less</code> auf. \n"
 "        </ul>\n"
 
-#: static/templates/index.html:154
+#: static/templates/index.html:160
 msgid ""
 "Algae is designed to get you app running on Google App Engine in less "
 "than 3 minutes and 42 seconds. Guaranteed, or your money back."
 msgstr ""
-"Algae ist entworfen worden um Ihre Anwendung in weniger als 3 Minuten 42 "
-"Sekunden auf Google App Engine zum Laufen zu bringen. Mit Geld-zurück-"
-"Garantie."
+"Mit Algae läuft Ihre Anwendung in weniger als 3 Minuten 42 "
+"Sekunden auf Google App Engine. Mit Geld-zurück-Garantie."
 
-#: static/templates/index.html:156
+#: static/templates/index.html:162
 msgid ""
 "Algae integrates de facto industry standards (like Twitter Bootstrap and "
 "HTML5 Boilerplate) with features every web app needs (like user "
 "management and third-party authentication). It's flexible, functional, "
 "and easy to use."
 msgstr ""
-"Algae integriert de-facto Industriestandards (wie z.B. Twitter Bootstrap "
+"Algae kombiniert de-facto Industriestandards (wie z.B. Twitter Bootstrap "
 "und HTML5 Boilerplate) mit Eigenschaften die jede Web-Andwendung braucht "
 "(wie Benutzermanagement und Authentifizierung über Drittanwendungen). Es "
 "ist flexibel, funktionell und einfach zu verwenden."
 
-#: static/templates/index.html:158
-msgid "Here is what you get:"
-msgstr "Das ist dabei:"
-
 #: static/templates/index.html:164
+msgid "Here is what you get:"
+msgstr "Das ist alles dabei:"
+
+#: static/templates/index.html:170
 msgid "User account framework, including: "
 msgstr "Benutzerverwaltungsframework, einschließlich:"
 
-#: static/templates/index.html:166
+#: static/templates/index.html:172
 msgid "Twitter authentication"
 msgstr "Anmeldung über Twitter"
 
-#: static/templates/index.html:167
+#: static/templates/index.html:173
 msgid "Google authentication"
 msgstr "Anmeldung über Google"
 
-#: static/templates/index.html:168
+#: static/templates/index.html:174
 msgid "Facebook authentication"
 msgstr "Anmeldung über Facebook"
 
-#: static/templates/index.html:169
+#: static/templates/index.html:175
 msgid "Email authentication"
 msgstr "Anmeldung mit Email/Passwort"
 
-#: static/templates/index.html:170
+#: static/templates/index.html:176
 msgid "Others (<em>Work in progress</em>)"
 msgstr "Andere (<em>in Arbeit</em>)"
 
-#: static/templates/index.html:172
+#: static/templates/index.html:178
 msgid "Plain and RESTful style API bootstrap code:"
-msgstr "Einfacher und RESTful API Start-Code:"
+msgstr "Einfacher und RESTful-basierter API Basic-Code:"
 
-#: static/templates/index.html:174
+#: static/templates/index.html:180
 msgid "Auto-generate HTML forms from GAE data model"
 msgstr "Automatische Erzeugung von HTML-Formularen aus GAE-Datenmodell"
 
-#: static/templates/index.html:175
+#: static/templates/index.html:181
 msgid "Seamless entity CRUD via AJAX"
 msgstr "Nahtloses CRUD mittels AJAX"
 
-#: static/templates/index.html:177
+#: static/templates/index.html:183
 msgid "jQuery form validation"
 msgstr "jQuery Formular-Überprüfung"
 
-#: static/templates/index.html:178
+#: static/templates/index.html:184
 msgid "Basic testing infrastructure (<em>Work in progress</em>)"
 msgstr "Einfache Test-Infrstruktur (<em>in Arbeit</em>)"
 
-#: static/templates/index.html:179
+#: static/templates/index.html:185
 msgid "and more.."
 msgstr "und mehr.."
 
-#: static/templates/index.html:182
+#: static/templates/index.html:188
 msgid "Finally, a GAE template to write home about!"
 msgstr "Endlich, ein GAE Template von dem man erzählen kann!"
 
-#: static/templates/index.html:188
+#: static/templates/index.html:194
 msgid ""
 "A Python decorator -- <code>@with_login</code> -- can be used on any "
 "method of <code>BaseHandler</code> or <code>BaseAPIHandler</code> (or "
@@ -404,7 +406,7 @@ msgstr ""
 "deren Unterklassen) angewendet werden, um unangemeldeten Benutzern das "
 "Sehen einzelner Seiten oder den Aufruf einzelner APIs zu verwehren."
 
-#: static/templates/index.html:190
+#: static/templates/index.html:196
 msgid ""
 "For instance, this <a href=\"/login_only\">page</a> can only be viewed "
 "after you login."
@@ -412,7 +414,7 @@ msgstr ""
 "Ein Beispiel: diese <a href=\"/login_only\">Seite</a> kann nur gesehen "
 "werden, nachdem man angemeldet ist."
 
-#: static/templates/index.html:196
+#: static/templates/index.html:202
 msgid ""
 "Simply run <code>python tests/testrunner.py /usr/local/google_appengine "
 ".</code> from command line to execute unit and API tests."
@@ -421,7 +423,7 @@ msgstr ""
 ".</code> von der Befehlszeite auf, um die Unit- und API-Tests "
 "durchzuführen."
 
-#: static/templates/index.html:197
+#: static/templates/index.html:203
 msgid ""
 "If the above command fails, make sure that <code>webtest</code> and "
 "<code>unittest2</code> Python modules are installed."
@@ -430,15 +432,15 @@ msgstr ""
 "<code>webtest</code> und <code>unittest2</code> Python-Module installiert"
 " sind."
 
-#: static/templates/index.html:202
+#: static/templates/index.html:208
 msgid ""
 "Algae comes preconfigured for internationalization, so your application "
 "can speak multiple languages."
 msgstr ""
-"Algae kommt mit allem was für Internationalisierung notwendig ist, "
-"damit kann Ihre Anwendung mehrere Sprachen sprechen."
+"Algae kommt mit allem was für Internationalisierung notwendig ist, damit "
+"kann Ihre Anwendung mehrere Sprachen sprechen."
 
-#: static/templates/index.html:203
+#: static/templates/index.html:209
 msgid ""
 "To use this feature, make sure you have both <code>jinja2</code> and "
 "<code>babel</code> installed to compile the translations for Algae."
@@ -446,27 +448,27 @@ msgstr ""
 "Um dieses Feature auszunutzen, stellen Sie sicher dass sowohl "
 "<code>jinja2</code> als auch <code>babel</code> lokal installiert sind."
 
-#: static/templates/index.html:204
+#: static/templates/index.html:210
 msgid ""
-"Instuctions can be found <a href=\"http://webapp-"
+"Instructions can be found <a href=\"http://webapp-"
 "improved.appspot.com/tutorials/i18n.html\">here</a> and <a "
 "href=\"http://jinja.pocoo.org/docs/templates/#i18n-in-"
 "templates\">here</a>."
 msgstr ""
-"Anleitungen können <a href=\"http://webapp-"
+"Anleitungen findet man <a href=\"http://webapp-"
 "improved.appspot.com/tutorials/i18n.html\">hier</a> und <a "
 "href=\"http://jinja.pocoo.org/docs/templates/#i18n-in-"
-"templates\">hier</a> gefunden werden"
+"templates\">hier</a>."
 
-#: static/templates/index.html:205
+#: static/templates/index.html:211
 msgid "View this page in <a href=\"/locale/de_DE\">German</a>"
 msgstr "Diese Seite in <a href=\"/locale/en_US\">Englisch</a> ansehen"
 
-#: static/templates/index.html:210
+#: static/templates/index.html:216
 msgid "Change Email Address"
 msgstr "Ändere E-Mail Adresse"
 
-#: static/templates/index.html:214
+#: static/templates/index.html:221
 msgid ""
 "\n"
 "          Only logged in users can change their email address. You can <a"
@@ -477,40 +479,40 @@ msgstr ""
 "          Nur angemeldete Benutzer können ihre E-Mail Adresse anpassen. "
 "<a href=\"/\">Hier</a> kann man sich anmelden.\n"
 
-#: static/templates/index.html:223 static/templates/index.html:241
-#: static/templates/index.html:276 static/templates/index.html:311
+#: static/templates/index.html:230 static/templates/index.html:249
+#: static/templates/index.html:285 static/templates/index.html:318
 msgid "Email address"
 msgstr "E-Mail Adresse"
 
-#: static/templates/index.html:230
+#: static/templates/index.html:237
 msgid "Change"
 msgstr "Ändern"
 
-#: static/templates/index.html:237
+#: static/templates/index.html:244
 msgid "Add To Mailing List"
 msgstr "Zur Mailing-Liste hinzufügen"
 
-#: static/templates/index.html:248 static/templates/index.html:295
+#: static/templates/index.html:256 static/templates/index.html:303
 msgid "Sign Up"
 msgstr "Registrieren"
 
-#: static/templates/index.html:263
+#: static/templates/index.html:271
 msgid "Sign up with your email address"
 msgstr "Mit E-Mail-Adresse registrieren"
 
-#: static/templates/index.html:270
+#: static/templates/index.html:279
 msgid "Username"
 msgstr "Benutzername"
 
-#: static/templates/index.html:282 static/templates/index.html:317
+#: static/templates/index.html:291 static/templates/index.html:324
 msgid "Password"
 msgstr "Passwort"
 
-#: static/templates/index.html:304
+#: static/templates/index.html:311
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: static/templates/index.html:330
+#: static/templates/index.html:336
 msgid "Sign In"
 msgstr "Anmelden"
 
@@ -550,10 +552,4 @@ msgstr ""
 " <a href=\"https://mail.google.com/mail/?view=cm&amp;fs=1&amp;tf=1&amp;to"
 "=replace-with-ilya.replace-with-bagrak@gmail.com\" "
 "target=\"_blank\">E-Mails</a> antwortet."
-
-#~ msgid "RESTful APIs"
-#~ msgstr "REST APIs"
-
-#~ msgid "RPC-style APIs"
-#~ msgstr "RPC APIs"
 
