@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-09-10 23:28+0200\n"
+"POT-Creation-Date: 2012-09-11 22:08+0200\n"
 "PO-Revision-Date: 2012-09-02 12:15+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: de_DE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: libs/httplib2/__init__.py:394
 #, python-format
 msgid "Content purported to be compressed with %s but failed to decompress."
-msgstr "Inhalt anscheinend mit %s komprimiert aber entpacken ist fehlgeschlagen."
+msgstr "Der Inhalt ist angeblich mit %s komprimiert, konnte aber nicht entpackt werden."
 
 #: libs/httplib2/__init__.py:504
 #, python-format
@@ -35,7 +35,7 @@ msgstr "Wert %s.algorithm ist für algorithm nicht unterstützt."
 
 #: libs/httplib2/__init__.py:567
 msgid "The challenge doesn't contain a server nonce, or this one is empty."
-msgstr "Die Challenge enthält kein Server-generiertes Nonce, oder sie ist leer."
+msgstr "Die Challenge enthält kein Server-generiertes Nonce, oder die Nonce ist leer."
 
 #: libs/httplib2/__init__.py:573
 #, python-format
@@ -121,8 +121,8 @@ msgstr ""
 "        <code>USER_ATTR</code> Dictionary in "
 "<code>gae/handlers/oauth.py</code> definiert wie Benutzerfelder zwischen "
 "den unterschiedlichen Authentifizierungs-Services (Providern) und dem "
-"internen User-Modell zugeordnet werden. Der Rest wird von "
-"cleverem Python-Code gemacht, um den Sie sich keine Sorgen machen müssen.\n"
+"internen User-Modell zugeordnet werden. Der Rest wird von cleverem "
+"Python-Code gemacht, um den Sie sich keine Sorgen machen müssen.\n"
 
 #: static/templates/index.html:43
 #, python-format
@@ -165,7 +165,7 @@ msgstr ""
 
 #: static/templates/index.html:57
 msgid "Sessions"
-msgstr "Sessions"
+msgstr ""
 
 #: static/templates/index.html:59
 #, python-format
@@ -228,7 +228,7 @@ msgid "Create Entity"
 msgstr "Element anlegen"
 
 #: static/templates/index.html:85 static/templates/index.html:96
-#: static/templates/index.html:220
+#: static/templates/index.html:288
 msgid "Heads up!"
 msgstr "Achtung!"
 
@@ -292,10 +292,11 @@ msgid ""
 "          <li>Install npm.\n"
 "          <li>Run <code>npm init</code>\n"
 "          <li>Accept all defaults (keep pressing Enter)\n"
-"          <li>Run <code>npm install less --save</code> to install LESS\n"
-"          <li>Run <code>npm install uglify-js --save</code> to install "
+"          <li>Run <code>$ npm install less --save</code> to install LESS\n"
+"          <li>Run <code>$ npm install uglify-js --save</code> to install "
 "Javascript minimizer.\n"
-"          <li>Run <code>npm run-script less</code> again. \n"
+"          <li>Run <code>$ npm run-script less; npm run-script js</code> "
+"to generate site CSS and minified Javascript.\n"
 "        </ul>\n"
 "        "
 msgstr ""
@@ -323,8 +324,8 @@ msgid ""
 "Algae is designed to get you app running on Google App Engine in less "
 "than 3 minutes and 42 seconds. Guaranteed, or your money back."
 msgstr ""
-"Mit Algae läuft Ihre Anwendung in weniger als 3 Minuten 42 "
-"Sekunden auf Google App Engine. Mit Geld-zurück-Garantie."
+"Mit Algae läuft Ihre Anwendung in weniger als 3 Minuten 42 Sekunden auf "
+"Google App Engine. Mit Geld-zurück-Garantie."
 
 #: static/templates/index.html:162
 msgid ""
@@ -366,35 +367,35 @@ msgstr "Anmeldung mit Email/Passwort"
 msgid "Others (<em>Work in progress</em>)"
 msgstr "Andere (<em>in Arbeit</em>)"
 
-#: static/templates/index.html:178
+#: static/templates/index.html:179
 msgid "Plain and RESTful style API bootstrap code:"
 msgstr "Einfacher und RESTful-basierter API Basic-Code:"
 
-#: static/templates/index.html:180
+#: static/templates/index.html:181
 msgid "Auto-generate HTML forms from GAE data model"
 msgstr "Automatische Erzeugung von HTML-Formularen aus GAE-Datenmodell"
 
-#: static/templates/index.html:181
+#: static/templates/index.html:182
 msgid "Seamless entity CRUD via AJAX"
 msgstr "Nahtloses CRUD mittels AJAX"
 
-#: static/templates/index.html:183
+#: static/templates/index.html:185
 msgid "jQuery form validation"
 msgstr "jQuery Formular-Überprüfung"
 
-#: static/templates/index.html:184
+#: static/templates/index.html:186
 msgid "Basic testing infrastructure (<em>Work in progress</em>)"
 msgstr "Einfache Test-Infrstruktur (<em>in Arbeit</em>)"
 
-#: static/templates/index.html:185
+#: static/templates/index.html:187
 msgid "and more.."
 msgstr "und mehr.."
 
-#: static/templates/index.html:188
+#: static/templates/index.html:190
 msgid "Finally, a GAE template to write home about!"
 msgstr "Endlich, ein GAE Template von dem man erzählen kann!"
 
-#: static/templates/index.html:194
+#: static/templates/index.html:196
 msgid ""
 "A Python decorator -- <code>@with_login</code> -- can be used on any "
 "method of <code>BaseHandler</code> or <code>BaseAPIHandler</code> (or "
@@ -406,41 +407,52 @@ msgstr ""
 "deren Unterklassen) angewendet werden, um unangemeldeten Benutzern das "
 "Sehen einzelner Seiten oder den Aufruf einzelner APIs zu verwehren."
 
-#: static/templates/index.html:196
+#: static/templates/index.html:198
 msgid ""
 "For instance, this <a href=\"/login_only\">page</a> can only be viewed "
 "after you login."
 msgstr ""
 "Ein Beispiel: diese <a href=\"/login_only\">Seite</a> kann nur gesehen "
-"werden, nachdem man angemeldet ist."
+"werden wenn man angemeldet ist."
 
-#: static/templates/index.html:202
+#: static/templates/index.html:204
+#, fuzzy
 msgid ""
-"Simply run <code>python tests/testrunner.py /usr/local/google_appengine "
-".</code> from command line to execute unit and API tests."
+"Simply run <code>$ python tests/testrunner.py /usr/local/google_appengine"
+" .</code> from command line to execute unit and API tests."
 msgstr ""
 "Rufe <code>python tests/testrunner.py /usr/local/google_appengine "
 ".</code> von der Befehlszeite auf, um die Unit- und API-Tests "
 "durchzuführen."
 
-#: static/templates/index.html:203
+#: static/templates/index.html:206
 msgid ""
 "If the above command fails, make sure that <code>webtest</code> and "
-"<code>unittest2</code> Python modules are installed."
+"<code>unittest2</code> Python modules are installed and that "
+"<code>APPLICATION_ID</code> and <code>SERVER_SOFTWARE</code> environment "
+"variables are set correctly, as they are required by "
+"<code>testrunner.py</code> script to run."
 msgstr ""
-"Falls das obige Kommando fehlschlägt, stelle sicher dass die "
-"<code>webtest</code> und <code>unittest2</code> Python-Module installiert"
-" sind."
+"Falls der vorige Befehl nicht funktioniert, stellen Sie sicher dass die "
+"<code>webtest</code> und <code>unittest2</code> Python-Module "
+"installiert sind und dass die beiden Environment-Variablen "
+"<code>APPLICATION_ID</code> und <code>SERVER_SOFTWARE</code> "
+"richtig gesetzt sind, da diese von <code>testrunner.py</code> "
+"benötigt werden."
 
 #: static/templates/index.html:208
+msgid "Here is how to set environment variables:"
+msgstr "So werden die Variablen richtig gesetzt:"
+
+#: static/templates/index.html:218
 msgid ""
 "Algae comes preconfigured for internationalization, so your application "
 "can speak multiple languages."
 msgstr ""
 "Algae kommt mit allem was für Internationalisierung notwendig ist, damit "
-"kann Ihre Anwendung mehrere Sprachen sprechen."
+"Ihre Anwendung mehrere Sprachen sprechen kann."
 
-#: static/templates/index.html:209
+#: static/templates/index.html:219
 msgid ""
 "To use this feature, make sure you have both <code>jinja2</code> and "
 "<code>babel</code> installed to compile the translations for Algae."
@@ -448,9 +460,157 @@ msgstr ""
 "Um dieses Feature auszunutzen, stellen Sie sicher dass sowohl "
 "<code>jinja2</code> als auch <code>babel</code> lokal installiert sind."
 
-#: static/templates/index.html:210
+#: static/templates/index.html:220
+msgid "These steps are needed for creating a multilanguage application:"
+msgstr "Diese Schritte sind notwendig um eine mehrsprachige Anwendung zu erstellen:"
+
+#: static/templates/index.html:222 static/templates/index.html:228
+msgid "Configure the locales"
+msgstr "Locales konfigurieren"
+
+#: static/templates/index.html:223 static/templates/index.html:232
+msgid "Prepare code &amp; templates for i18n"
+msgstr "Python- und jinja2-Templates für i18n vorbereiten"
+
+#: static/templates/index.html:224 static/templates/index.html:256
+msgid "Extract strings into separate messages file"
+msgstr "Sprachspezifische Texte extrahieren"
+
+#: static/templates/index.html:225 static/templates/index.html:261
+msgid "Translate the messages into all needed languages"
+msgstr "Sprachspezifische Texte übersetzen"
+
+#: static/templates/index.html:226 static/templates/index.html:272
+msgid "Compile message files"
+msgstr "Texte für die Laufzeit optimieren"
+
+#: static/templates/index.html:229
 msgid ""
-"Instructions can be found <a href=\"http://webapp-"
+"In <code>settings.py</code> you find the list of\n"
+"           the supported locales. Update this list according to your\n"
+"           needs."
+msgstr ""
+"In der Datei <code>settings.py</code> finden Sie die Liste der\n"
+"unterstützten Locales. Diese Liste passen Sie Ihrem Bedarf\n"
+"entsprechend an."
+
+#: static/templates/index.html:233
+#, python-format
+msgid ""
+"\n"
+"           In essence this boils down to putting any language-specific "
+"text\n"
+"           into a sequence of <code>%(transtxt)s</code> -\n"
+"           <code>%(endtranstxt)s</code> in the jinja2-template\n"
+"           files and into a sequence of <code>_('</code> -\n"
+"           <code>')</code> in the python files."
+msgstr ""
+"Im Wesentlichen bedeutet das, dass Sie sprachspezifische Texte in den "
+"jinja2-Templates jeweils in eine <code>%(transtxt)s</code> - "
+"<code>%(endtranstxt)s</code> Sequenz einschließen, und in den Python-"
+"Dateien in einen Aufruf von <code>_('</code> - <code>')</code> "
+"einklammern."
+
+#: static/templates/index.html:239
+msgid ""
+"Each python file will need to add an import\n"
+"           for this to work:"
+msgstr ""
+"Jede Python-Datei wird den folgenden Import benötigen:"
+
+#: static/templates/index.html:244
+msgid ""
+"Some special handling is possible in the\n"
+"           jinja2-templates, see <a\n"
+"           href=\"http://jinja.pocoo.org/docs/templates/#i18n-in-"
+"templates\"\n"
+"           target=\"_blank\">i18n in templates</a> from the jinja2\n"
+"           documentation."
+msgstr ""
+"Zusätzliche Möglichkeiten stehen in den jinja2-Templates offen, "
+"mehr Information gibt es in <a "
+"href=\"http://jinja.pocoo.org/docs/templates/#i18n-in-"
+"templates\"\n"
+"target=\"_blank\">i18n in Templates</a> aus der jinja2-\n"
+"Dokumentation."
+
+
+#: static/templates/index.html:249
+msgid ""
+"And in case your template contains almost\n"
+"           only text which has to be translated, you can create a\n"
+"           separate template file per language and reference the template"
+"\n"
+"           in the python code with <code>_('</code><code>')</code>.<br>\n"
+"           You will then treat the name of the template as a\n"
+"           language-dependent text, which could be 'template.html' for\n"
+"           English and 'template.html.de' for German."
+msgstr ""
+"Falls Ihr Template fast nur sprachabhängige Texte enthält, können Sie "
+"auch sprachabhängige Template-Files verwenden, und im Python-Code "
+"das Template mittels <code>_('</code><code>')</code> auswählen. "
+"Sie behandeln damit den Namen der Template-Datei als einen sprachabhängigen "
+"Text, der z.B. 'template.html' für Englisch und 'template.html.de' für "
+"Deutsch sein könnte."
+
+#: static/templates/index.html:257
+msgid ""
+"In this step you extract all the strings in the\n"
+"           templates and python files into a translation template."
+msgstr ""
+"In diesem Schritt extrahieren Sie alle markierten sprachabhängigen "
+"Texte aus den Python-Dateien und jinja2-Templates in eine "
+"Übersetzungsvorlage."
+
+#: static/templates/index.html:259
+msgid "Use the following command:"
+msgstr "Verwenden Sie den folgenden Befehl:"
+
+#: static/templates/index.html:262
+msgid ""
+"The very first time when you start your application\n"
+"           or when you add a new language you can enter the command:"
+msgstr ""
+"Das allererste Mal, wenn Sie Ihre Anwendung in eine neue Sprache "
+"übersetzen, geben Sie den folgenden Befehl ein:"
+
+#: static/templates/index.html:265
+msgid ""
+"However, once you have started with translating text\n"
+"           into a language you should use the command"
+msgstr ""
+"Danach verwenden Sie aber nur den Befehl"
+
+#: static/templates/index.html:268
+msgid "The 'update' will preserve old translations."
+msgstr "Hier wird durch 'update' Ihre bisherige Übersetzungsarbeit erhalten bleiben."
+
+#: static/templates/index.html:269
+msgid ""
+"Now you find in the folder <code>./locale/en_US</code>\n"
+"        a file named <code>message.po</code> which you can edit and add\n"
+"        valid translations for the locale."
+msgstr ""
+"Nun finden Sie in dem Ordner <code>./locale/en_US</code> "
+"eine Datei namens <code>message.po</code>, die Sie bearbeiten und mit "
+"Übersetzungen in der Zielsprache ergänzen können."
+
+#: static/templates/index.html:273
+msgid ""
+"In this last step you are optimizing the messages\n"
+"           files for runtime."
+msgstr ""
+"In diesem letzten Schritt werden die Sprachdateien für die Laufzeit "
+"optimiert."
+
+#: static/templates/index.html:275
+msgid "Use the following command for this purpose:"
+msgstr "Verwenden Sie dazu den folgende Befehl:"
+
+#: static/templates/index.html:278
+#, fuzzy
+msgid ""
+"Additional instructions can be found <a href=\"http://webapp-"
 "improved.appspot.com/tutorials/i18n.html\">here</a> and <a "
 "href=\"http://jinja.pocoo.org/docs/templates/#i18n-in-"
 "templates\">here</a>."
@@ -460,15 +620,15 @@ msgstr ""
 "href=\"http://jinja.pocoo.org/docs/templates/#i18n-in-"
 "templates\">hier</a>."
 
-#: static/templates/index.html:211
+#: static/templates/index.html:279
 msgid "View this page in <a href=\"/locale/de_DE\">German</a>"
 msgstr "Diese Seite in <a href=\"/locale/en_US\">Englisch</a> ansehen"
 
-#: static/templates/index.html:216
+#: static/templates/index.html:284
 msgid "Change Email Address"
 msgstr "Ändere E-Mail Adresse"
 
-#: static/templates/index.html:221
+#: static/templates/index.html:289
 msgid ""
 "\n"
 "          Only logged in users can change their email address. You can <a"
@@ -479,40 +639,40 @@ msgstr ""
 "          Nur angemeldete Benutzer können ihre E-Mail Adresse anpassen. "
 "<a href=\"/\">Hier</a> kann man sich anmelden.\n"
 
-#: static/templates/index.html:230 static/templates/index.html:249
-#: static/templates/index.html:285 static/templates/index.html:318
+#: static/templates/index.html:298 static/templates/index.html:317
+#: static/templates/index.html:353 static/templates/index.html:386
 msgid "Email address"
 msgstr "E-Mail Adresse"
 
-#: static/templates/index.html:237
+#: static/templates/index.html:305
 msgid "Change"
 msgstr "Ändern"
 
-#: static/templates/index.html:244
+#: static/templates/index.html:312
 msgid "Add To Mailing List"
 msgstr "Zur Mailing-Liste hinzufügen"
 
-#: static/templates/index.html:256 static/templates/index.html:303
+#: static/templates/index.html:324 static/templates/index.html:371
 msgid "Sign Up"
 msgstr "Registrieren"
 
-#: static/templates/index.html:271
+#: static/templates/index.html:339
 msgid "Sign up with your email address"
 msgstr "Mit E-Mail-Adresse registrieren"
 
-#: static/templates/index.html:279
+#: static/templates/index.html:347
 msgid "Username"
 msgstr "Benutzername"
 
-#: static/templates/index.html:291 static/templates/index.html:324
+#: static/templates/index.html:359 static/templates/index.html:392
 msgid "Password"
 msgstr "Passwort"
 
-#: static/templates/index.html:311
+#: static/templates/index.html:379
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: static/templates/index.html:336
+#: static/templates/index.html:404
 msgid "Sign In"
 msgstr "Anmelden"
 

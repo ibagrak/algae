@@ -24,7 +24,7 @@
     </li>
     <li><a href="#security"><h4><i class="icon-lock"></i> {% trans %}Security{% endtrans %}</h4></a></li>
     <li><a href="#css"><h4><i class="icon-tint"></i> {% trans %}CSS/LESS{% endtrans %}</h4></a></li>
-    <li><a href="#i18n"><h4><i class="icon-bullhorn"></i> {% trans %}I18N{% endtrans %}</h4></a></li>
+    <li><a href="#i18n"><h4><i class="icon-flag"></i> {% trans %}I18N{% endtrans %}</h4></a></li>
     <li><a href="#test"><h4><i class="icon-fire"></i> {% trans %}Testing{% endtrans %}</h4></a></li>
     <li class="pull-right"><a href="#about"><h4>{% trans %}About{% endtrans %}</h4></a></li>
   </ul>
@@ -203,22 +203,79 @@
       <div class="span12" >
         <p>{% trans %}Simply run <code>$ python tests/testrunner.py /usr/local/google_appengine .</code> from command line to execute unit and API tests.{% endtrans %}</p>
         
-        {% trans %}<p>If the above command fails, make sure that <code>webtest</code> and <code>unittest2</code> Python modules are installed and that <code>APPLICATION_ID</code> and <code>SERVER_SOFTWARE</code> environment variables are set correctly, as they are required by <code>testrunner.py</code> script to run.</p>
+        <p>{% trans %}If the above command fails, make sure that <code>webtest</code> and <code>unittest2</code> Python modules are installed and that <code>APPLICATION_ID</code> and <code>SERVER_SOFTWARE</code> environment variables are set correctly, as they are required by <code>testrunner.py</code> script to run.{% endtrans %}</p>
 
-        <p>Here is how to set environment variables:</p>
+        <p>{% trans %}Here is how to set environment variables:{% endtrans %}</p>
         <p>
         <ul class="unstyled">
           <li><code>$ export SERVER_SOFTWARE=Dev</code>
           <li><code>$ export APPLICATION_ID=green-algae</code> 
         </ul></p>
-        {% endtrans %}
       </div>
     </div>
     <div class="tab-pane row" id="i18n">
       <div class="span12" >
         <p>{% trans %}Algae comes preconfigured for internationalization, so your application can speak multiple languages.{% endtrans %}</p>
         <p>{% trans %}To use this feature, make sure you have both <code>jinja2</code> and <code>babel</code> installed to compile the translations for Algae.{% endtrans %}</p>
-        <p>{% trans %}Instructions can be found <a href="http://webapp-improved.appspot.com/tutorials/i18n.html">here</a> and <a href="http://jinja.pocoo.org/docs/templates/#i18n-in-templates">here</a>.{% endtrans %}</p>
+        <p>{% trans %}These steps are needed for creating a multilanguage application:{% endtrans %}
+        <ul>
+          <li><h5>{% trans %}Configure the locales{% endtrans %}</h5></li>
+          <li><h5>{% trans %}Prepare code &amp; templates for i18n{% endtrans %}</h5></li>
+          <li><h5>{% trans %}Extract strings into separate messages file{% endtrans %}</h5></li>
+          <li><h5>{% trans %}Translate the messages into all needed languages{% endtrans %}</h5></li>
+          <li><h5>{% trans %}Compile message files{% endtrans %}</h5></li>
+        </ul>
+        <h5>{% trans %}Configure the locales{% endtrans %}</h5>
+        <p>{% trans %}In <code>settings.py</code> you find the list of
+           the supported locales. Update this list according to your
+           needs.{% endtrans %}</p>
+        <h5>{% trans %}Prepare code &amp; templates for i18n{% endtrans %}</h5>
+        <p>{% trans transtxt='{% trans %}', endtranstxt='{% endtrans %}' %}
+           In essence this boils down to putting any language-specific text
+           into a sequence of <code>{{ transtxt }}</code> -
+           <code>{{ endtranstxt }}</code> in the jinja2-template
+           files and into a sequence of <code>_('</code> -
+           <code>')</code> in the python files.{% endtrans %}</p>
+        <p>{% trans %}Each python file will need to add an import
+           for this to work:{% endtrans%}
+           <br>
+           <code>from webapp2_extras.i18n import gettext as _</code>
+           </p>
+        <p>{% trans %}Some special handling is possible in the
+           jinja2-templates, see <a
+           href="http://jinja.pocoo.org/docs/templates/#i18n-in-templates"
+           target="_blank">i18n in templates</a> from the jinja2
+           documentation.{% endtrans %}</p>
+        <p>{% trans %}And in case your template contains almost
+           only text which has to be translated, you can create a
+           separate template file per language and reference the template
+           in the python code with <code>_('</code><code>')</code>.<br>
+           You will then treat the name of the template as a
+           language-dependent text, which could be 'template.html' for
+           English and 'template.html.de' for German.{% endtrans %}</p>
+        <h5>{% trans %}Extract strings into separate messages file{% endtrans %}</h5>
+        <p>{% trans %}In this step you extract all the strings in the
+           templates and python files into a translation template.{% endtrans%}</p>
+        <p>{% trans %}Use the following command:{% endtrans %}</p>
+        <p><code>$ pybabel extract -F ./babel.cfg -o ./locale/messages.pot ./</code></p>
+        <h5>{% trans %}Translate the messages into all needed languages{% endtrans %}</h5>
+        <p>{% trans %}The very first time when you start your application
+           or when you add a new language you can enter the command:{% endtrans %}</p>
+        <p><code>$ pybabel init -l en_US -d ./locale -i ./locale/messages.pot</code></p>
+        <p>{% trans %}However, once you have started with translating text
+           into a language you should use the command{% endtrans %}</p>
+        <p><code>$ pybabel update -l en_US -d ./locale -i ./locale/messages.pot</code></p>
+        <p>{% trans %}The 'update' will preserve old translations.{% endtrans %}</p>
+        <p>{% trans %}Now you find in the folder <code>./locale/en_US</code>
+        a file named <code>message.po</code> which you can edit and add
+        valid translations for the locale.{% endtrans %}</p>
+        <h5>{% trans %}Compile message files{% endtrans %}</h5>
+        <p>{% trans %}In this last step you are optimizing the messages
+           files for runtime.{% endtrans %}</p>
+        <p>{% trans %}Use the following command for this purpose:{% endtrans %}</p>
+        <p><code>$ pybabel compile -f -d ./locale</code></p>
+        <br>
+        <p>{% trans %}Additional instructions can be found <a href="http://webapp-improved.appspot.com/tutorials/i18n.html">here</a> and <a href="http://jinja.pocoo.org/docs/templates/#i18n-in-templates">here</a>.{% endtrans %}</p>
         <p>{% trans %}View this page in <a href="/locale/de_DE">German</a>{% endtrans %}
       </div>
     </div>
