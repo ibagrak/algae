@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-09-11 22:08+0200\n"
+"POT-Creation-Date: 2012-09-28 01:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -523,7 +523,7 @@ msgid "Sign up with your email address"
 msgstr ""
 
 #: static/templates/index.html:347
-msgid "Username"
+msgid "Name"
 msgstr ""
 
 #: static/templates/index.html:359 static/templates/index.html:392
@@ -538,22 +538,22 @@ msgstr ""
 msgid "Sign In"
 msgstr ""
 
-#: static/templates/layout.html:32
+#: static/templates/layout.html:35
 msgid "Your browser is <em>ancient!</em>"
 msgstr ""
 
-#: static/templates/layout.html:32
+#: static/templates/layout.html:35
 msgid ""
 "<a href=\"http://browsehappy.com/\">Upgrade to a different browser</a> or"
 " <a href=\"http://www.google.com/chromeframe/?redirect=true\">install "
 "Google Chrome Frame</a> to experience this site."
 msgstr ""
 
-#: static/templates/layout.html:42
+#: static/templates/layout.html:45
 msgid "Application Template for Google App Engine"
 msgstr ""
 
-#: static/templates/layout.html:92
+#: static/templates/layout.html:95
 msgid ""
 "Algae was created by Ilya Bagrak, who <a "
 "href=\"http://twitter.com/ibagrak\">tweets</a>,\n"

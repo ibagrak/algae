@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-09-11 22:08+0200\n"
+"POT-Creation-Date: 2012-09-28 01:41+0200\n"
 "PO-Revision-Date: 2012-09-02 12:15+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: de_DE <LL@li.org>\n"
@@ -21,7 +21,9 @@ msgstr ""
 #: libs/httplib2/__init__.py:394
 #, python-format
 msgid "Content purported to be compressed with %s but failed to decompress."
-msgstr "Der Inhalt ist angeblich mit %s komprimiert, konnte aber nicht entpackt werden."
+msgstr ""
+"Der Inhalt ist angeblich mit %s komprimiert, konnte aber nicht entpackt "
+"werden."
 
 #: libs/httplib2/__init__.py:504
 #, python-format
@@ -35,7 +37,9 @@ msgstr "Wert %s.algorithm ist für algorithm nicht unterstützt."
 
 #: libs/httplib2/__init__.py:567
 msgid "The challenge doesn't contain a server nonce, or this one is empty."
-msgstr "Die Challenge enthält kein Server-generiertes Nonce, oder die Nonce ist leer."
+msgstr ""
+"Die Challenge enthält kein Server-generiertes Nonce, oder die Nonce ist "
+"leer."
 
 #: libs/httplib2/__init__.py:573
 #, python-format
@@ -434,11 +438,10 @@ msgid ""
 "<code>testrunner.py</code> script to run."
 msgstr ""
 "Falls der vorige Befehl nicht funktioniert, stellen Sie sicher dass die "
-"<code>webtest</code> und <code>unittest2</code> Python-Module "
-"installiert sind und dass die beiden Environment-Variablen "
-"<code>APPLICATION_ID</code> und <code>SERVER_SOFTWARE</code> "
-"richtig gesetzt sind, da diese von <code>testrunner.py</code> "
-"benötigt werden."
+"<code>webtest</code> und <code>unittest2</code> Python-Module installiert"
+" sind und dass die beiden Environment-Variablen "
+"<code>APPLICATION_ID</code> und <code>SERVER_SOFTWARE</code> richtig "
+"gesetzt sind, da diese von <code>testrunner.py</code> benötigt werden."
 
 #: static/templates/index.html:208
 msgid "Here is how to set environment variables:"
@@ -462,7 +465,9 @@ msgstr ""
 
 #: static/templates/index.html:220
 msgid "These steps are needed for creating a multilanguage application:"
-msgstr "Diese Schritte sind notwendig um eine mehrsprachige Anwendung zu erstellen:"
+msgstr ""
+"Diese Schritte sind notwendig um eine mehrsprachige Anwendung zu "
+"erstellen:"
 
 #: static/templates/index.html:222 static/templates/index.html:228
 msgid "Configure the locales"
@@ -515,8 +520,7 @@ msgstr ""
 msgid ""
 "Each python file will need to add an import\n"
 "           for this to work:"
-msgstr ""
-"Jede Python-Datei wird den folgenden Import benötigen:"
+msgstr "Jede Python-Datei wird den folgenden Import benötigen:"
 
 #: static/templates/index.html:244
 msgid ""
@@ -527,13 +531,11 @@ msgid ""
 "           target=\"_blank\">i18n in templates</a> from the jinja2\n"
 "           documentation."
 msgstr ""
-"Zusätzliche Möglichkeiten stehen in den jinja2-Templates offen, "
-"mehr Information gibt es in <a "
-"href=\"http://jinja.pocoo.org/docs/templates/#i18n-in-"
-"templates\"\n"
+"Zusätzliche Möglichkeiten stehen in den jinja2-Templates offen, mehr "
+"Information gibt es in <a href=\"http://jinja.pocoo.org/docs/templates"
+"/#i18n-in-templates\"\n"
 "target=\"_blank\">i18n in Templates</a> aus der jinja2-\n"
 "Dokumentation."
-
 
 #: static/templates/index.html:249
 msgid ""
@@ -547,20 +549,19 @@ msgid ""
 "           English and 'template.html.de' for German."
 msgstr ""
 "Falls Ihr Template fast nur sprachabhängige Texte enthält, können Sie "
-"auch sprachabhängige Template-Files verwenden, und im Python-Code "
-"das Template mittels <code>_('</code><code>')</code> auswählen. "
-"Sie behandeln damit den Namen der Template-Datei als einen sprachabhängigen "
-"Text, der z.B. 'template.html' für Englisch und 'template.html.de' für "
-"Deutsch sein könnte."
+"auch sprachabhängige Template-Files verwenden, und im Python-Code das "
+"Template mittels <code>_('</code><code>')</code> auswählen. Sie behandeln"
+" damit den Namen der Template-Datei als einen sprachabhängigen Text, der "
+"z.B. 'template.html' für Englisch und 'template.html.de' für Deutsch sein"
+" könnte."
 
 #: static/templates/index.html:257
 msgid ""
 "In this step you extract all the strings in the\n"
 "           templates and python files into a translation template."
 msgstr ""
-"In diesem Schritt extrahieren Sie alle markierten sprachabhängigen "
-"Texte aus den Python-Dateien und jinja2-Templates in eine "
-"Übersetzungsvorlage."
+"In diesem Schritt extrahieren Sie alle markierten sprachabhängigen Texte "
+"aus den Python-Dateien und jinja2-Templates in eine Übersetzungsvorlage."
 
 #: static/templates/index.html:259
 msgid "Use the following command:"
@@ -578,12 +579,13 @@ msgstr ""
 msgid ""
 "However, once you have started with translating text\n"
 "           into a language you should use the command"
-msgstr ""
-"Danach verwenden Sie aber nur den Befehl"
+msgstr "Danach verwenden Sie aber nur den Befehl"
 
 #: static/templates/index.html:268
 msgid "The 'update' will preserve old translations."
-msgstr "Hier wird durch 'update' Ihre bisherige Übersetzungsarbeit erhalten bleiben."
+msgstr ""
+"Hier wird durch 'update' Ihre bisherige Übersetzungsarbeit erhalten "
+"bleiben."
 
 #: static/templates/index.html:269
 msgid ""
@@ -591,9 +593,9 @@ msgid ""
 "        a file named <code>message.po</code> which you can edit and add\n"
 "        valid translations for the locale."
 msgstr ""
-"Nun finden Sie in dem Ordner <code>./locale/en_US</code> "
-"eine Datei namens <code>message.po</code>, die Sie bearbeiten und mit "
-"Übersetzungen in der Zielsprache ergänzen können."
+"Nun finden Sie in dem Ordner <code>./locale/en_US</code> eine Datei "
+"namens <code>message.po</code>, die Sie bearbeiten und mit Übersetzungen "
+"in der Zielsprache ergänzen können."
 
 #: static/templates/index.html:273
 msgid ""
@@ -661,8 +663,9 @@ msgid "Sign up with your email address"
 msgstr "Mit E-Mail-Adresse registrieren"
 
 #: static/templates/index.html:347
-msgid "Username"
-msgstr "Benutzername"
+#, fuzzy
+msgid "Name"
+msgstr ""
 
 #: static/templates/index.html:359 static/templates/index.html:392
 msgid "Password"
@@ -676,11 +679,11 @@ msgstr "Anmelden"
 msgid "Sign In"
 msgstr "Anmelden"
 
-#: static/templates/layout.html:32
+#: static/templates/layout.html:35
 msgid "Your browser is <em>ancient!</em>"
 msgstr "Ihr Browser ist <em>steinalt!</em>"
 
-#: static/templates/layout.html:32
+#: static/templates/layout.html:35
 msgid ""
 "<a href=\"http://browsehappy.com/\">Upgrade to a different browser</a> or"
 " <a href=\"http://www.google.com/chromeframe/?redirect=true\">install "
@@ -691,12 +694,12 @@ msgstr ""
 "href=\"http://www.google.com/chromeframe/?redirect=true\">installieren "
 "Sie Google Chrome Frame</a> um diese Seite anzusehen."
 
-#: static/templates/layout.html:42
+#: static/templates/layout.html:45
 #, fuzzy
 msgid "Application Template for Google App Engine"
 msgstr "Algae ist ein Anwendungs-Template für Google App Engine"
 
-#: static/templates/layout.html:92
+#: static/templates/layout.html:95
 msgid ""
 "Algae was created by Ilya Bagrak, who <a "
 "href=\"http://twitter.com/ibagrak\">tweets</a>,\n"
