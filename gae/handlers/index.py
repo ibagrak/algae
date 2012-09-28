@@ -2,7 +2,7 @@ import common
 import logging
 from core import model
 
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
 class Index(common.BaseHandler):
     
@@ -12,7 +12,7 @@ class Index(common.BaseHandler):
         
         self.prep_html_response('index.html', 
                                 { 'pageviews' : self.session['pageviews'], 
-                                'widgets' : db.Query(model.Widget).order('-__key__').fetch(5), 
+                                'widgets' : model.Widget.query().order(-model.Widget._key).fetch(5),
                                 'form' : model.generate_model_form(model.Widget)})
 
 
@@ -21,5 +21,5 @@ class WithLogin(common.BaseHandler):
 	def get(self):
 		self.prep_html_response('index.html', 
                                 { 'pageviews' : self.session['pageviews'], 
-                                'widgets' : db.Query(model.Widget).order('-__key__').fetch(5), 
+                                'widgets' : model.Widget.query().order(-model.Widget._key).fetch(5),
                                 'form' : model.generate_model_form(model.Widget)})

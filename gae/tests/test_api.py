@@ -6,7 +6,7 @@ import urllib
 import logging
 
 from google.appengine.ext import testbed
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 from webapp2_extras import json
 from webapp2_extras.appengine.auth import models as users
 
@@ -73,9 +73,9 @@ class RESTTest(unittest2.TestCase):
 	def test_get(self):
 		# create widget in DB and get its id
 		widget = copy.copy(self.json_widget)
-		ident = model.Widget.put(widget).key().id()
+		ident = model.Widget.put1(widget).key.integer_id()
 
-		self.assertEqual(1, len(model.Widget.all().fetch(2)))
+		self.assertEqual(1, len(model.Widget.query().fetch(2)))
 
 		# get widget with the same id through API and verify that email field is correct
 		response = self.testapp.get('/rest/Widget/' + str(ident), 
@@ -89,9 +89,9 @@ class RESTTest(unittest2.TestCase):
 	def test_post(self):
 		# create widget in DB and get its id
 		widget = copy.copy(self.json_widget)
-		ident = model.Widget.put(widget).key().id()
+		ident = model.Widget.put1(widget).key.integer_id()
 
-		self.assertEqual(1, len(model.Widget.all().fetch(2)))
+		self.assertEqual(1, len(model.Widget.query().fetch(2)))
 
 		# update widget with the same id through API
 		widget = copy.copy(self.json_widget)
@@ -116,9 +116,9 @@ class RESTTest(unittest2.TestCase):
 	def test_delete_unauth(self):
 		# create widget in DB and get its id
 		widget = copy.copy(self.json_widget)
-		ident = model.Widget.put(widget).key().id()
+		ident = model.Widget.put1(widget).key.integer_id()
 
-		self.assertEqual(1, len(model.Widget.all().fetch(2)))
+		self.assertEqual(1, len(model.Widget.query().fetch(2)))
 
 		response = self.testapp.delete('/rest/Widget/' + str(ident), 
 				expect_errors=True)
@@ -142,9 +142,9 @@ class RESTTest(unittest2.TestCase):
 
 		# create widget in DB and get its id
 		widget = copy.copy(self.json_widget)
-		ident = model.Widget.put(widget).key().id()
+		ident = model.Widget.put1(widget).key.integer_id()
 
-		self.assertEqual(1, len(model.Widget.all().fetch(2)))
+		self.assertEqual(1, len(model.Widget.query().fetch(2)))
 
 		response = self.testapp.delete('/rest/Widget/' + str(ident), 
 				expect_errors=True)
@@ -194,7 +194,7 @@ class RPCTest(unittest2.TestCase):
 		self.assertEqual(response.status_int, 200)
 		self.assertEqual(response.content_type, 'application/json')
 
-		self.assertNotEqual(None, db.Query(model.EmailAddr).filter('email =', 'ibagrak@hotmail.com').get())
+		self.assertNotEqual(None, model.EmailAddr.query().filter(model.EmailAddr.email == 'ibagrak@hotmail.com').get())
 
 	def test_update_email_noauth(self):
 		response = self.testapp.get('/rpc/change_email_addr?email=%s' % urllib.quote('ibagrak@hotmail.com'), expect_errors=True)

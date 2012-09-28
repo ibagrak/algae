@@ -1,4 +1,4 @@
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
 import settings
 from core import model
@@ -19,8 +19,8 @@ class RPCHandler(common.BaseAPIHandler):
 
     def signup_mailing_list(self, args):
     	if 'email' in args:
-            if not db.Query(model.EmailAddr).filter("email =", args['email']).get():
-                db.put(model.EmailAddr(email = args['email']))
+            if not model.EmailAddr.query().filter(model.EmailAddr.email == args['email']).get():
+                model.EmailAddr(email = args['email']).put()
                 
             self.prep_json_response(200, message = "Thanks for signing up!")
     	else:

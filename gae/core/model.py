@@ -10,12 +10,12 @@ from webapp2_extras import json
 import settings
 import utils
 
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
 class UnsupportedFieldTypeError(Exception): pass
 class InvalidFieldValueError(Exception): pass
 
-class RESTModel(db.Model):
+class RESTModel(ndb.Model):
     # implemented by subclasses
     @classmethod
     def validate(cls, kvs):
@@ -28,31 +28,27 @@ class RESTModel(db.Model):
     
     # creates a new entity
     @classmethod
-    def put(cls, kvs, entity = None):
+    def put1(cls, kvs, entity = None):
         
         # prevent malicious overwriting of system attrs
         for k in kvs.keys(): 
-            if not k in cls.properties():
+            if not k in cls._properties:
                 del kvs[k]
                 continue
             
             v = cls.__dict__[k]
             
             # convert unicode values to datastore value types
-            if isinstance(v, db.IntegerProperty): 
+            if isinstance(v, ndb.IntegerProperty): 
                 kvs[k] = int(kvs[k])
-            elif isinstance(v, db.FloatProperty):
+            elif isinstance(v, ndb.FloatProperty):
                 kvs[k] = float(kvs[k])
-            elif isinstance(v, db.BooleanProperty):
+            elif isinstance(v, ndb.BooleanProperty):
                 kvs[k] = True if kvs[k] == 'True' else False
-            elif isinstance(v, db.StringProperty) or isinstance(v, db.TextProperty):
+            elif isinstance(v, ndb.StringProperty) or isinstance(v, ndb.TextProperty):
                 kvs[k] = kvs[k]
-            elif isinstance(v, db.DateProperty):
+            elif isinstance(v, ndb.DateProperty):
                 kvs[k] = datetime.strptime(kvs[k], settings.DATE_FORMAT).date()
-            elif isinstance(v, db.LinkProperty):
-                kvs[k] = kvs[k] #TODO: verify URL
-            elif isinstance(v, db.EmailProperty):
-                kvs[k] = kvs[k] #TODO: verify email address
             else:
                 raise UnsupportedFieldTypeError(v)
         
@@ -66,8 +62,9 @@ class RESTModel(db.Model):
                 for k in kvs.keys(): 
                     setattr(entity, k, kvs[k])
 
-            db.put(entity)
+            entity.put()
         except Exception as e: 
+            logging.error("Class: %s" % cls.__name__)
             logging.error("Couldn't put entity: %s" % kvs)
             logging.error(e)
             return None
@@ -78,14 +75,14 @@ class RESTModel(db.Model):
     @classmethod
     def post(cls, i, kvs):
         entity = cls.get_by_id(i)
-        return cls.put(kvs, entity = entity)
+        return cls.put1(kvs, entity = entity)
     
     # deletes an entity based on id
     @classmethod
     def delete1(cls, i):
         item = cls.get_by_id(i)
         if item: 
-            item.delete()
+            item.key.delete()
             return True
         
         return False
@@ -95,7 +92,7 @@ class RESTModel(db.Model):
         return str(json.encode(utils.to_dict(self)))
 
 def generate_model_form(cls, with_key = False):
-    fields = filter(lambda x: issubclass(type(x[1]), db.Property), cls.__dict__.iteritems())
+    fields = filter(lambda x: issubclass(type(x[1]), ndb.Property), cls.__dict__.iteritems())
     
     #firstly, let's add key to the form and make it disabled
     form = [{'element' : 'text', 'label' : 'id', 'id' : 'id'}] if with_key else []
@@ -103,33 +100,25 @@ def generate_model_form(cls, with_key = False):
     for (k, t) in fields: 
         d = {'label' : k, 'id' : k}
 
-        if isinstance(t, db.IntegerProperty) or isinstance(t, db.FloatProperty):
+        if isinstance(t, ndb.IntegerProperty) or isinstance(t, ndb.FloatProperty):
             d['element'] = 'text'
             d['class'] = 'number'
         
-        elif isinstance(t, db.StringProperty):
+        elif isinstance(t, ndb.StringProperty):
             d['element'] = 'text'
 
-        elif isinstance(t, db.TextProperty):
+        elif isinstance(t, ndb.TextProperty):
             d['element'] = 'textarea'
             d['class'] = 'textarea'
 
-        elif isinstance(t, db.DateProperty):
+        elif isinstance(t, ndb.DateProperty):
             d['element'] = 'text'
             d['class'] = 'date'
             d['format'] = settings.DATE_FORMAT_HTML
 
-        elif isinstance(t, db.BooleanProperty):
+        elif isinstance(t, ndb.BooleanProperty):
             d['element'] = 'checkbox'
             d['class'] = 'checkbox'
-
-        elif isinstance(t, db.EmailProperty):
-            d['element'] = 'text'
-            d['class'] = 'email'
-
-        elif isinstance(t, db.LinkProperty):
-            d['element'] = 'text'
-            d['class'] = 'url'
 
         else:
             raise UnsupportedFieldTypeError(k)
@@ -137,15 +126,15 @@ def generate_model_form(cls, with_key = False):
         form.append(d)
         
     return form
-        
-class Widget(RESTModel):
-    int_field = db.IntegerProperty(required = True)
-    boolean_field = db.BooleanProperty(required = True)
-    string_field = db.StringProperty(required = True)
-    text_field = db.TextProperty(required = True)
-    email_field = db.EmailProperty(required = True)
-    link_field = db.LinkProperty(required = True)
-    date_field = db.DateProperty(required = True)
 
-class EmailAddr(db.Model):
-    email = db.EmailProperty(required = True)
+class Widget(RESTModel):
+    int_field = ndb.IntegerProperty(required = True)
+    boolean_field = ndb.BooleanProperty(required = True)
+    string_field = ndb.StringProperty(required = True)
+    text_field = ndb.TextProperty(required = True)
+    email_field = ndb.StringProperty(required = True)
+    link_field = ndb.StringProperty(required = True)
+    date_field = ndb.DateProperty(required = True)
+
+class EmailAddr(ndb.Model):
+    email = ndb.StringProperty(required = True)

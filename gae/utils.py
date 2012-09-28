@@ -6,7 +6,7 @@ Created on Aug 6, 2012
 import datetime, re
 import hashlib
 import urllib
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
 import settings
 
@@ -15,7 +15,7 @@ SIMPLE_TYPES = (int, long, float, bool, dict, basestring, list)
 def to_dict(model):
     output = {}
 
-    for key, prop in model.properties().iteritems():
+    for key, prop in model._properties.iteritems():
         value = getattr(model, key)
 
         if value is None or isinstance(value, SIMPLE_TYPES):
@@ -26,14 +26,14 @@ def to_dict(model):
             #ms = time.mktime(value.utctimetuple())
             #ms += getattr(value, 'microseconds', 0) / 1000
             #output[key] = int(ms)
-        elif isinstance(value, db.GeoPt):
+        elif isinstance(value, ndb.GeoPt):
             output[key] = {'lat': value.lat, 'lon': value.lon}
-        elif isinstance(value, db.Model):
+        elif isinstance(value, ndb.Model):
             output[key] = to_dict(value)
         else:
             raise ValueError('cannot encode ' + repr(prop))
 
-    output['id'] = model.key().id()
+    output['id'] = model.key.integer_id()
     return output
 
 def to_gravatar_url(email): 

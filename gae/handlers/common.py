@@ -214,7 +214,7 @@ class BaseRESTHandler(BaseAPIHandler):
         cls = getattr(sys.modules['core.model'], obj_t)
         
         # dispatch put to that model class. all model classes need to a subclass model.RESTModel
-        obj = utils.to_dict(cls.put(kvs))
+        obj = utils.to_dict(cls.put1(kvs))
         
         return self.prep_json_response(200, message = obj)
 

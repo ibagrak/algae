@@ -26,24 +26,24 @@ class ModelTestCase(unittest2.TestCase):
 
 	def test_create(self):
 		widget = copy.copy(self.fixture_widget)
-		model.Widget.put(widget)
+		model.Widget.put1(widget)
 
-		self.assertEqual(1, len(model.Widget.all().fetch(2)))
+		self.assertEqual(1, len(model.Widget.query().fetch(2)))
 
 	def test_read(self):
 		widget = copy.copy(self.fixture_widget)
 		widget['int_field'] = 123
 
-		entity = model.Widget.put(widget)
+		entity = model.Widget.put1(widget)
 		
 		self.assertNotEqual(None, entity)
 
-		entity = model.Widget.get(entity.key().id())
+		entity = model.Widget.get(entity.key.integer_id())
 		self.assertEqual(entity.int_field, 123)
 
 	def test_update(self):
 		widget = copy.copy(self.fixture_widget)
-		identifier = model.Widget.put(widget).key().id()
+		identifier = model.Widget.put1(widget).key.integer_id()
 
 		widget = copy.copy(self.fixture_widget)
 		widget['int_field'] = 234
@@ -57,9 +57,9 @@ class ModelTestCase(unittest2.TestCase):
 
 	def test_delete(self):
 		widget = copy.copy(self.fixture_widget)
-		identifier = model.Widget.put(widget).key().id()
+		identifier = model.Widget.put1(widget).key.integer_id()
 
 		self.assertEqual(model.Widget.delete1(identifier), True)
 
-		self.assertEqual(0, len(model.Widget.all().fetch(2)))
+		self.assertEqual(0, len(model.Widget.query().fetch(2)))
 		
