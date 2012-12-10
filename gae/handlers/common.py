@@ -12,27 +12,29 @@ from webapp2_extras import sessions, json, auth, i18n
 from jinja2.runtime import TemplateNotFound
 
 import settings
-from core import model
 import utils
 from handlers import jinja_environment
 
-def get_json_error(code, key = None, message = None, *args):
-    logging.info(json.encode(get_error(code, key = key, message = message, *args)))
-    return json.encode(get_error(code, key = key, message = message, *args))
+def get_json_error(code, key = None, message = None):
+    logging.debug(json.encode(get_error(code, key = key, message = message)))
+    return json.encode(get_error(code, key = key, message = message))
 
-def get_error(code, key = None, message = None, *args):
+def get_error(code, key = None, message = None):
     if message:
         text = message
     elif key: 
         text = settings.API_CODES[code][key]
-    else:
+    
+    if not message and not key:
         text = settings.API_CODES[code]
+    
     # try to translate the text
     try:
       text = i18n.gettext(text)
     except Exception:
       pass
-    return {'code' : code, 'message' : text }
+    
+    return {'code' : code, 'response' : text }
 
 def with_login(func):
 	@wraps(func)
@@ -52,7 +54,7 @@ class BaseHandler(webapp2.RequestHandler):
         pass
         
     def handle_exception(self, exception, debug_mode):    
-        logging.exception(exception)
+        logging.exception("handler exception: " + exception)
         self.response.clear()
 
         if debug_mode:
