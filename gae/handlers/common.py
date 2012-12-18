@@ -201,10 +201,10 @@ class BaseAPIHandler(BaseHandler):
     def delete(self):
         pass
     
-    def prep_json_response(self, code, key = None, message = None, *args):
+    def prep_json_response(self, code, key = None, message = None):
         self.response.set_status(code)
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.write(get_json_error(code, key = key, message = message, *args))
+        self.response.write(get_json_error(code, key = key, message = message))
 
 class BaseRESTHandler(BaseAPIHandler):
     

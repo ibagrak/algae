@@ -18,9 +18,9 @@ class RPCHandler(common.BaseAPIHandler):
             getattr(self, action)(args)
 
     def signup_mailing_list(self, args):
-    	if 'email' in args:
-            if not db.Query(model.EmailAddr).filter("email =", args['email']).get():
-                db.put(model.EmailAddr(email = args['email']))
+    	if 'email_mailinglist' in args:
+            if not db.Query(model.EmailAddr).filter("email =", args['email_mailinglist']).get():
+                db.put(model.EmailAddr(email = args['email_mailinglist']))
                 
             self.prep_json_response(200, message = "Thanks for signing up!")
     	else:
@@ -28,8 +28,8 @@ class RPCHandler(common.BaseAPIHandler):
 
     @common.with_login
     def change_email_addr(self, args):
-    	if 'email' in args: 
-    		self.current_user.email = args['email']
+    	if 'email_change' in args: 
+    		self.current_user.email = args['email_change']
     		self.current_user.put()
 
     		self.prep_json_response(200, message = "Email updated!")

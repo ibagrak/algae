@@ -84,7 +84,7 @@ class RESTTest(unittest2.TestCase):
 		
 		self.assertEqual(response.status_int, 200)
 		self.assertEqual(json.decode(response.body)['code'], 200)
-		self.assertEqual(json.decode(response.body)['message']['email_field'], "i@co.co")
+		self.assertEqual(json.decode(response.body)['response']['email_field'], "i@co.co")
 	
 	def test_post(self):
 		# create widget in DB and get its id
@@ -111,7 +111,7 @@ class RESTTest(unittest2.TestCase):
 		
 		self.assertEqual(response.status_int, 200)
 		self.assertEqual(json.decode(response.body)['code'], 200)
-		self.assertEqual(json.decode(response.body)['message']['email_field'], "newemail@co.co")
+		self.assertEqual(json.decode(response.body)['response']['email_field'], "newemail@co.co")
 
 	def test_delete_unauth(self):
 		# create widget in DB and get its id
@@ -190,21 +190,21 @@ class RPCTest(unittest2.TestCase):
 		self.testbed.init_memcache_stub()
 
 	def test_mailing_list(self):
-		response = self.testapp.get('/rpc/signup_mailing_list?email=%s' % urllib.quote('ibagrak@hotmail.com'))
+		response = self.testapp.get('/rpc/signup_mailing_list?email_mailinglist=%s' % urllib.quote('ibagrak@hotmail.com'))
 		self.assertEqual(response.status_int, 200)
 		self.assertEqual(response.content_type, 'application/json')
 
 		self.assertNotEqual(None, db.Query(model.EmailAddr).filter('email =', 'ibagrak@hotmail.com').get())
 
 	def test_update_email_noauth(self):
-		response = self.testapp.get('/rpc/change_email_addr?email=%s' % urllib.quote('ibagrak@hotmail.com'), expect_errors=True)
+		response = self.testapp.get('/rpc/change_email_addr?email_change=%s' % urllib.quote('ibagrak@hotmail.com'), expect_errors=True)
 		self.assertEqual(response.status_int, 401)
 		self.assertEqual(response.content_type, 'application/json')
 
 	def test_update_email_auth(self):
 		self.signin_faux_user()
 
-		response = self.testapp.get('/rpc/change_email_addr?email=%s' % urllib.quote('ibagrak@hotmail.com'))
+		response = self.testapp.get('/rpc/change_email_addr?email_change=%s' % urllib.quote('ibagrak@hotmail.com'))
 		self.assertEqual(response.status_int, 200)
 		self.assertEqual(response.content_type, 'application/json')
 

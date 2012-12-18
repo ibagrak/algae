@@ -121,7 +121,7 @@ $(document).ready( function() {
                     data: kvs,
                 }).done(function(data, code, jqxhr) {
                     var code = data['code'];
-                    var message = data['message'];
+                    var message = data['response'];
                     
                     if (code == 200) { // success
                         // if we were trying to signin reload with new session on success
@@ -142,7 +142,7 @@ $(document).ready( function() {
                     // TODO: Error handling
                     var data = $.parseJSON(jqxhr.responseText);
                     var code = data['code'];
-                    var message = data['message'];
+                    var message = data['response'];
                     
                     result.html('So sorry! ' + message);
                     frm.hide();
@@ -239,7 +239,7 @@ $(document).ready( function() {
                 // TODO: Error handling
                 var data = $.parseJSON(jqxhr.responseText);
                 var code = data['code'];
-                var message = data['message'];
+                var message = data['response'];
                 
                 // Restore
                 restore(frm, btn);
@@ -253,7 +253,7 @@ $(document).ready( function() {
     // this function is a parameter to make_ajax_form()
     var done_create_func = function (data, result) {
         var code = data['code'];
-        var message = data['message'];
+        var message = data['response'];
                     
         if (code == 200) { // success                   
             var id = message['id'];
@@ -265,13 +265,13 @@ $(document).ready( function() {
                 contentType: "application/json; charset=utf-8"
             }).done(function(data, code, jqxhr) {
                 var code = data['code'];
-                var message = data['message'];
+                var message = data['response'];
                 
                 if (code == 200) {  
                     // hide form & show result
                     show_result(result, 'Success!');
                     
-                    $("#entity-row").tmpl([{id : data['message']['id'], obj : JSON.stringify(data['message'])}]).prependTo("#entities > tbody");
+                    $("#entity-row").tmpl([{id : data['response']['id'], obj : JSON.stringify(data['response'])}]).prependTo("#entities > tbody");
                 } else {
                     // should never happen (HTTP error code always matches JSON 'code')
                     show_result(result, 'Couldn\'t retrieve created entity!');
@@ -290,7 +290,7 @@ $(document).ready( function() {
     // this function is a parameter to make_ajax_form()
     var done_update_func = function (data, result) {
         var code = data['code'];
-        var message = data['message'];
+        var message = data['response'];
                     
         if (code == 200) { // success                   
             var id = message['id'];
@@ -302,7 +302,7 @@ $(document).ready( function() {
                 contentType: "application/json; charset=utf-8"
             }).done(function(data, code, jqxhr) {
                 var code = data['code'];
-                var message = data['message'];
+                var message = data['response'];
                 
                 if (code == 200) {  
                     // hide form & show result
@@ -359,7 +359,7 @@ $(document).ready( function() {
             contentType: "application/json; charset=utf-8"
          }).done(function(data, code, jqxhr) {
             var code = data['code'];
-            var message = data['message'];
+            var message = data['response'];
                         
             if (code == 200) {
                 //load the form with item to update
@@ -394,7 +394,7 @@ $(document).ready( function() {
             // TODO: Error handling
             var data = $.parseJSON(jqxhr.responseText);
             var code = data['code'];
-            var message = data['message'];
+            var message = data['response'];
 
             var summary_cell = btn.parents('tr').find('td:nth-child(2)');
             var summary = summary_cell.html();
@@ -419,7 +419,7 @@ $(document).ready( function() {
                 contentType: "application/json; charset=utf-8"
          }).done(function(data, code, jqxhr) {
             var code = data['code'];
-            var message = data['message'];
+            var message = data['response'];
                         
             if (code == 200) {
                 btn.parents('tr').remove();
@@ -436,7 +436,7 @@ $(document).ready( function() {
             // should never happen (HTTP error code always matches JSON 'code')
             var data = $.parseJSON(jqxhr.responseText);
             var code = data['code'];
-            var message = data['message'];
+            var message = data['response'];
 
             var summary_cell = btn.parents('tr').find('td:nth-child(2)');
             var summary = summary_cell.html();
@@ -484,7 +484,7 @@ $(document).ready( function() {
             data: kvs,
         }).done(function(data, code, jqxhr) {
             var code = data['code'];
-            var message = data['message'];
+            var message = data['response'];
 
             // Restore
             restore(frm, btn);
@@ -503,7 +503,7 @@ $(document).ready( function() {
             // TODO: Error handling
             var data = $.parseJSON(jqxhr.responseText);
             var code = data['code'];
-            var message = data['message'];
+            var message = data['response'];
             
             // Restore
             restore(frm, btn);
