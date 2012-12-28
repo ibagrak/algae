@@ -9,11 +9,39 @@ from webapp2_extras import json
 
 import settings
 import utils
+import re
 
 from google.appengine.ext import ndb
 
 class UnsupportedFieldTypeError(Exception): pass
 class InvalidFieldValueError(Exception): pass
+
+# subclass of StringProperty for more specific handling
+class SpecificStringProperty(ndb.StringProperty):
+    _css_class = None
+    _re_prog = None
+    _attributes = ndb.StringProperty._attributes + ['_css_class','_re_pattern']
+
+    @ndb.utils.positional(1 + ndb.StringProperty._positional)
+    def __init__(self, name=None, css_class=None, re_pattern=None, **kwds):
+        super(ndb.StringProperty, self).__init__(name=name, **kwds)
+        if re_pattern != None:
+            self._re_prog = re.compile(re_pattern)
+        self._css_class = css_class
+
+    def _validate(self, value):
+        if self._re_prog != None:
+            if self._re_prog.match(value) == None:
+                raise datastore_errors.BAdValueError('Does not match regexp')
+
+# helper subclasses
+class EmailProperty(SpecificStringProperty):
+    _re_prog = re.compile('^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]+$', re.I)
+    _css_class = 'email'
+
+class LinkProperty(SpecificStringProperty):
+    _re_prog = re.compile('^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$', re.I)
+    _css_class = 'url'
 
 class RESTModel(ndb.Model):
     # implemented by subclasses
@@ -45,7 +73,7 @@ class RESTModel(ndb.Model):
                 kvs[k] = float(kvs[k])
             elif isinstance(v, ndb.BooleanProperty):
                 kvs[k] = True if kvs[k] == 'True' else False
-            elif isinstance(v, ndb.StringProperty) or isinstance(v, ndb.TextProperty):
+            elif isinstance(v, ndb.TextProperty):
                 kvs[k] = kvs[k]
             elif isinstance(v, ndb.DateProperty):
                 kvs[k] = datetime.strptime(kvs[k], settings.DATE_FORMAT).date()
@@ -104,6 +132,10 @@ def generate_model_form(cls, with_key = False):
             d['element'] = 'text'
             d['class'] = 'number'
         
+        elif isinstance(t, SpecificStringProperty):
+            d['element'] = 'text'
+            d['class'] = t._css_class
+
         elif isinstance(t, ndb.StringProperty):
             d['element'] = 'text'
 
@@ -132,9 +164,9 @@ class Widget(RESTModel):
     boolean_field = ndb.BooleanProperty(required = True)
     string_field = ndb.StringProperty(required = True)
     text_field = ndb.TextProperty(required = True)
-    email_field = ndb.StringProperty(required = True)
-    link_field = ndb.StringProperty(required = True)
+    email_field = EmailProperty(required = True)
+    link_field = LinkProperty(required = True)
     date_field = ndb.DateProperty(required = True)
 
 class EmailAddr(ndb.Model):
-    email = ndb.StringProperty(required = True)
+    email = EmailProperty(required = True)
