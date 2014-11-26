@@ -1,4 +1,4 @@
-# Algae is an application template for [Google App Engine](http://https://developers.google.com/appengine/)
+# Algae is an application template for [Google App Engine](https://developers.google.com/appengine/)
 
 Algae is designed to get you up to speed and running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed or your money back.
 
